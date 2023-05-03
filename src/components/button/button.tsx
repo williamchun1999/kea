@@ -20,7 +20,8 @@ export const Add = () => {
     
   return (
       <>
-      <button className="btn btn-circle btn-lg add--text" onClick={clicked}> +
+      <button className="btn btn-circle btn-lg add--text btn-primary text-base-100" onClick={clicked}> 
+      +
       </button>
     </>
     )

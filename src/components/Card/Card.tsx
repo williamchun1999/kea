@@ -1,5 +1,9 @@
 import {useState, useEffect,  CSSProperties} from 'react'
 
+
+import './Card.module.css'
+
+
 export const Card = () => {
 
   const [progress, setProgress] = useState(30)
@@ -28,7 +32,7 @@ export const Card = () => {
   return (
     <div>
         <div 
-        className="radial-progress" 
+        className="radial-progress text-primary card--progress" 
         style={{"--value":progress} as CSSProperties} 
         >
       {progress}%

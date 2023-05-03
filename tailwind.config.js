@@ -4,6 +4,17 @@ export default {
   theme: {
     extend: {},
   },
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+        "primary": "#e0b0ff",  
+        "secondary": "#cfffb0",
+        "base-100": "#FFFFFF",
+        },
+      },
+    ],
+  },
   plugins: [require("daisyui")],
 }
 
