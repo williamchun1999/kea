@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './button.module.css'
+
+
 export const Button = () => {
   const [count, setCount] = useState(0);
 
@@ -8,4 +10,19 @@ export const Button = () => {
 
   )
 }
+
+export const Add = () => {
+
+  function clicked(){
+      //popup that deals with adding elements should go here 
+      console.log("clicked")
+  }
+    
+  return (
+      <>
+      <button className="btn btn-circle btn-lg add--text" onClick={clicked}> +
+      </button>
+    </>
+    )
+  }
 

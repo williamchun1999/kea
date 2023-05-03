@@ -1,7 +1,8 @@
 
 import './App.module.css'
-import { Button } from './components/button/button'
+import { Button, Add } from './components/button/button'
 import { Card } from './components/Card/Card'
+
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
       <div className="card">
         <Button />
         <Card />
+        <Add />
       </div>
      
     </>

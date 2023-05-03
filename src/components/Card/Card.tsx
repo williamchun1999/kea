@@ -1,17 +1,39 @@
-import {useState, CSSProperties} from 'react'
+import {useState, useEffect,  CSSProperties} from 'react'
 
 export const Card = () => {
+
+  const [progress, setProgress] = useState(30)
+
+  useEffect(() => {
+    async function getData(){
+      try{
+        const res = await fetch("")
+        const data = await res.json()
+        //probably need to do calculations with the data fetched from db, then setstate to that % 
+        setProgress(data)
+
+      } catch(err){
+        console.log(err)
+      }
+    }
+
+    getData()
+
+    return () => {
+      // setProgress(0)
+    }
+
+  },[progress])
 
   return (
     <div>
         <div 
         className="radial-progress" 
-        style={{"--value":20} as CSSProperties} 
+        style={{"--value":progress} as CSSProperties} 
         >
-      20%
+      {progress}%
       </div>
-      <progress className="progress progress-secondary w-56" value="30" max="80"></progress>
-      <progress className="progress progress-secondary w-56" value="99" max="100"></progress>
+
     </div>
   )
 }
