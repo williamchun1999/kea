@@ -2,7 +2,7 @@
 import './App.module.css'
 import { Button, Add } from './components/button/button'
 import { Card } from './components/Card/Card'
-
+import bear from "./assets/bear.png"
 
 function App() {
 
@@ -11,7 +11,7 @@ function App() {
     <>
       <div className="card">
         <Button />
-        <Card />
+        <Card image= {bear}/>
         <Add />
       </div>
      

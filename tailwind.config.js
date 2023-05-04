@@ -9,7 +9,7 @@ export default {
       {
         mytheme: {
         "primary": "#e0b0ff",  
-        "secondary": "#cfffb0",
+        "secondary": "#9575aa",
         "base-100": "#FFFFFF",
         },
       },
