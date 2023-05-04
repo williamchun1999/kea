@@ -1,32 +1,45 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.module.css'
-import { Button } from './components/button/button'
+import { FriendTaskOverview } from "./components/friend_task_overview";
+
+// Temporary Hard coded data response of friends tasks
+const friendsTaskResponse = [
+  {
+    userName: "William",
+    tasks: [
+      {
+        taskName: "5 questions of Leetcode",
+        taskType: "Progress",
+        taskCompleted: false,
+        taskProgress: 0.8,
+      },
+    ],
+  },
+  {
+    userName: "Chloe",
+    tasks: [
+      {
+        taskName: "Finish Essay",
+        taskType: "Checkbox",
+        taskCompleted: false,
+        taskProgress: null,
+      },
+      {
+        taskName: "3 questions of Leetcode",
+        taskType: "Progress",
+        taskCompleted: true,
+        taskProgress: 1,
+      },
+    ],
+  },
+];
 
 function App() {
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
       <div className="card">
-        <Button />
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <FriendTaskOverview friendsTasks={friendsTaskResponse} />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
