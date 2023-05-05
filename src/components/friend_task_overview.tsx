@@ -32,12 +32,17 @@ const checkTaskType = (task: Task) => {
     </div>
   );
 };
+// Route to friend page when clicking their task
+const directToFriendPage = () => {
+  // Pass in required data for routing to page, will most likely need to change prop data to include some form of uuid for routing?
+  console.log('Clicked');
+}
 
 export const FriendTaskOverview = ({ friendsTasks }: FriendsTasksProps) => {
   return (
     <>
-      <div className="flex justify-between">
-        <h3>Your Friends</h3>
+      <div className="h-15 flex justify-between">
+        <span className="flex justify-center content-center flex-wrap px-4">Your Friends</span>
         {/* Button for See All */}
         <button className="btn btn-link">See All</button>
       </div>
@@ -45,7 +50,7 @@ export const FriendTaskOverview = ({ friendsTasks }: FriendsTasksProps) => {
         {friendsTasks.map((friend) => {
           return (
             <li>
-              <a className="flex flex-col items-start">
+              <a className="flex flex-col items-start" onClick={directToFriendPage}>
                 <span>{friend.userName}</span>
                 <span>{friend.tasks[0].taskName}</span>
                 {checkTaskType(friend.tasks[0])}
