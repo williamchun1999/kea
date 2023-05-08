@@ -7,20 +7,19 @@ export const Button = () => {
 
   return (
     <button onClick={() => setCount(count + 1)} className="btn btn-primary">count is {count}</button>
-
   )
 }
 
 export const Add = () => {
 
-  function clicked(){
+  function createTask(){
       //popup that deals with adding elements should go here 
-      console.log("clicked")
+      console.log("createdTask")
   }
     
   return (
       <>
-      <button className="btn btn-circle btn-lg add--text btn-primary text-base-400" onClick={clicked}> 
+      <button className="btn btn-circle btn-lg add--text btn-primary text-base-400" onClick={createTask}> 
       +
       </button>
     </>
