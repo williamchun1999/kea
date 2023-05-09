@@ -1,11 +1,28 @@
 import { useState } from 'react'
 import './button.module.css'
+
+
 export const Button = () => {
   const [count, setCount] = useState(0);
 
   return (
-    <button onClick={() => setCount(count + 1)} className="btn-accent">count is {count}</button>
-
+    <button onClick={() => setCount(count + 1)} className="btn btn-primary">count is {count}</button>
   )
 }
+
+export const Add = () => {
+
+  function createTask(){
+      //popup that deals with adding elements should go here 
+      console.log("createdTask")
+  }
+    
+  return (
+      <>
+      <button className="btn btn-circle btn-lg add--text btn-primary text-base-400" onClick={createTask}> 
+      +
+      </button>
+    </>
+    )
+  }
 
