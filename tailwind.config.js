@@ -5,35 +5,31 @@ export default {
     extend: {},
   },
   daisyui: {
-
     themes: [
       {
         mytheme: {
         
-        "primary": "#e0b0ff",
-                
-        "secondary": "#4b3b55",
-                
-        "accent": "#e0b0ff",
-                
-        "neutral": "#f0d8ff",
-                
-        "base-100": "#FFFFFF",
-                
-        "info": "#f9efff",
-                
-        "success": "#fcf7ff",
-                
-        "warning": "#FBBD23",
-                
-        "error": "#F87272",
-
-        "hover": "#9d7bb3"
+"primary": "#e0b0ff",
+        
+"secondary": "#4b3b55",
+        
+"accent": "#9575aa",
+        
+"neutral": "#F1EEF1",
+        
+"base-100": "#FFFFFF",
+        
+"info": "#3ABFF8",
+        
+"success": "#cfffb0",
+        
+"warning": "#FBBD23",
+        
+"error": "#F87272",
         },
       },
-
     ],
   },
-  plugins: [require("daisyui")]
+  plugins: [require("daisyui")],
 }
 

@@ -1,9 +1,9 @@
-
-<<<<<<< HEAD
-import './App.module.css'
+import { FriendTaskOverview } from "./components/friend_task_overview";
 import { Button, Add } from './components/button/button'
 import { Card } from './components/Card/Card'
+import Habits from './components/habits/Habits'
 
+// Temporary Hard coded data response of friends and personal user tasks
 
 const user1 = {
   userName: 'elena',
@@ -21,23 +21,39 @@ const user1 = {
 ],
 };
 
+const friendsTaskResponse = [
+  {
+    userName: "William",
+    tasks: [
+      {
+        taskName: "5 questions of Leetcode",
+        taskType: "Progress",
+        taskCompleted: false,
+        taskProgress: 0.8,
+      },
+    ],
+  },
+  {
+    userName: "Chloe",
+    tasks: [
+      {
+        taskName: "Finish Essay",
+        taskType: "Checkbox",
+        taskCompleted: false,
+        taskProgress: null,
+      },
+      {
+        taskName: "3 questions of Leetcode",
+        taskType: "Progress",
+        taskCompleted: true,
+        taskProgress: 1,
+      },
+    ],
+  },
+];
+
 function App() {
-
-
-  return (
-    <>
-      <div className="card">
-        <Button />
-        <Card userName={user1.userName} tasks={user1.tasks} />
-        <Add />
-      </div>
-     
-=======
-import Habits from './components/habits/Habits'
-import { useState, useEffect } from 'react';
-
-// import Temp from './components/Temp'
-/*interface Habit {
+  /*interface Habit {
   id: number;
   name: string;
   type: "checkbox" | "progress";
@@ -45,8 +61,6 @@ import { useState, useEffect } from 'react';
   total?: number; //7 total hours of studying
   current?: number; //how much done?
 } */
-
-function App() {
 
   /*const [habits, setHabits] = useState<Habit[]>([])
 
@@ -72,19 +86,16 @@ function App() {
 
 
     //console.log(habits)*/
-
-
   return (
     <>
-
+      <div className="card">
+      <Button />
+        <Card userName={user1.userName} tasks={user1.tasks} />
+        <Add />
+        {/* <Habits habits={habits} onUpdate={handleUpdate}/> */}
+        <FriendTaskOverview friendsTasks={friendsTaskResponse} />
         
-        <Habits habits={habits} onUpdate={handleUpdate}/>
-       
+      </div>
+    </>)}
 
-
->>>>>>> 3016ab73dfacd6ef17a5712c44ad7e2bd246aa14
-    </>
-  )
-}
-
-export default App
+export default App;
