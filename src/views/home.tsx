@@ -1,7 +1,7 @@
-import { FriendTaskOverview } from "./components/friend_task_overview";
-import { Button, Add } from './components/button/button'
-import { Card } from './components/Card/Card'
-import Habits from './components/habits/Habits'
+import { FriendTaskOverview } from "../components/friend_task_overview";
+import { Button, Add } from '../components/button/button'
+import { Card } from '../components/Card/Card'
+import Habits from '../components/habits/Habits'
 
 // Temporary Hard coded data response of friends and personal user tasks
 
