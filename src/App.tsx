@@ -1,30 +1,53 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.module.css'
-import { Button } from './components/button/button'
+
+import Habits from './components/habits/Habits'
+import { useState, useEffect } from 'react';
+
+// import Temp from './components/Temp'
+/*interface Habit {
+  id: number;
+  name: string;
+  type: "checkbox" | "progress";
+  checked?: false;
+  total?: number; //7 total hours of studying
+  current?: number; //how much done?
+} */
 
 function App() {
 
+  /*const [habits, setHabits] = useState<Habit[]>([])
+
+    useEffect(() => {
+        
+        async function fetchHabits() {
+          try {
+            const response = await fetch('https://a0189d37-9167-4880-8aef-b5f97dd6f50d.mock.pstmn.io/get');
+            const data = await response.json();
+            setHabits(data);
+          } catch (error) {
+            console.error('Error fetching habits:', error);
+          }
+        }
+    
+        fetchHabits();
+    }, []);
+
+    function handleUpdate(newHabits: Habit[]) {
+      setHabits(newHabits);
+      
+    }
+
+
+    //console.log(habits)*/
+
+
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <Button />
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+        
+        <Habits habits={habits} onUpdate={handleUpdate}/>
+       
+
+
     </>
   )
 }
