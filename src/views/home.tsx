@@ -1,5 +1,5 @@
 import { FriendTaskOverview } from "../components/friend_task_overview";
-import { Button, Add } from '../components/button/button'
+import { Add } from '../components/button/button'
 import { Card } from '../components/Card/Card'
 import Habits from '../components/habits/Habits'
 
@@ -89,7 +89,7 @@ function App() {
   return (
     <>
       <div className="card">
-      <Button />
+      
         <Card userName={user1.userName} tasks={user1.tasks} />
         <Add />
         {/* <Habits habits={habits} onUpdate={handleUpdate}/> */}
