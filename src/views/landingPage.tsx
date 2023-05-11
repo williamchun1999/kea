@@ -39,8 +39,8 @@ function LandingPage() {
   
       </div>
       <p className=" w-4/5 text-center m-auto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ut quae tempora, hic por</p>
-      <Button name="Login" color="bg-primary -pt-10 relative " />
-      <Button name="Sign Up" color="bg-primary -pt-10 relative" />
+      <Button name="Login" color="bg-primary " />
+      <Button name="Sign Up" color="bg-primary " />
     </div>
   );
 }
