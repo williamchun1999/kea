@@ -45,7 +45,7 @@ export const Home = () => {
         <Card userName={currentUserDataResponse.userName} tasks={currentUserDataResponse.tasks} />
         <Add />
         {/* <Habits habits={habits} onUpdate={handleUpdate}/> */}
-        <FriendMenu content={friendsTaskResponse} />
+        <FriendMenu content={friendsTaskResponse.slice(0, 3)} />
         
       </div>
     </>)}
