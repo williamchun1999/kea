@@ -1,7 +1,7 @@
-import { FriendTaskOverview } from "../components/friend_task_overview";
-import { Button, Add } from '../components/button/button'
-import { Card } from '../components/Card/Card'
-import { friendsTaskResponse, currentUserDataResponse } from '../common/fake_data'
+import { FriendMenu } from "../components/friend_menu";
+import { Button, Add } from '../components/button/button';
+import { Card } from '../components/Card/Card';
+import { friendsTaskResponse, currentUserDataResponse } from '../common/fake_data';
 import Habits from '../components/habits/Habits'
 
 export const Home = () => {
@@ -45,7 +45,7 @@ export const Home = () => {
         <Card userName={currentUserDataResponse.userName} tasks={currentUserDataResponse.tasks} />
         <Add />
         {/* <Habits habits={habits} onUpdate={handleUpdate}/> */}
-        <FriendTaskOverview friendsTasks={friendsTaskResponse} />
+        <FriendMenu content={friendsTaskResponse} />
         
       </div>
     </>)}

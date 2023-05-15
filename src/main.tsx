@@ -9,16 +9,14 @@ import './index.css'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Friends />,
     // errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: <Friends />,
-      },
-    
-    ],
+   
   },
+  {
+    path: "friends",
+    element: <Friends />
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

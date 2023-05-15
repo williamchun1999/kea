@@ -33,11 +33,11 @@ const checkTaskType = (task: Task) => {
 
 export const FriendMenu = (props: FriendMenuProps) => {
   return (
-    <ul className="menu bg-base-200 rounded-box">
+    <ul className="menu bg-base-100">
       {props.content.map((friend) => {
         return (
-          <li>
-            <a className="flex flex-col items-start" onClick={directToFriendPage}>
+          <li className=' bg-base-200 mb-4 border-solid border-2 border-primary'>
+            <a className="flex flex-col items-start h-40" onClick={directToFriendPage}>
               <span>{friend.userName}</span>
               <span>{friend.tasks[0].taskName}</span>
               {checkTaskType(friend.tasks[0])}
