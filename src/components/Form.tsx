@@ -1,7 +1,11 @@
+import { ChangeEventHandler } from 'react';
+
+
 type formType= {
     title: string;
     value:string,
     name: string
+    controlInput: ChangeEventHandler<HTMLInputElement>
     
   }
 

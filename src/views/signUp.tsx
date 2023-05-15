@@ -1,4 +1,5 @@
-import {useState} from 'react'
+import { ChangeEventHandler, FormEventHandler , useState  } from 'react';
+
 
 import { TextBox } from "../components/Form";
 import { Button } from "../components/button/button";
@@ -14,11 +15,8 @@ function signUp() {
         passwordC:""
     })
   
-
     //make controlled inputs from React's end
-
-    function handleChange(event){
-
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         setFormData(prev => {
             return{
                 ...prev,
@@ -28,7 +26,7 @@ function signUp() {
     }
 
     //on pressing the signup button, the info is gathered and sent to db 
-    function handleSubmit(event) {
+     const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault()
         //write function to send to the db , for now just console log's the data that was inputted 
         console.log(formData)
