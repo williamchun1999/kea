@@ -31,7 +31,7 @@ export const Add = () => {
     
   return (
       <>
-      <label className="btn btn-circle btn-lg add--text btn-primary text-base-400 fixed bottom-4 right-4" onClick={createTask} htmlFor="addTask"> 
+      <label className="btn btn-circle btn-lg add--text btn-primary text-base-400 fixed bottom-20 right-4 z-10" onClick={createTask} htmlFor="addTask"> 
       +
       </label>
 

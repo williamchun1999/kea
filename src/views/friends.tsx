@@ -42,7 +42,7 @@ export const Friends = () => {
       <div className='mx-4'>
         <FriendMenu content={displayData} />
       </div>
-      <div className="btn-group flex mt-auto">
+      <div className="btn-group flex mt-auto mb-16">
         <button className={`${buttonStyle}`} onClick={prevPage}>«</button>
         <div className="bg-base-200 grow flex justify-center content-center flex-wrap">{`Page ${currentPage}`}</div>
         <button className={`${buttonStyle}`} onClick={nextPage}>»</button>

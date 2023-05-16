@@ -41,7 +41,7 @@ export const Home = () => {
     //console.log(habits)*/
   return (
     <>
-      <div className="card">
+      <div className="card mb-20">
       <Button />
         <Card userName={currentUserDataResponse.userName} tasks={currentUserDataResponse.tasks} />
         <Add />
