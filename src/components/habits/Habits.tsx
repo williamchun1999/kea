@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import SeeAll from '../SeeAll'
-
+import TaskInput from '../TaskInput'
 
 
 
@@ -41,8 +41,7 @@ const WeeklyHabits = ({ habits, onUpdate }: HabitProps ) => {
     
     return (
         <>
-        
-        <div className="habits w-96">
+        <div className="habits w-full ">
             <div className="flex justify-between"> 
                 <h2 className='text-3xl'>Weekly Habits</h2>
                 <SeeAll />
@@ -54,34 +53,26 @@ const WeeklyHabits = ({ habits, onUpdate }: HabitProps ) => {
                     {habits.map((habit) => 
                     habit.type === "checkbox" ? (
                     <div className={`${habit.checked ? 'bg-success' : ""} bg-base-200 hover:bg-neutral`}>
-                        <label className={`label cursor-pointer flex-1 justify-between`} htmlFor="my-modal"> 
-                            <span className="label-text">{habit.checked.toString()}</span> 
+                        <label className={`label cursor-pointer flex-1 justify-between`} htmlFor="editCheckbox"> 
+                            <span className="label-text">{habit.name}</span> 
                         </label>
                         <input type="checkbox" className="checkbox checkbox-primary" checked={habit.checked} onClick={()=>check(habit.id)}/>
 
 
-                        {/* modal setup */}
-                        <input type="checkbox" id="my-modal" className="modal-toggle" />
-                        <div className="modal bg-transparent">
-                            <div className="modal-box">
-                                <h3 className="font-bold text-lg">Modal! </h3>
-                                <p className="py-4">This is a modal! Users can edit their input values here</p>
-                                <div className="modal-action">
-                                    <label htmlFor="my-modal" className="btn">Yay!</label>
-                                </div>
-                            </div>
-                        </div>
+                        <TaskInput title="Edit" type={habit.type} htmlfor='editCheckbox'/>
                     </div>
 
                     ) :
                     <div className={`${habit.total === habit.current ? 'bg-success' : ""} bg-base-200 hover:bg-neutral`}>
-                        <label className="label cursor-pointer flex-1 justify-between" htmlFor="my-modal">
+                        <label className="label cursor-pointer flex-1 justify-between" htmlFor="editProgress">
 
                             <span>{habit.name}</span>
-                            <progress className="progress progress-primary w-56" value={habit.current/habit.total} max="1"></progress>
+                            <progress className="progress progress-primary w-6/12" value={habit.current/habit.total} max="1"></progress>
 
 
                         </label>
+
+                        <TaskInput title="Edit" type={habit.type} htmlfor='editProgress'/>
                         
                         
                     </div>

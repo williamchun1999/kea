@@ -3,6 +3,7 @@ import { Button, Add } from '../components/button/button';
 import { Card } from '../components/Card/Card';
 import { friendsTaskResponse, currentUserDataResponse } from '../common/fake_data';
 import Habits from '../components/habits/Habits'
+import { useState, useEffect } from "react";
 
 export const Home = () => {
   /*interface Habit {
@@ -10,17 +11,17 @@ export const Home = () => {
   name: string;
   type: "checkbox" | "progress";
   checked?: false;
-  total?: number; //7 total hours of studying
+  total?: number; //e.g. 7 total hours of studying
   current?: number; //how much done?
-} */
+} 
 
-  /*const [habits, setHabits] = useState<Habit[]>([])
+  const [habits, setHabits] = useState<Habit[]>([])
 
     useEffect(() => {
         
         async function fetchHabits() {
           try {
-            const response = await fetch('https://a0189d37-9167-4880-8aef-b5f97dd6f50d.mock.pstmn.io/get');
+            const response = await fetch('https://a6e8ec70-3095-485b-83d7-1b9d254f4f42.mock.pstmn.io/get');
             const data = await response.json();
             setHabits(data);
           } catch (error) {

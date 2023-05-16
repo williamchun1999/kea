@@ -35,7 +35,7 @@ export const FriendTaskOverview = ({ friendsTasks }: FriendsTasksProps) => {
       <div className="h-15 flex justify-between">
         <span className="flex justify-center content-center flex-wrap px-4">Your Friends</span>
         {/* Button for See All */}
-        <button className="btn btn-link">See All</button>
+        <SeeAll />
       </div>
       <ul className="menu bg-base-200 rounded-box">
         {friendsTasks.map((friend) => {
