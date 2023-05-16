@@ -5,6 +5,7 @@ import pics from "../assets/pics.jpg";
 import pic from "../assets/pic.jpg";
 
 export const LandingPage= ()=> {
+  
   return (
     <div className="bg-base-200 flex flex-col h-screen w-screen">
       <MainTitle text="text-5xl" color="text-primary" />
