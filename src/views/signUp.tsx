@@ -5,7 +5,7 @@ import { TextBox } from "../components/Form";
 import { Button } from "../components/button/button";
 
 
-function signUp() {
+export const SignUp=()=> {
 
     const [formData, setFormData] = useState({
         firstName:"",
@@ -49,6 +49,6 @@ function signUp() {
         </div>
     )
 }
-  export default signUp;
+
   
   

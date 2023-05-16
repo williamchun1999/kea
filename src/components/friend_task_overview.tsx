@@ -1,17 +1,8 @@
-type Task = {
-  taskName: string;
-  taskType: string;
-  taskCompleted: boolean;
-  taskProgress: number | null;
-};
+import {Task, User} from '../common/types'
 
 type FriendsTasksProps = {
-  friendsTasks: Array<{
-    userName: string;
-    tasks: Array<Task>;
-  }>;
-};
-
+  friendsTasks: Array<User>,
+}
 const checkTaskType = (task: Task) => {
   return task.taskType === "Progress" && task.taskProgress !== null ? (
     <progress

@@ -2,8 +2,8 @@ import { useState } from 'react'
 import './button.module.css'
 
 type ButtonProp = {
-  color: string;
-  name: string;
+  color?: string;
+  name?: string;
 }
 
 // export const Button = () => {
