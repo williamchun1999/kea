@@ -4,7 +4,7 @@ import React from 'react'
 const SeeAll = () => {
 
   return (
-    <a href="#" className='text-[#4b3b55] flex items-end'>See All</a>
+    <a href="#" className='text-[#e0b0ff] flex items-end'>SEE ALL</a>
   )
 
 }

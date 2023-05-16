@@ -2,11 +2,12 @@ import { FriendTaskOverview } from "../components/friend_task_overview";
 import { Button, Add } from '../components/button/button'
 import { Card } from '../components/Card/Card'
 import Habits from '../components/habits/Habits'
+import { useState, useEffect } from "react";
 
 // Temporary Hard coded data response of friends and personal user tasks
 
 const user1 = {
-  userName: 'elena',
+  userName: 'Elena',
   tasks: [{
     taskName: 'pair programming',
     taskType: 'checkbox',
@@ -52,23 +53,25 @@ const friendsTaskResponse = [
   },
 ];
 
+
+
 function App() {
   /*interface Habit {
   id: number;
   name: string;
   type: "checkbox" | "progress";
   checked?: false;
-  total?: number; //7 total hours of studying
+  total?: number; //e.g. 7 total hours of studying
   current?: number; //how much done?
-} */
+} 
 
-  /*const [habits, setHabits] = useState<Habit[]>([])
+  const [habits, setHabits] = useState<Habit[]>([])
 
     useEffect(() => {
         
         async function fetchHabits() {
           try {
-            const response = await fetch('https://a0189d37-9167-4880-8aef-b5f97dd6f50d.mock.pstmn.io/get');
+            const response = await fetch('https://a6e8ec70-3095-485b-83d7-1b9d254f4f42.mock.pstmn.io/get');
             const data = await response.json();
             setHabits(data);
           } catch (error) {
@@ -85,17 +88,24 @@ function App() {
     }
 
 
-    //console.log(habits)*/
+    //console.log(habits)
   return (
     <>
       <div className="card">
-      <Button />
-        <Card userName={user1.userName} tasks={user1.tasks} />
+        <Button />
+        <div className="head p-4">
+          <Card userName={user1.userName} tasks={user1.tasks} />
+        </div>
+        
+        <div className="tasks p-4">
+          <Habits habits={habits} onUpdate={handleUpdate}/> 
+          <FriendTaskOverview friendsTasks={friendsTaskResponse} />
+
+        </div>
+       
         <Add />
-        {/* <Habits habits={habits} onUpdate={handleUpdate}/> */}
-        <FriendTaskOverview friendsTasks={friendsTaskResponse} />
         
       </div>
-    </>)}
+  </>)*/}
 
 export default App;
