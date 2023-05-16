@@ -2,7 +2,7 @@ import { FriendMenu } from "../components/friend_menu";
 import { Button, Add } from '../components/button/button';
 import { Card } from '../components/Card/Card';
 import { friendsTaskResponse, currentUserDataResponse } from '../common/fake_data';
-// import Habits from '../components/habits/Habits'
+import Habits from '../components/habits/Habits'
 
 export const Home = () => {
   /*interface Habit {
