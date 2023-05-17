@@ -1,4 +1,5 @@
-import {Task, User} from '../common/types'
+import {Task, User} from '../common/types';
+import { SeeAll } from './SeeAll';
 
 type FriendsTasksProps = {
   friendsTasks: Array<User>,
@@ -41,7 +42,7 @@ export const FriendTaskOverview = ({ friendsTasks }: FriendsTasksProps) => {
         {friendsTasks.map((friend) => {
           return (
             <li>
-              <a className="flex flex-col items-start" onClick={directToFriendPage}>
+              <a href={`profile/${friend.uuid}`} className="flex flex-col items-start" onClick={directToFriendPage}>
                 <span>{friend.userName}</span>
                 <span>{friend.tasks[0].taskName}</span>
                 {checkTaskType(friend.tasks[0])}

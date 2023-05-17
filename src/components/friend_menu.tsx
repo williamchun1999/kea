@@ -6,7 +6,7 @@ type FriendMenuProps = {
 
 // Route to friend page when clicking their task
 const directToFriendPage = () => {
-  // Pass in required data for routing to page, will most likely need to change prop data to include some form of uuid for routing?
+  // Pass in required data for routing to page, will most likely need to change prop data to include some form of uuid for routing
   console.log('Clicked');
 }
 
@@ -37,7 +37,7 @@ export const FriendMenu = (props: FriendMenuProps) => {
       {props.content.map((friend) => {
         return (
           <li className=' bg-base-200 mb-4 border-solid border-2 border-primary'>
-            <a className="flex flex-col items-start justify-around h-36 md:h-40" onClick={directToFriendPage}>
+            <a href={`profile/${friend.uuid}`} className="flex flex-col items-start justify-around h-36 md:h-40" onClick={directToFriendPage}>
               <span>{friend.userName}</span>
               <span>{friend.tasks[0].taskName}</span>
               {checkTaskType(friend.tasks[0])}

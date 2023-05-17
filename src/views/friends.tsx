@@ -5,6 +5,11 @@ import { useState } from 'react';
 
 const buttonStyle = "bg-base-200 btn btn-outline btn-primary btn-square sm:btn-sm md:btn-md lg:btn-lg no-animation"
 
+export async function loader() {
+  // const friendsTaskResponse = await getFriends();
+  return { friendsTaskResponse };
+}
+
 export const Friends = () => {
   const [totalDataIndex, setTotalDataIndex] = useState<number>(3);
   const [displayData, setDisplayData] = useState<Array<User>>(friendsTaskResponse.slice(0, totalDataIndex));

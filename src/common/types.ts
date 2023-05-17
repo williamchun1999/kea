@@ -7,5 +7,6 @@ export type Task = {
 };
 export type User = {
   userName: string;
+  uuid: string;
   tasks: Array<Task>;
 };
