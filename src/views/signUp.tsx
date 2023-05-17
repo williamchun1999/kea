@@ -34,7 +34,7 @@ export const SignUp=()=> {
     return (
         <div className="div bg-base-200 h-screen">
             <div className="flex flex-col gap-5">
-            <h1 className="text-5xl mt-20 ml-10 tracking-wider">Sign Up</h1>
+            <h1 className="text-5xl mt-10 ml-10 tracking-wider">Sign Up</h1>
             <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center">
                 <TextBox title="First Name" name="firstName" value={formData.firstName}  controlInput = {handleChange}/> 
                 <TextBox title="Last Name" name="lastName" value={formData.lastName} controlInput = {handleChange}/> 
