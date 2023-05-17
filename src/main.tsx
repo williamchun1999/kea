@@ -3,7 +3,8 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 
-import { Friends, Home, SignUp, LandingPage } from "./views";
+import { Friends, Home, SignUp, LandingPage, Profile } from "./views";
+// import { loader as userLoader } from './views/profile';
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
 
   },
   {
-    path: "/",
+    path: "home",
     element: <Home />,
     // errorElement: <ErrorPage />,
   },
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
   {
     path: "SignUp",
     element: <SignUp />,
+  },
+  {
+    path: "profile/:uuid",
+    element: <Profile />,
+    // loader: userLoader,
   },
 ]);
 

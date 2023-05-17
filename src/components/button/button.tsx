@@ -1,18 +1,9 @@
 import { useState } from 'react'
-import './button.module.css'
 
 type ButtonProp = {
   color?: string;
   name?: string;
 }
-
-// export const Button = () => {
-//   const [count, setCount] = useState(0);
-
-//   return (
-//     <button onClick={() => setCount(count + 1)} className="btn btn-primary">count is {count}</button>
-//   )
-// }
 
 export const Add = () => {
 
