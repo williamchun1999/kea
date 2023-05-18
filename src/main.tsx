@@ -7,11 +7,11 @@ import { Friends, Home, SignUp, LandingPage } from "./views";
 import "./index.css";
 
 const router = createBrowserRouter([
-  {
+  /*{
     path: "/",
     element: <LandingPage />,
 
-  },
+  },*/
   {
     path: "/",
     element: <Home />,
