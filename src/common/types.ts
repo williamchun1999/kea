@@ -3,6 +3,7 @@ export type Task = {
   taskType: string;
   taskCompleted: boolean;
   taskProgress: number | null;
+  taskProgressTotal: number | null;
 };
 export type User = {
   userName: string;

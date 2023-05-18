@@ -6,7 +6,7 @@ import Habits from '../components/habits/Habits'
 import { useState, useEffect } from "react";
 
 export const Home = () => {
-  /*interface Habit {
+  interface Habit {
   id: number;
   name: string;
   type: "checkbox" | "progress";
@@ -45,7 +45,7 @@ export const Home = () => {
       <Button />
         <Card userName={currentUserDataResponse.userName} tasks={currentUserDataResponse.tasks} />
         <Add />
-        {/* <Habits habits={habits} onUpdate={handleUpdate}/> */}
+        <Habits habits={habits} onUpdate={handleUpdate}/> 
         <FriendMenu content={friendsTaskResponse.slice(0, 3)} />
         
       </div>
