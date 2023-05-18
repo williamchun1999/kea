@@ -11,7 +11,7 @@ export const LandingPage= ()=> {
   
   return (
     <div className="bg-base-200 flex flex-col h-screen w-screen">
-      <MainTitle text="text-5xl" color="text-primary" />
+      <MainTitle />
       <Carousel img1={pic} img2={pics}/>
       <p className=" w-4/5 text-center m-auto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ut quae tempora, hic por</p>
       <div className="flex flex-col items-center">

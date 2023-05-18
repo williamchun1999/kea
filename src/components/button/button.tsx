@@ -1,9 +1,16 @@
-import { useState } from 'react'
+import { useState, MouseEventHandler } from 'react'
 import './button.module.css'
 
 type ButtonProp = {
   color?: string;
   name?: string;
+}
+
+type NavButtonProp={
+  d: string;
+  id: string;
+  onChange: (id:string) =>void
+  isActive: boolean;
 }
 
 // export const Button = () => {
@@ -108,3 +115,24 @@ export const Button = (design: ButtonProp ) => {
   )
 }
 
+export const NavButton = (props: NavButtonProp) => {
+  
+  return (
+    <button className={`text-secondary ${props.isActive && "active"}`} onClick={() => props.onChange(props.id)}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d={props.d}
+      />
+    </svg>
+  </button>
+  )
+}
