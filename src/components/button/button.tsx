@@ -8,9 +8,6 @@ type ButtonProp = {
 
 type NavButtonProp={
   d: string;
-  id: string;
-  onChange: (id:string) =>void
-  isActive: boolean;
 }
 
 // export const Button = () => {
@@ -118,7 +115,7 @@ export const Button = (design: ButtonProp ) => {
 export const NavButton = (props: NavButtonProp) => {
   
   return (
-    <button className={`text-secondary ${props.isActive && "active"}`} onClick={() => props.onChange(props.id)}>
+    <button className="text-secondary" >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className="h-5 w-5"
