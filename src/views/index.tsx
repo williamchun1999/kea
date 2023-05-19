@@ -4,6 +4,7 @@ import { LandingPage } from './landingPage';
 import { SignUp } from './signUp';
 import { Login } from './login';
 import { Navbar } from './navbar';
+import { Settings } from './settings';
 
 export {
   Friends,
@@ -12,4 +13,5 @@ export {
   SignUp,
   Login,
   Navbar,
+  Settings,
 }
