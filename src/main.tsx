@@ -8,11 +8,11 @@ import { Friends, Home, SignUp, LandingPage, Profile } from "./views";
 import "./index.css";
 
 const router = createBrowserRouter([
-  /*{
+  {
     path: "/",
     element: <LandingPage />,
 
-  },*/
+  },
   {
     path: "home",
     element: <Home />,

@@ -1,4 +1,4 @@
-import { Task, User } from '../common/types'
+import { Task, TaskType, User } from '../common/types'
 
 type FriendMenuProps = {
   content: Array<User>
@@ -11,7 +11,7 @@ const directToFriendPage = () => {
 }
 
 const checkTaskType = (task: Task) => {
-  return task.taskType === "Progress" && task.taskProgress !== null ? (
+  return task.taskType === TaskType.progress && task.taskProgress !== null ? (
     <progress
       className="progress progress-primary"
       value={task.taskProgress?.toString()}

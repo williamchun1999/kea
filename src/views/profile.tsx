@@ -1,7 +1,8 @@
 import { CSSProperties, useState } from "react";
 // import { useLoaderData, useParams } from "react-router-dom";
 
-// import Habits from '../components/habits/Habits';
+import { UserTaskOverview } from '../components/user_task_overview';
+import { Task } from '../common/types';
 import { currentUserDataResponse } from "../common/fake_data";
 import { tasksCompletedPercentage } from "../common/weekly_tasks_calculation";
 
@@ -15,6 +16,12 @@ import { tasksCompletedPercentage } from "../common/weekly_tasks_calculation";
 // }
 
 export const Profile = () => {
+
+  const [tasks, setTasks] = useState<Array<Task>>(currentUserDataResponse.tasks)
+    function handleUpdate(newTasks: Task[]) {
+      setTasks(newTasks);
+      
+    }
   // Can grab uuid from useParams, or from loader
   // let { uuid } = useParams();
   // const { currentUserDataResponse } = useLoaderData();
@@ -51,7 +58,7 @@ export const Profile = () => {
           <div>
             <h3>Tasks</h3>
             {/* Need to resolve Habits component */}
-            {/* <Habits habits={currentUserDataResponse.tasks} /> */}
+            <UserTaskOverview tasks={tasks} onUpdate={handleUpdate} />
           </div>
         </div>
       </div>
