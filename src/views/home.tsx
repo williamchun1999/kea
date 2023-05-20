@@ -1,52 +1,51 @@
-import { FriendMenu } from "../components/friend_menu";
-import { Button, Add } from '../components/button/button';
-import { Card } from '../components/Card/Card';
-import { friendsTaskResponse, currentUserDataResponse } from '../common/fake_data';
-import Habits from '../components/habits/Habits'
-import { useState, useEffect } from "react";
+import { useState } from "react";
+
+import { FriendTaskOverview } from "../components/friend_task_overview";
+import { Button, Add } from "../components/button/button";
+import { Card } from "../components/Card/Card";
+import {
+  friendsTaskResponse,
+  currentUserDataResponse,
+} from "../common/fake_data";
+import { UserTaskOverview } from "../components/user_task_overview";
+import { Task } from "../common/types";
+import { SeeAll } from "../components/SeeAll";
 
 export const Home = () => {
-  interface Habit {
-  id: number;
-  name: string;
-  type: "checkbox" | "progress";
-  checked?: false;
-  total?: number; //e.g. 7 total hours of studying
-  current?: number; //how much done?
-} 
+  // Page should only update when interacting with user's tasks (CRUD)
+  /**
+   * Home Component will fetch for current user
+   * It will then use user's id to fetch request for their tasks
+   * It will also use user's id to fetch request for their friends
+   *
+   *
+   */
+  const [userTasks, setUserTasks] = useState<Array<Task>>(
+    currentUserDataResponse.tasks
+  );
+  function handleUpdate(newTasks: Task[]) {
+    setUserTasks(newTasks);
+  }
 
-  const [habits, setHabits] = useState<Habit[]>([])
-
-    useEffect(() => {
-        
-        async function fetchHabits() {
-          try {
-            const response = await fetch('https://a6e8ec70-3095-485b-83d7-1b9d254f4f42.mock.pstmn.io/get');
-            const data = await response.json();
-            setHabits(data);
-          } catch (error) {
-            console.error('Error fetching habits:', error);
-          }
-        }
-    
-        fetchHabits();
-    }, []);
-
-    function handleUpdate(newHabits: Habit[]) {
-      setHabits(newHabits);
-      
-    }
-
-
-    //console.log(habits)*/
+  //console.log(habits)*/
   return (
     <>
       <div className="card">
-      <Button />
-        <Card userName={currentUserDataResponse.userName} tasks={currentUserDataResponse.tasks} />
+        <Button />
+        <Card
+          userName={currentUserDataResponse.userName}
+          tasks={currentUserDataResponse.tasks}
+        />
         <Add />
-        <Habits habits={habits} onUpdate={handleUpdate}/> 
-        <FriendMenu content={friendsTaskResponse.slice(0, 3)} />
-        
+        <div className="tasks w-full p-4">
+          <div className="flex justify-between">
+            <h2 className="text-3xl">Weekly tasks</h2>
+            <SeeAll />
+          </div>
+        </div>
+        <UserTaskOverview tasks={userTasks} onUpdate={handleUpdate} />
+        <FriendTaskOverview friendsTasks={friendsTaskResponse.slice(0, 3)} />
       </div>
-    </>)}
+    </>
+  );
+};
