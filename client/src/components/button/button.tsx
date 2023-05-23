@@ -6,6 +6,13 @@ type ButtonProp = {
   name?: string;
 };
 
+type NavButtonProp = {
+  d: string;
+}
+
+type DeleteButtonProp = {
+  userName: string;
+};
 
 export const Add = () => {
   const [selectedValue, updateSelectedValue] = useState("");
@@ -23,7 +30,7 @@ export const Add = () => {
 
   return (
       <>
-      <label className="btn btn-circle btn-lg add--text btn-primary text-base-400 fixed bottom-4 right-4 z-10" onClick={createTask} htmlFor="addTask"> 
+      <label className="btn btn-circle btn-lg add--text btn-primary text-base-400 fixed bottom-20 right-4 z-10" onClick={createTask} htmlFor="addTask"> 
       +
       </label>
 
@@ -216,12 +223,12 @@ export const AddFriends = () => {
   return (
     <>
     
-    <label className="btn btn-wide" htmlFor='addFriends' onClick={() => handleDoneClick(true)}>Add Friends</label>
+    <label className="btn btn-ghost w-screen border-2 border-primary" htmlFor='addFriends' onClick={() => handleDoneClick(true)}>Add Friends</label>
 
 
     { doneClick &&
       <>
-      <input type="checkbox" id="addFriends" className="modal-toggle" />
+      <input type="checkbox" id="addFriends" className="modal-toggle " />
       <div className="modal">
         <div className="modal-box">
           <div className="flex justify-between">
@@ -262,3 +269,14 @@ export const AddFriends = () => {
   )
 }
 
+export const LogOutButton = () => {
+  return(
+    <>
+    <Link to="/">
+    <button className="btn btn-ghost w-screen border-2 border-primary">
+      Log Out
+    </button>
+    </Link>
+    </>
+  )
+}

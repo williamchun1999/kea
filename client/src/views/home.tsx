@@ -31,7 +31,6 @@ export const Home = () => {
   return (
     <>
       <div className="card">
-        <Button />
         <Card
           userName={currentUserDataResponse.userName}
           tasks={currentUserDataResponse.tasks}
