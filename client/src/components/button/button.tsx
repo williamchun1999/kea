@@ -1,9 +1,6 @@
 import { useState, MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 
-
-import "./button.module.css";
-
 type ButtonProp = {
   color?: string;
   name?: string;
