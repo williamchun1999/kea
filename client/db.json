@@ -1,0 +1,84 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "userName": "elenanana",
+      "email": "elenanana0903@gmail.com",
+      "password": "elenanana",
+      "friends": ["chunnno","chloe0123"]
+    },
+    {
+      "id": 2,
+      "userName": "chloe0123",
+      "email": "chloe0123@gmail.com",
+      "password": "chloe0123",
+      "friends": ["elenanana","chloe0123"]
+    },
+    {
+      "id": 3,
+      "userName": "chunno",
+      "email": "williamchun1999@gmail.com",
+      "password": "williamchun1999",
+      "friends": ["chloe0123","elenanana"]
+    }
+  ],
+
+
+
+  "tasks": [
+    {
+      "id": 100,
+      "userId": 1,
+      "taskName": "5 questions of Leetcode",
+      "taskType": 1,
+      "taskCompleted": false,
+      "taskProgress": 1,
+      "taskProgressTotal": 1
+    },
+    {
+      "id": 101,
+      "userId": 2,
+      "taskName": "Finish essay",
+      "taskType": 1,
+      "taskCompleted": false,
+      "taskProgress": null,
+      "taskProgressTotal": null
+    },
+    {
+      "id": 102,
+      "userId": 3,
+      "taskName": "3 questions of Leetcode",
+      "taskType": 1,
+      "taskCompleted": true,
+      "taskProgress": 1,
+      "taskProgressTotal": 1
+    },
+    {
+      "id": 103,
+      "userId": 1,
+      "taskName": "1 question of Leetcode",
+      "taskType": 1,
+      "taskCompleted": true,
+      "taskProgress": 1,
+      "taskProgressTotal": 1
+    },
+    {
+      "id": 104,
+      "userId": 2,
+      "taskName": "solve 6 math questions",
+      "taskType": 1,
+      "taskCompleted": false,
+      "taskProgress": 1,
+      "taskProgressTotal": 1
+    },
+    {
+      "id": 105,
+      "userId": 3,
+      "taskName": "finish assignment 1",
+      "taskType": 1,
+      "taskCompleted": true,
+      "taskProgress": null,
+      "taskProgressTotal": null
+    }
+  ]
+}
