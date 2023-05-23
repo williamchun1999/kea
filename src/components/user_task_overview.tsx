@@ -50,7 +50,7 @@ export const UserTaskOverview = ({ tasks, onUpdate }: TaskProps) => {
                     className={`${
                       task.taskProgress === 1 || task.taskCompleted ? "bg-success" : ""
                     } bg-base-200 hover:bg-neutral`}
-                  >
+                    >
                     <label
                       className="label cursor-pointer flex-1 justify-between"
                       htmlFor="edit-task-modal"
