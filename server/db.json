@@ -1,3 +1,4 @@
+
 {
   "users": [
     {
@@ -30,16 +31,16 @@
       "id": 100,
       "userId": 1,
       "taskName": "5 questions of Leetcode",
-      "taskType": 1,
+      "taskType": "progress",
       "taskCompleted": false,
-      "taskProgress": 1,
-      "taskProgressTotal": 1
+      "taskProgress": 2,
+      "taskProgressTotal": 5
     },
     {
       "id": 101,
       "userId": 2,
       "taskName": "Finish essay",
-      "taskType": 1,
+      "taskType": "checkbox",
       "taskCompleted": false,
       "taskProgress": null,
       "taskProgressTotal": null
@@ -48,34 +49,34 @@
       "id": 102,
       "userId": 3,
       "taskName": "3 questions of Leetcode",
-      "taskType": 1,
+      "taskType": "progress",
       "taskCompleted": true,
       "taskProgress": 1,
-      "taskProgressTotal": 1
+      "taskProgressTotal": 3
     },
     {
       "id": 103,
       "userId": 1,
       "taskName": "1 question of Leetcode",
-      "taskType": 1,
+      "taskType": "checkbox",
       "taskCompleted": true,
-      "taskProgress": 1,
-      "taskProgressTotal": 1
+      "taskProgress": null,
+      "taskProgressTotal": null
     },
     {
       "id": 104,
       "userId": 2,
       "taskName": "solve 6 math questions",
-      "taskType": 1,
+      "taskType": "progress",
       "taskCompleted": false,
-      "taskProgress": 1,
-      "taskProgressTotal": 1
+      "taskProgress": 4,
+      "taskProgressTotal": 6
     },
     {
       "id": 105,
       "userId": 3,
       "taskName": "finish assignment 1",
-      "taskType": 1,
+      "taskType": "checkbox",
       "taskCompleted": true,
       "taskProgress": null,
       "taskProgressTotal": null
