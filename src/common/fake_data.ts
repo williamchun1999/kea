@@ -14,6 +14,8 @@ export const friendsTaskResponse:Array<User> = [
       },
     ],
   },
+
+
   {
     userName: "Chloe",
     uuid: "0cd30d2c-5b1b-47a4-b430-6b329e0597e6",
@@ -34,6 +36,8 @@ export const friendsTaskResponse:Array<User> = [
       },
     ],
   },
+
+
   {
     userName: "William",
     uuid: "3809e1a3-95fc-41f7-82b9-6e00f8d36079",
@@ -47,6 +51,8 @@ export const friendsTaskResponse:Array<User> = [
       },
     ],
   },
+
+
   {
     userName: "Chloe",
     uuid: "0cd30d2c-5b1b-47a4-b430-6b329e0597e6",
@@ -67,6 +73,8 @@ export const friendsTaskResponse:Array<User> = [
       },
     ],
   },
+
+
   {
     userName: "William",
     uuid: "3809e1a3-95fc-41f7-82b9-6e00f8d36079",
@@ -80,6 +88,8 @@ export const friendsTaskResponse:Array<User> = [
       },
     ],
   },
+
+
   {
     userName: "Chloe",
     uuid: "0cd30d2c-5b1b-47a4-b430-6b329e0597e6",
@@ -100,6 +110,8 @@ export const friendsTaskResponse:Array<User> = [
       },
     ],
   },
+
+  
   {
     userName: "Chloe",
     uuid: "0cd30d2c-5b1b-47a4-b430-6b329e0597e6",

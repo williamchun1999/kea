@@ -208,3 +208,60 @@ export const DeleteButton = (props: DeleteButtonProp) => {
     </>
   );
 };
+export const AddFriends = () => {
+
+  const [doneClick, setDoneClick] = useState(true)
+
+  function handleDoneClick (clicked : boolean) {
+    setDoneClick(clicked)
+  }
+  
+  return (
+    <>
+    
+    <label className="btn btn-wide" htmlFor='addFriends' onClick={() => handleDoneClick(true)}>Add Friends</label>
+
+
+    { doneClick &&
+      <>
+      <input type="checkbox" id="addFriends" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box">
+          <div className="flex justify-between">
+          <h3 className="font-bold text-lg pt-3">Add Friends</h3>
+          <label className="btn btn-circle bg-transparent border-0" htmlFor='addFriends' >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          </label>
+
+          
+
+          </div>
+          {/*<p className="py-4">Add friends by Email</p>*/}
+          <input type="text" placeholder="example@example.com" className="input input-bordered w-full mt-4" />
+          {/* if no user found: <p>No user found. Try again</p>*/}
+          <div className="modal-action">
+            <label htmlFor="added" className="btn w-full">Add</label>
+          </div>
+
+
+        </div>
+      </div>
+
+      <input type="checkbox" id="added" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Successfully Added!</h3>
+          <p className="py-4"></p>
+          <div className="modal-action">
+            <label htmlFor="added" className="btn" onClick={() => handleDoneClick(false)}>Done</label>
+          </div>
+        </div>
+      </div>
+       
+      </>
+      }
+    </>
+    
+  )
+}
+

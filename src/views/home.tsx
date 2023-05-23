@@ -40,7 +40,7 @@ export const Home = () => {
         <div className="tasks w-full p-4">
           <div className="flex justify-between">
             <h2 className="text-3xl">Weekly tasks</h2>
-            <SeeAll />
+            <SeeAll userId={ currentUserDataResponse.uuid }/>
           </div>
         </div>
         <UserTaskOverview tasks={userTasks} onUpdate={handleUpdate} />
