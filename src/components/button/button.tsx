@@ -1,18 +1,9 @@
 import { useState } from 'react'
-import './button.module.css'
 
 type ButtonProp = {
   color?: string;
   name?: string;
 }
-
-// export const Button = () => {
-//   const [count, setCount] = useState(0);
-
-//   return (
-//     <button onClick={() => setCount(count + 1)} className="btn btn-primary">count is {count}</button>
-//   )
-// }
 
 export const Add = () => {
 
@@ -31,7 +22,7 @@ export const Add = () => {
     
   return (
       <>
-      <label className="btn btn-circle btn-lg add--text btn-primary text-base-400 fixed bottom-4 right-4" onClick={createTask} htmlFor="addTask"> 
+      <label className="btn btn-circle btn-lg add--text btn-primary text-base-400 fixed bottom-4 right-4 z-10" onClick={createTask} htmlFor="addTask"> 
       +
       </label>
 
@@ -71,9 +62,11 @@ export const Add = () => {
           {selectedValue === "progressBar" && (
             <>
               <div className="progressInput flex flex-1 ">
-                <input type="text" placeholder="number" className="input input-bordered w-2/4" />
-                <input type="text" placeholder="type (e.g. hours, pages)" className="input input-bordered w-2/4" />
+                <input type="number" placeholder="total" className="input input-bordered w-2/4" />
+                <input type="text" placeholder="type" className="input input-bordered w-2/4" />
+                
               </div>
+              <p className='pl-40'>e.g. hours / words / pages</p>
              
             </>
           )}
@@ -82,9 +75,13 @@ export const Add = () => {
             <label htmlFor="period" className=' flex flex-1 items-center'>Period</label>
             <select className="select select-bordered w-9/12" id='period'>
 
-                <option disabled selected>1 Week</option>
-                <option>3 days</option>
-                <option>5 days</option>
+                <option value="1" selected>1 day</option>
+                <option value="2">2 days</option>
+                <option value="3">3 days</option>
+                <option value="4">4 days</option>
+                <option value="5">5 days</option>
+                <option value="6">6 days</option>
+                <option value="7">7 days</option>
             </select>
 
           </div>

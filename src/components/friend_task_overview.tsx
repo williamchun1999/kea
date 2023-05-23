@@ -1,10 +1,11 @@
-import {Task, User} from '../common/types'
+import { Task, TaskType, User } from "../common/types";
+import { SeeAll } from "./SeeAll";
 
 type FriendsTasksProps = {
-  friendsTasks: Array<User>,
-}
+  friendsTasks: Array<User>;
+};
 const checkTaskType = (task: Task) => {
-  return task.taskType === "Progress" && task.taskProgress !== null ? (
+  return task.taskType === TaskType.progress && task.taskProgress !== null ? (
     <progress
       className="progress progress-primary"
       value={task.taskProgress?.toString()}
@@ -26,14 +27,16 @@ const checkTaskType = (task: Task) => {
 // Route to friend page when clicking their task
 const directToFriendPage = () => {
   // Pass in required data for routing to page, will most likely need to change prop data to include some form of uuid for routing?
-  console.log('Clicked');
-}
+  console.log("Clicked");
+};
 
 export const FriendTaskOverview = ({ friendsTasks }: FriendsTasksProps) => {
   return (
     <>
       <div className="h-15 flex justify-between">
-        <span className="flex justify-center content-center flex-wrap px-4">Your Friends</span>
+        <span className="flex justify-center content-center flex-wrap px-4">
+          Your Friends
+        </span>
         {/* Button for See All */}
         <SeeAll />
       </div>
@@ -41,7 +44,11 @@ export const FriendTaskOverview = ({ friendsTasks }: FriendsTasksProps) => {
         {friendsTasks.map((friend) => {
           return (
             <li>
-              <a className="flex flex-col items-start" onClick={directToFriendPage}>
+              <a
+                href={`profile/${friend.uuid}`}
+                className="flex flex-col items-start"
+                onClick={directToFriendPage}
+              >
                 <span>{friend.userName}</span>
                 <span>{friend.tasks[0].taskName}</span>
                 {checkTaskType(friend.tasks[0])}
