@@ -1,4 +1,4 @@
-import express from "express"
+// import express from "express"
 // import mongoose from "mongoose"
 import { Request, Response, NextFunction } from 'express';
 
@@ -8,7 +8,7 @@ const User = require("../models/User")
 const router = express.Router()
 
 module.exports = {
-    
+
     deleteUser: async(req:Request ,res:Response) => {
         try{
             await User.deleteOne({_id : req.params.id })
