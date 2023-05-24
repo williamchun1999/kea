@@ -6,6 +6,14 @@ const MongoStore = require("connect-mongo");
 
 const app = express();
 
+//importing routes 
+
+const settingRoutes = require("./routes/setting")
+
+//determining which route to use 
+
+app.use ("/settings", settingRoutes)
+
 require("dotenv").config({ path: "./config/.env" });
 
 app.use(bodyParser.json({ extended: true }));
