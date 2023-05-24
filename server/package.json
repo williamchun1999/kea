@@ -4,8 +4,9 @@
     "description": "",
     "main": "index.ts",
     "scripts": {
-        "start": "nodemon index.ts",
-        "mock": "json-server --watch db.json --port 5000"
+        "start": "node dist/index.js",
+        "mock": "json-server --watch db.json --port 5000",
+        "dev":"nodemon dist/index.js "
     },
     "author": "",
     "license": "ISC",

@@ -3,6 +3,8 @@
   "users": [
     {
       "id": 1,
+      "fName":"Elena",
+      "lName":"Kim",
       "userName": "elenanana",
       "email": "elenanana0903@gmail.com",
       "password": "elenanana",
@@ -10,6 +12,8 @@
     },
     {
       "id": 2,
+      "fName":"Chloe",
+      "lName":"Kim",
       "userName": "chloe0123",
       "email": "chloe0123@gmail.com",
       "password": "chloe0123",
@@ -17,14 +21,14 @@
     },
     {
       "id": 3,
+      "fName":"William",
+      "lName":"Chun",
       "userName": "chunno",
       "email": "williamchun1999@gmail.com",
       "password": "williamchun1999",
       "friends": ["chloe0123","elenanana"]
     }
   ],
-
-
 
   "tasks": [
     {
