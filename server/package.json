@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.ts",
-    "type": "module",
     "scripts": {
         "start": "nodemon index.ts",
         "mock": "json-server --watch db.json --port 5000"
