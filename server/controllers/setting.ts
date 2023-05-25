@@ -1,11 +1,9 @@
-// import express from "express"
-// import mongoose from "mongoose"
-import { Request, Response, NextFunction } from 'express';
 
+import { Request, Response, NextFunction } from 'express';
 
 const User = require("../models/User")
 
-const router = express.Router()
+
 
 module.exports = {
 
@@ -20,11 +18,36 @@ module.exports = {
     },
     addFriend: async(req:Request ,res:Response) => {
         //get the email of a friend that user put 
-        let friendsId = req.params.friend
+        const friendsId = req.params.friend
 
         try{
             await User.findOneAndUpdate({_id : req.params.id}, {$push: {friends:friendsId}} )
-            console.log("Added User")
+            console.log("Followed Friend")
+            res.redirect("/settings")
+        } catch (err) {
+            res.redirect("/settings")
+        }
+    },
+    updateUser: async(req:Request ,res:Response) => {
+
+        //assuming that the form already contains the information for user
+        const {fName, lName, userName, email, password, friends} = req.body
+        
+        try{
+            await User.findOneAndUpdate(
+                {_id : req.params.id}, 
+                {$set: {
+                    fName : fName,
+                    lName: lName,
+                    userName : userName,
+                    email: email, 
+                    password: password,
+                    friends: friends,
+                },
+                },
+                {new : true}
+                )
+            console.log("Updated User Information")
             res.redirect("/settings")
         } catch (err) {
             res.redirect("/settings")

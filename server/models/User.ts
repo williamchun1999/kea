@@ -1,6 +1,7 @@
 //makes the userSchema
 import mongoose from "mongoose"
 
+
 const UserSchema = new mongoose.Schema({
   fName: {
     type: String,  
@@ -16,9 +17,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     unique: true 
   },
-  password: String,
+  password: {
+    type: String,
+  },
   friends: {
-    type: Array 
+    type: [String],
+    default: [],
   },
 });
 

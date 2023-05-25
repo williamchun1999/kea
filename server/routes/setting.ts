@@ -1,6 +1,6 @@
+const router = express.Router();
 
 const settingController = require("../controllers/setting");
-const router = express.Router();
 
 
 //Settings Routes 
@@ -8,3 +8,5 @@ const router = express.Router();
 router.delete("/deleteUser/:id", settingController.deleteUser)
 
 router.put("/addFriend/:id/:friend", settingController.addFriend)
+
+router.put("/updateUser/:id", settingController.updateUser)
