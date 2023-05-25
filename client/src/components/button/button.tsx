@@ -280,3 +280,13 @@ export const LogOutButton = () => {
     </>
   )
 }
+
+export const EditUserButton = () => {
+  return(
+    <>
+    <button className="btn btn-ghost w-screen border-2 border-primary">
+      Edit Account
+    </button>
+    </>
+  )
+}
