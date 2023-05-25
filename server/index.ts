@@ -1,33 +1,39 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const MongoStore = require("connect-mongo");
+import express from "express";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import cors from "cors";
 
-const app = express();
 
-//importing routes 
+
+import {connectDB} from "./config/database"
+
 
 const settingRoutes = require("./routes/setting")
 
+
+
+const app = express();
+
+
+require("dotenv").config({ path: "./config/.env" });
+
+//connecting to db 
+
+connectDB();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({origin: "http://localhost:5175", credentials:true}));
+
+
+
+
+  
 //determining which route to use 
 
 app.use ("/settings", settingRoutes)
 
-require("dotenv").config({ path: "./config/.env" });
-
-app.use(bodyParser.json({ extended: true }));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-
-mongoose
-  .connect(process.env.DB_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() =>
-    app.listen(process.env.PORT, () =>
-      console.log(`Server running on Port: ${process.env.PORT}`)
-    )
-  )
-  .catch((err) => console.log(err));
+//Server Running 
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on Port: ${process.env.PORT}`)
+})

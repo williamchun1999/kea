@@ -1,11 +1,10 @@
 
 import { Request, Response, NextFunction } from 'express';
 
-const User = require("../models/User")
 
+import {User} from "../models/User";
 
-
-module.exports = {
+export const settingController = {
 
     deleteUser: async(req:Request ,res:Response) => {
         try{
