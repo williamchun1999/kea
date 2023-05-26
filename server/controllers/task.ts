@@ -1,12 +1,12 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import mongoose from "mongoose";
 
-import { Task } from "../models/task";
+import { Task, ITask } from "../models/task";
 
 const router = express.Router();
 
 export const taskController = {
-  getTasks: async (req, res) => {
+  getTasks: async (req:Request, res:Response) => {
     const { userId } = req.params;
     try {
       const tasks = await Task.find({ userId }).exec();
@@ -17,7 +17,7 @@ export const taskController = {
     }
   },
 
-  createTask: async (req, res) => {
+  createTask: async (req:Request, res:Response) => {
     const { taskName, taskType, taskProgress, taskProgressTotal } = req.body;
     const { userId } = req.params;
 
@@ -43,14 +43,14 @@ export const taskController = {
     }
   },
 
-  updateTask: async (req, res) => {
+  updateTask: async (req:Request, res:Response) => {
     const {
       taskName,
       taskType,
       taskProgress,
       taskProgressTotal,
       taskCompleted,
-    } = req.body;
+    } = req.body as ITask;
     const { taskId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(taskId))
@@ -70,7 +70,7 @@ export const taskController = {
     return res.json(updatedTask);
   },
 
-  resetTasks: async (req, res) => {
+  resetTasks: async (req:Request, res:Response) => {
     const { userId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(userId))
@@ -104,7 +104,7 @@ export const taskController = {
     return res.json(updatedTasksResult);
   },
 
-  deleteTask: async (req, res) => {
+  deleteTask: async (req:Request, res:Response) => {
     const { taskId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(taskId))
