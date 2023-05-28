@@ -14,4 +14,4 @@ router.put("/addFriend/:id/:friend", settingController.addFriend)
 
 router.put("/updateUser/:id", settingController.updateUser)
 
-module.exports = router;
+export default router

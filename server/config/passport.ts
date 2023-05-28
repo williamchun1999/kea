@@ -1,4 +1,5 @@
-import { Strategy as LocalStrategy } from "passport-local";
+import { Strategy as LocalStrategy, AuthenticatorDoneFunction } from "passport-local";
+import passport, { PassportStatic } from "passport";
 import mongoose from "mongoose";
 
 
@@ -6,9 +7,9 @@ import {User} from "../models/User";
 
 //configuring passport authentication middleware, making use of local strategy 
 
-export const configurePassport = (passport) => {
+export const configurePassport = (passport: PassportStatic) => {
     passport.use(
-      new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
+      new LocalStrategy({ usernameField: "email" }, async (email:string, password:string, done:AuthenticatorDoneFunction) => {
           try{
               const user= await User.findOne({email:email.toLowerCase()})
                   if (!user) {
@@ -31,11 +32,11 @@ export const configurePassport = (passport) => {
           })
       )
   
-    passport.serializeUser((user, done) => {
+    passport.serializeUser((user:typeof User, done:AuthenticatorDoneFunction) => {
       done(null, user.id);
     });
   
-    passport.deserializeUser((id, done) => {
+    passport.deserializeUser((id:string, done: AuthenticatorDoneFunction) => {
       User.findById(id) 
           .then(user=> done(null, user))
           .catch(err => done(err))

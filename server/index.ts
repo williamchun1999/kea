@@ -6,11 +6,9 @@ import cors from "cors";
 
 
 import {connectDB} from "./config/database"
-
-
-const settingRoutes = require("./routes/setting")
-
-
+    
+import settingRoutes from "./routes/setting"
+// const settingRoutes = require("./routes/setting")
 
 const app = express();
 
@@ -18,7 +16,6 @@ const app = express();
 require("dotenv").config({ path: "./config/.env" });
 
 //connecting to db 
-
 connectDB();
 
 app.use(express.json());
@@ -26,14 +23,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({origin: "http://localhost:5175", credentials:true}));
 
 
-
-
   
 //determining which route to use 
-
 app.use ("/settings", settingRoutes)
 
+
 //Server Running 
+
 app.listen(process.env.PORT, () => {
   console.log(`Server running on Port: ${process.env.PORT}`)
 })
