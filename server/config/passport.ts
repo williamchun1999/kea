@@ -11,6 +11,7 @@ export const configurePassport = (passport: PassportStatic) => {
     passport.use(
       new LocalStrategy({ usernameField: "email" }, async (email:string, password:string, done:AuthenticatorDoneFunction) => {
           try{
+            //check if the email exists in the db
               const user= await User.findOne({email:email.toLowerCase()})
                   if (!user) {
                       return done(null, false, { msg: `Email ${email} not found.` });
@@ -21,6 +22,7 @@ export const configurePassport = (passport: PassportStatic) => {
                           "Incorrect Password",
                   });
               }
+              //if there is a match then compare the password to the password in the db 
               const isMatch = await user.comparePassword(password)
                  if (isMatch) {
                     return done(null, user);

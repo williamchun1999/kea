@@ -1,7 +1,7 @@
 import passport from "passport";
 import validator from "validator";
 import { Request, Response, NextFunction } from 'express';
-import flash from "express-flash"
+
 // import {Session} from "express-session"
 
 import { User } from "../models/User";
@@ -91,7 +91,7 @@ export const authController =  {
       
           if (validationErrors.length) {
             req.flash("errors", validationErrors);
-            return res.send({ message: "Validation error" });
+            return res.send({ message: "Validation error"});
           }
       
           req.body.email = validator.normalizeEmail(req.body.email, {

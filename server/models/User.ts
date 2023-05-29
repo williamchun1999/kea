@@ -16,7 +16,11 @@ export interface IUser extends Document {
   comparePassword(candidatePassword: string): Promise<Boolean>
 }
 
-const UserSchema = new mongoose.Schema<IUser>({
+const UserSchema = new mongoose.Schema({
+  // _id : {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   auto:true,
+  // },
   fName: {
     type: String,  
   },
