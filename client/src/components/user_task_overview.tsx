@@ -1,5 +1,6 @@
 import TaskInput from "./TaskInput";
 import { Task, TaskType } from "../common/types";
+//import { useListTasks } from "../hooks/tasks/listTasks";
 
 interface TaskProps {
   //type Task for the array
@@ -9,6 +10,18 @@ interface TaskProps {
 }
 
 export const UserTaskOverview = ({ tasks, onUpdate }: TaskProps) => {
+
+  //const { data, loading, error } = useListTasks<Task[]>("http://localhost:5000/tasks?userId=1", (rawData) => rawData);
+
+  /*if (loading) {
+    return <p>loading...</p>
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }*/ 
+
+  
   // Create a clone where we can mutate the array and return the mutated version in our onUpdate function to rerender the page
   const tasksClone = [...tasks];
 
