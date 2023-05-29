@@ -3,7 +3,7 @@ import passport, { PassportStatic } from "passport";
 import mongoose from "mongoose";
 
 
-import {User} from "../models/User";
+import {User, IUser} from "../models/User";
 
 //configuring passport authentication middleware, making use of local strategy 
 
@@ -32,7 +32,7 @@ export const configurePassport = (passport: PassportStatic) => {
           })
       )
   
-    passport.serializeUser((user:typeof User, done:AuthenticatorDoneFunction) => {
+    passport.serializeUser((user: IUser, done:AuthenticatorDoneFunction) => {
       done(null, user.id);
     });
   

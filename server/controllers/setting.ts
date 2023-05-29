@@ -9,6 +9,7 @@ export const settingController = {
       console.log("Deleted User");
       res.send({ message: 'Success' })
     } catch (err) {
+    console.log(err)
       res.send({ message: err.message });
     }
   },
@@ -31,6 +32,7 @@ export const settingController = {
       console.log("Followed Friend");
       res.send(user.friends);
     } catch (err) {
+    console.log(err)
       res.send({ message: err.message });
     }
   },
@@ -61,6 +63,7 @@ export const settingController = {
       console.log("Updated User Information");
       res.send(user)
     } catch (err) {
+    console.log(err)
       res.send({ message: err.message });
     }
   },

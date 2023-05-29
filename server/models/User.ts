@@ -1,10 +1,11 @@
 //makes the userSchema
-import mongoose, {Document} from "mongoose"
+import mongoose, {Document,Types} from "mongoose"
 import bcrypt from "bcrypt"
 
 //define interface that extends Document and include the method
 
-interface IUser extends Document {
+export interface IUser extends Document {
+  _id:Types.ObjectId
   fName: string
   lName: string
   userName: string
@@ -15,8 +16,7 @@ interface IUser extends Document {
   comparePassword(candidatePassword: string): Promise<Boolean>
 }
 
-
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema<IUser>({
   fName: {
     type: String,  
   },

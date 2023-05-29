@@ -8,6 +8,7 @@ import cors from "cors";
 import {connectDB} from "./config/database"
     
 import settingRoutes from "./routes/setting"
+import authRoutes from "./routes/auth"
 // const settingRoutes = require("./routes/setting")
 
 const app = express();
@@ -26,7 +27,7 @@ app.use(cors({origin: "http://localhost:5175", credentials:true}));
   
 //determining which route to use 
 app.use ("/settings", settingRoutes)
-
+app.use("/",authRoutes)
 
 //Server Running 
 
