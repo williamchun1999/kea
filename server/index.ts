@@ -9,15 +9,16 @@ import passport from "passport"
 
 
 import {connectDB} from "./config/database"
-    
+import dotenv from "dotenv";
 import settingRoutes from "./routes/setting"
 import authRoutes from "./routes/auth"
-// const settingRoutes = require("./routes/setting")
+import homeRoutes from "./routes/home";
+import friendsRoutes from "./routes/friends";
+import profileRoutes from "./routes/profile";
 
 const app = express();
+dotenv.config({ path: "./config/.env" });
 
-
-require("dotenv").config({ path: "./config/.env" });
 
 // Passport config
 import {configurePassport} from "./config/passport"
@@ -52,6 +53,9 @@ app.use(flash())
 //determining which route to use 
 app.use ("/settings", settingRoutes)
 app.use("/",authRoutes)
+app.use("/home", homeRoutes);
+app.use("/friends", friendsRoutes);
+app.use("/profile", profileRoutes);
 
 //Server Running 
 

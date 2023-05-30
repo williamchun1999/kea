@@ -105,7 +105,7 @@ const TaskInput = ({ task }: TaskInputProps) => {
             <label
               htmlFor="edit-task-modal"
               className="btn btn-block"
-              onClick={handleConfirmDelete}
+              onClick={handleUpdate}
             >
               Delete
             </label>
