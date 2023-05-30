@@ -2,9 +2,16 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-import MongoStore from "connect-mongo";
-import dotenv from "dotenv";
+import flash from "express-flash"
+import session from "express-session"
+import MongoStore from "connect-mongo"
+import passport from "passport"
 
+
+import {connectDB} from "./config/database"
+import dotenv from "dotenv";
+import settingRoutes from "./routes/setting"
+import authRoutes from "./routes/auth"
 import homeRoutes from "./routes/home";
 import friendsRoutes from "./routes/friends";
 import profileRoutes from "./routes/profile";
@@ -12,19 +19,46 @@ import profileRoutes from "./routes/profile";
 const app = express();
 dotenv.config({ path: "./config/.env" });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
+// Passport config
+import {configurePassport} from "./config/passport"
+configurePassport(passport)
+
+//connecting to db 
+connectDB();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({origin: "http://localhost:3000", credentials:true}));
+
+
+// Setup Sessions - stored in MongoDB
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.DB_STRING
+  })
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+//allowing to use flash
+app.use(flash())
+  
+//determining which route to use 
+app.use ("/settings", settingRoutes)
+app.use("/",authRoutes)
 app.use("/home", homeRoutes);
 app.use("/friends", friendsRoutes);
 app.use("/profile", profileRoutes);
 
-mongoose
-  .connect(process.env.DB_STRING)
-  .then(() =>
-    app.listen(process.env.PORT, () =>
-      console.log(`Server running on Port: ${process.env.PORT}`)
-    )
-  )
-  .catch((err) => console.log(err));
+//Server Running 
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on Port: ${process.env.PORT}`)
+})
