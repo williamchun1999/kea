@@ -2,7 +2,16 @@
 import axios from 'axios';
 import { useState, useCallback } from 'react';
 
-export const useCreateUser = <T,>(
+
+export interface User {
+  fName: string
+  lName: string
+  userName: string
+  email: string
+  password: string
+}
+
+export const useCreateUser = <T extends User,>(
   url: string,
   headers?: HeadersInit
 ): {
