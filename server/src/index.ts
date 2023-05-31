@@ -9,7 +9,7 @@ import passport from "passport";
 import dotenv from "dotenv";
 
 import { connectDB } from "./config/database";
-import settingRoutes from "./routes/setting";
+import userRoutes from "./routes/user";
 import authRoutes from "./routes/auth";
 import { homeRouter } from "./routes/home";
 import friendsRoutes from "./routes/friends";
@@ -47,7 +47,7 @@ app.use(passport.session());
 app.use(flash());
 
 //determining which route to use
-app.use("/settings", settingRoutes);
+app.use("/settings", userRoutes);
 app.use("/", authRoutes);
 app.use("/home", homeRouter);
 app.use("/friends", friendsRoutes);

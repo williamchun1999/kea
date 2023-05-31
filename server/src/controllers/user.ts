@@ -1,11 +1,25 @@
 import { Request, Response, NextFunction } from "express";
 
-import { User } from "../models/User";
+import { User, IUser } from "../models/User";
 
-export const settingController = {
-  deleteUser: async (req: Request, res: Response) => {
+export const userController = {
+
+  getUser: async (req:Request, res: Response) => {
+    const currentUser = req.user as IUser;
     try {
-      await User.deleteOne({ _id: req.params.id });
+        const user = await User.findById(currentUser._id)
+        console.log("User info fetched");
+        res.send({user})
+    }
+    catch(err){
+    console.log(err)
+    res.send({ message: err.message });
+    }
+},
+  deleteUser: async (req: Request, res: Response) => {
+    const currentUser = req.user as IUser;
+    try {
+      await User.deleteOne({ _id: currentUser._id });
       console.log("Deleted User");
       res.send({ message: 'Success' })
     } catch (err) {
@@ -14,23 +28,32 @@ export const settingController = {
     }
   },
   addFriend: async (req: Request, res: Response) => {
-    //get the email of a friend that user put
-    const friendsId = req.params.friend;
+    //get currentUser's ID
+    const currentUser = req.user as IUser
+    
+    //get the userName of a friend that user put
+    const  friendsId= req.params.friend;
 
-    //find user and update the friends array
     try {
+
+       //check if the userName exists 
+      const friend = await User.findOne({userName: friendsId})
+
+      if (!friend){
+        return res.send({ message: "Username does not exist" });
+      }
+
+      //find user and update the friends array only if it doesn't already exist 
       const user = await User.findOneAndUpdate(
-        { _id: req.params.id },
-        { $push: { friends: friendsId } },
+        { _id: currentUser._id},
+        { $addToSet: { friends: friendsId } },
         { new: true }
       );
 
-      if (!user) {
-        return res.send({ message: "User not found" });
-      }
-
       console.log("Followed Friend");
+      
       res.send(user.friends);
+
     } catch (err) {
     console.log(err)
       res.send({ message: err.message });
@@ -40,9 +63,11 @@ export const settingController = {
     //assuming that the form already contains the information for user
     const { fName, lName, userName, email, password, friends } = req.body;
 
+    //get currentUser's ID
+    const currentUser = req.user as IUser
     try {
       const user = await User.findOneAndUpdate(
-        { _id: req.params.id },
+        { _id: currentUser._id },
         {
           $set: {
             fName: fName,

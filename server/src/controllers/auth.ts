@@ -69,6 +69,8 @@ export const authController =  {
             if (err)
               console.log("Error : Failed to destroy the session during logout.", err);
             req.user = null;
+            console.log("logged out")
+            res.send({ message: "Success" })
             res.redirect("/");
           });
     },
