@@ -1,25 +1,28 @@
 import express from "express";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
 import cors from "cors";
 import flash from "express-flash";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "passport";
 import dotenv from "dotenv";
+import cron from "node-cron";
 
 import { connectDB } from "./config/database";
-import settingRoutes from "./routes/setting";
-import authRoutes from "./routes/auth";
+import { configurePassport } from "./config/passport";
+import { settingRouter } from "./routes/setting";
+import { authRouter } from "./routes/auth";
 import { homeRouter } from "./routes/home";
-import friendsRoutes from "./routes/friends";
-import profileRoutes from "./routes/profile";
+import { friendsRouter } from "./routes/friends";
+import { profileRouter } from "./routes/profile";
+import { Task } from "./models/task";
 
 const app = express();
+
+// Path for .env file
 dotenv.config({ path: "src/config/.env" });
 
 // Passport config
-import { configurePassport } from "./config/passport";
+
 configurePassport(passport);
 
 //connecting to db
@@ -47,11 +50,43 @@ app.use(passport.session());
 app.use(flash());
 
 //determining which route to use
-app.use("/settings", settingRoutes);
-app.use("/", authRoutes);
+app.use("/settings", settingRouter);
+app.use("/", authRouter);
 app.use("/home", homeRouter);
-app.use("/friends", friendsRoutes);
-app.use("/profile", profileRoutes);
+app.use("/friends", friendsRouter);
+app.use("/profile", profileRouter);
+
+// Cron job for weekly interval resetting tasks
+cron.schedule("0 0 * * MON", async () => {
+  try {
+    await Task.bulkWrite([
+      {
+        updateMany: {
+          filter: { taskType: "progress" },
+          update: {
+            $set: {
+              taskProgress: { type: 0, nullable: true },
+              taskCompleted: false,
+            },
+          },
+        },
+      },
+      {
+        updateMany: {
+          filter: { taskType: "checkbox" },
+          update: {
+            $set: {
+              taskProgress: { type: null, nullable: true },
+              taskCompleted: false,
+            },
+          },
+        },
+      },
+    ]);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 //Server Running
 
