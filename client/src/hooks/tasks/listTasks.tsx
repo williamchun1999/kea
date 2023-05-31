@@ -1,35 +1,33 @@
-import  {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export const useListTasks = <T,>(
-  url: string,
-  mapFunction: (rawData: any) => (T | null)[]) => 
-  
-  {
-  const [taskData, setData] = useState<(T | null)[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  
-  useEffect(() => {
-    setLoading(true)
+    url: string,
+) => {
+    const [taskList, setTaskList] = useState<(T | null)[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
-    axios
-        .get(url)
+    useEffect(() => {
+        setLoading(true)
 
-        .then((res) => {
-            setData(mapFunction(res.data))
-        })
+        axios
+            .get(url)
 
-        .catch((err : any) => {
-            setError(err)
-        })
+            .then((res) => {
+                setTaskList(res.data)
+            })
 
-        .finally(() => {
-            setLoading(false)
-        })
+            .catch((err: any) => {
+                setError(err)
+            })
 
-  }, [])
+            .finally(() => {
+                setLoading(false)
+            })
 
-  
-  return { taskData, loading, error };
+    }, [])
+
+
+    return { taskList, loading, error };
 };

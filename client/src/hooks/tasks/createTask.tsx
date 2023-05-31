@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios, {AxiosHeaders} from 'axios';
 import { useState, useCallback } from 'react';
 
 export const useCreateTask = <T,>(
   url: string,
-  headers?: HeadersInit
+  headers?: AxiosHeaders
 ): {
   post: (data: T) => Promise<void>,
   loading: boolean,
@@ -21,7 +21,7 @@ export const useCreateTask = <T,>(
 
       axios
       
-      .post(url, data)
+      .post(url, data, {headers,})
 
       .then((res: any) => setResponseData(res.data))
 

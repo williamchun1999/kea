@@ -7,8 +7,9 @@ import { IUser } from "../models/User";
 export const taskController = {
   getTasks: async (req: Request, res: Response) => {
     const currentUser = req.user as IUser;
+    const { userId } = req.params;
     try {
-      const tasks = await Task.find({ userId: currentUser._id }).exec();
+      const tasks = await Task.find({ userId: userId ? userId : currentUser._id }).exec();
 
       res.status(200).json(tasks);
     } catch (error) {
