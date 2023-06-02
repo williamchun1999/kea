@@ -144,7 +144,7 @@ export const Button = (design: ButtonProp) => {
   return (
     <>
       <button
-        className={`btn btn-wide self-center tracking-widest font-bold ${design.color} text-base mb-3 rounded-full`}
+        className={`btn btn-wide self-center tracking-widest font-bold ${design.color}  text-base mb-3 rounded-full`}
       >
         {design.name}
       </button>
