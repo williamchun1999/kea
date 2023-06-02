@@ -25,7 +25,7 @@ export const authController =  {
         if (req.user) {
             return res.redirect("/home");
           }
-        res.send("success")
+        res.status(200).send("success")
     },
     postLogin: async (req:Request,res:Response, next:NextFunction) => {
 
@@ -50,14 +50,14 @@ export const authController =  {
             }
             if (!user) {
               req.flash("errors", info);
-              return res.send({ message: "User does not exist" })
+              return res.status(400).send({ message: "User does not exist" })
             }
             req.logIn(user, (err) => {
               if (err) {
                 return next(err);
               }
               req.flash("success", { msg: "Success! You are logged in." });
-              return res.send({ message: "Success return to home" })
+              return res.status(200).send({ message: "Success return to home" })
             });
         }) (req,res,next)
         } catch (err){
@@ -70,7 +70,7 @@ export const authController =  {
               console.log("Error : Failed to destroy the session during logout.", err);
             req.user = null;
             console.log("logged out")
-            res.send({ message: "Success" })
+            res.status(200).send({ message: "Success" })
             res.redirect("/");
           });
     },
@@ -78,28 +78,29 @@ export const authController =  {
         if (req.user) {
             return res.redirect("/home")
           }
-        res.send({ message: "Success" })
+        res.status(200).send({ message: "Success" })
     },
     postSignup: async (req: Request, res: Response, next: NextFunction) => {
         try {
+         
           const validationErrors = [];
           
           if (!validator.isEmail(req.body.email))
             validationErrors.push({ msg: "Please enter a valid email address." });
           if (!validator.isLength(req.body.password, { min: 8 }))
             validationErrors.push({ msg: "Password must be at least 8 characters long" });
-          if (req.body.password !== req.body.confirmPassword)
+          if (req.body.password !== req.body.passwordC)
             validationErrors.push({ msg: "Passwords do not match" });
       
           if (validationErrors.length) {
             req.flash("errors", validationErrors);
             return res.send({ message: "Validation error"});
           }
-      
+          
           req.body.email = validator.normalizeEmail(req.body.email, {
             gmail_remove_dots: false,
           });
-      
+          
           const user = new User({
             fName: req.body.fName,
             lName: req.body.lName,
@@ -118,7 +119,7 @@ export const authController =  {
             req.flash("errors", {
               msg: "Account with that email address or username already exists.",
             });
-            return res.send({ message: "Account with that email address or username already exists." });
+            return res.status(200).send({ message: "Account with that email address or username already exists." });
           }
       
           await user.save();
@@ -131,8 +132,7 @@ export const authController =  {
               }
             });
           });
-      
-          res.send({ message: "Success return to home" })
+          res.status(200).send({ message: "Success return to home" })
         } catch (err) {
           next(err);
         }
