@@ -42,10 +42,8 @@ export const useCreateUser = <T,>(
 
       .finally(() => setLoading(false))
     },
-    []
+    [url]
   );
-
+  
   return { createUserResponse, loading, error, post };
 };
-
-

@@ -21,7 +21,7 @@ export const Add = () => {
     updateSelectedValue(() => event?.target.value);
   }
 
-  console.log(selectedValue);
+  //console.log(selectedValue);
 
   function createTask() {
     //popup that deals with adding elements should go here

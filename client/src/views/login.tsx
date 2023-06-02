@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEventHandler , useState  } from 'react';
+import { ChangeEventHandler, FormEventHandler , useEffect, useState  } from 'react';
 import {Link, useNavigate} from "react-router-dom"
 import { useCreateUser } from '../hooks/user/createUser';
 import { TextBox } from "../components/Form";
@@ -15,9 +15,10 @@ export const Login=()=> {
 
     
     //hooks for the createUser 
-    const url = "http://localhost:3000/login"
-    const { error, post} = useCreateUser<Login>(url)
-    
+    const url = "http://localhost:4000/login"
+    const { createUserResponse ,error, post } = useCreateUser<Login>(url)
+
+
     //navigating 
     const navigate = useNavigate()
 
@@ -57,17 +58,19 @@ export const Login=()=> {
     }
 
     //on pressing the signup button, the info is gathered and sent to db 
-     const handleSubmit: FormEventHandler<HTMLFormElement> = async(event) => {
+     const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault()
        
 
         //usecallback call 
-        await post(formData) 
+        post(formData) 
+
+        console.log('C: ', createUserResponse)
                 
         //if ()
         if (error){
             navigate("/")
-            console.log("ERROR")
+            console.log("ERROR: ", error)
             return
         } else{
             navigate("/home")
