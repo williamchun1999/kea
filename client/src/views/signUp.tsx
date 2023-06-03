@@ -17,8 +17,8 @@ import { Button } from "../components/button/button";
 
 export const SignUp=()=> {
     //hooks for the createUser 
-    const url = "http://localhost:3000/signup"
-    const { error, post} = useCreateUser<User>(url)
+    const url = "http://localhost:4000/signup"
+    const { error, post } = useCreateUser<User>(url)
 
     //navigating 
     const navigate = useNavigate()
@@ -50,15 +50,15 @@ export const SignUp=()=> {
 
         
         //usecallback call 
-         post(formData) 
+       post(formData) 
         
         
         //if ()
-            if (error){
-                //error page 
-                console.log("ERROR")
-            }
-            navigate("/")
+        if (error){
+            //error page 
+            console.log("ERROR")
+        }
+        navigate("/")
         
 
         console.log(formData)

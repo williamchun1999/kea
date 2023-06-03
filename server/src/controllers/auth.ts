@@ -48,27 +48,27 @@ export const authController =  {
           gmail_remove_dots: false,
         });
 
-        try{
-            passport.authenticate("local", (err:Error, user: typeof User, info) => {
+      try{
+          passport.authenticate("local", (err:Error, user: typeof User, info) => {
+          if (err) {
+            return next(err);
+          }
+          if (!user) {
+            req.flash("errors", info);
+            return res.status(400).send({ message: "User does not exist" })
+          }
+          req.logIn(user, (err) => {
             if (err) {
               return next(err);
             }
-            if (!user) {
-              req.flash("errors", info);
-              return res.status(400).send({ message: "User does not exist" })
-            }
-            req.logIn(user, (err) => {
-              if (err) {
-                return next(err);
-              }
-              req.flash("success", { msg: "Success! You are logged in." });
-              return res.status(200).send({ message: "Success return to home" })
-            });
-        }) (req,res,next)
-        } catch (err){
-            next(err)
-        }
-    },
+            req.flash("success", { msg: "Success! You are logged in." });
+            return res.status(200).send({ message: "Success return to home" })
+          });
+      }) (req,res,next)
+      } catch (err){
+          next(err)
+      }
+  },
     logout: (req:Request, res:Response) => {
         req.session.destroy((err) => {
             if (err)
