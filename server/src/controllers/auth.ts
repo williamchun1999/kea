@@ -23,13 +23,18 @@ declare global{
 export const authController =  {
     getLogin: (req:Request,res:Response) => {
         if (req.user) {
-            return res.redirect("/home");
+            // return res.redirect("/home");
+            res.status(200).send({message: "user already logged in , redirect to home"})
           }
-        res.status(200).send("success")
+        res.status(200).send({message: "success"})
     },
     postLogin: async (req:Request,res:Response, next:NextFunction) => {
+      console.log("req.body", req.body)
 
         const validationErrors = [];
+        if (!req.body.email || !req.body.password){
+          validationErrors.push({ msg: "Email and/or password cannot be blank" });
+        }
         if (!validator.isEmail(req.body.email))
           validationErrors.push({ msg: "Please enter a valid email address." });
         if (validator.isEmpty(req.body.password))
@@ -37,7 +42,7 @@ export const authController =  {
       
         if (validationErrors.length) {
           req.flash("errors in validating", validationErrors);
-          return res.send({ message: "Validation error" })
+          return res.send({ message: validationErrors})
         }
         req.body.email = validator.normalizeEmail(req.body.email, {
           gmail_remove_dots: false,
@@ -71,12 +76,13 @@ export const authController =  {
             req.user = null;
             console.log("logged out")
             res.status(200).send({ message: "Success" })
-            res.redirect("/");
+            // res.redirect("/");
           });
     },
     getSignup: (req:Request, res:Response) => {
         if (req.user) {
-            return res.redirect("/home")
+            // return res.redirect("/home")
+            res.status(200).send({message: "user already logged in , redirect to home"})
           }
         res.status(200).send({ message: "Success" })
     },
@@ -94,7 +100,7 @@ export const authController =  {
       
           if (validationErrors.length) {
             req.flash("errors", validationErrors);
-            return res.send({ message: "Validation error"});
+            return res.send({ message: validationErrors});
           }
           
           req.body.email = validator.normalizeEmail(req.body.email, {

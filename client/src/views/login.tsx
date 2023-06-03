@@ -5,21 +5,24 @@ import { TextBox } from "../components/Form";
 import { Button } from "../components/button/button";
 
 
-export interface Login {
-    email: string
-    password: string
+export interface BodyData {
+    email: string | null
+    password: string | null
+}
+export interface ResponseData {
+    message: string
 }
 
 
 export const Login=()=> {
 
     
-    //hooks for the createUser 
-    const url = "http://localhost:3000/login"
-    const { error, post} = useCreateUser<Login>(url)
+    // //hooks for the createUser 
+    // const url = "http://localhost:3000/login"
+    // const { error, post, createUserResponse} = useCreateUser<BodyData,ResponseData>(url)
     
-    //navigating 
-    const navigate = useNavigate()
+    // //navigating 
+    // const navigate = useNavigate()
 
 
     /*function mapUserListData(rawData: any): IUser {
@@ -36,7 +39,6 @@ export const Login=()=> {
           }
         })
       }*/
-
 
 
     const [formData, setFormData] = useState({
@@ -62,16 +64,18 @@ export const Login=()=> {
        
 
         //usecallback call 
-        await post(formData) 
+        // await post(formData) 
                 
         //if ()
-        if (error){
-            navigate("/")
-            console.log("ERROR")
-            return
-        } else{
-            navigate("/home")
-        }
+        // if (error){
+        //     console.log("ERROR")
+        //     console.log("error",error)
+        //     // navigate("/settings")
+        
+        // } else{
+        //     console.log("createuserresponse",createUserResponse)
+        //     // navigate("/home")
+        // }
 
 
         console.log(formData)

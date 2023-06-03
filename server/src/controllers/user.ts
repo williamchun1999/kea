@@ -46,7 +46,7 @@ export const userController = {
       //find user and update the friends array only if it doesn't already exist 
       const user = await User.findOneAndUpdate(
         { _id: currentUser._id},
-        { $addToSet: { friends: friendsId } },
+        { $addToSet: { friends: friend._id } },
         { new: true }
       );
 
