@@ -12,15 +12,10 @@ export interface IUser extends Document {
   email:string
   password: string
   friends: string[]
-
-  comparePassword(candidatePassword: string): Promise<Boolean>
 }
 
 const UserSchema = new mongoose.Schema({
-  // _id : {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   auto:true,
-  // },
+
   fName: {
     type: String,  
   },
@@ -68,8 +63,8 @@ UserSchema.pre("save", function save(next) {
 
 // Helper method for validating user's password.
 
-UserSchema.methods.comparePassword = function comparePassword(candidatePassword){
-  return bcrypt.compare(candidatePassword, this.password)
+export const comparePassword = (candidatePassword, userPassword) => {
+  return bcrypt.compare(candidatePassword, userPassword)
 }
 
 export const User = mongoose.model<IUser>("User", UserSchema);

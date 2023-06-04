@@ -3,59 +3,63 @@ import { Request, Response, NextFunction } from "express";
 import { User, IUser } from "../models/User";
 
 export const userController = {
-
-  getUser: async (req:Request, res: Response) => {
+  getUser: async (req: Request, res: Response) => {
     const currentUser = req.user as IUser;
     try {
-        const user = await User.findById(currentUser._id)
-        console.log("User info fetched");
-        res.send({user})
+      const { _id, fName, lName, friends, userName, email } =
+        await User.findById(currentUser._id);
+      console.log("User info fetched");
+      res.send({
+        id: _id,
+        fName,
+        lName,
+        friends,
+        userName,
+        email,
+      });
+    } catch (err) {
+      console.log(err);
+      res.send({ message: err.message });
     }
-    catch(err){
-    console.log(err)
-    res.send({ message: err.message });
-    }
-},
+  },
   deleteUser: async (req: Request, res: Response) => {
     const currentUser = req.user as IUser;
     try {
       await User.deleteOne({ _id: currentUser._id });
       console.log("Deleted User");
-      res.send({ message: 'Success' })
+      res.send({ message: "Success" });
     } catch (err) {
-    console.log(err)
+      console.log(err);
       res.send({ message: err.message });
     }
   },
   addFriend: async (req: Request, res: Response) => {
     //get currentUser's ID
-    const currentUser = req.user as IUser
-    
+    const currentUser = req.user as IUser;
+
     //get the userName of a friend that user put
-    const  friendsId= req.params.friend;
+    const friendsId = req.params.friend;
 
     try {
+      //check if the userName exists
+      const friend = await User.findOne({ userName: friendsId });
 
-       //check if the userName exists 
-      const friend = await User.findOne({userName: friendsId})
-
-      if (!friend){
+      if (!friend) {
         return res.send({ message: "Username does not exist" });
       }
 
-      //find user and update the friends array only if it doesn't already exist 
+      //find user and update the friends array only if it doesn't already exist
       const user = await User.findOneAndUpdate(
-        { _id: currentUser._id},
+        { _id: currentUser._id },
         { $addToSet: { friends: friend._id } },
         { new: true }
       );
 
       console.log("Followed Friend");
-      
-      res.send(user.friends);
 
+      res.send(user.friends);
     } catch (err) {
-    console.log(err)
+      console.log(err);
       res.send({ message: err.message });
     }
   },
@@ -64,7 +68,7 @@ export const userController = {
     const { fName, lName, userName, email, password, friends } = req.body;
 
     //get currentUser's ID
-    const currentUser = req.user as IUser
+    const currentUser = req.user as IUser;
     try {
       const user = await User.findOneAndUpdate(
         { _id: currentUser._id },
@@ -86,9 +90,9 @@ export const userController = {
       }
 
       console.log("Updated User Information");
-      res.send(user)
+      res.send(user);
     } catch (err) {
-    console.log(err)
+      console.log(err);
       res.send({ message: err.message });
     }
   },
