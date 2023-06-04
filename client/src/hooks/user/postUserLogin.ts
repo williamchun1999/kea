@@ -1,21 +1,23 @@
 import { AxiosRequestConfig, isAxiosError } from "axios";
 import { axiosInstance  } from "../../axios";
-
-type GetUserResponse = {
-  id:string
-  fName: string
-  lName: string
-  userName: string
-  email:string
-  friends: string[]
+export interface BodyData {
+  email: string | null
+  password: string | null
 }
 
-export const useFetchUser = async (
+type PostUserLoginResponse = {
+  message: string;
+}
+
+
+export const usePostUserLogin = async (
   url: string,
+  body: BodyData,
   axiosConfigOptions?: AxiosRequestConfig
-):Promise<GetUserResponse | string> => {
+):Promise<PostUserLoginResponse | string> => {
     try {
-      const response = await axiosInstance.get(url, axiosConfigOptions)
+      const response = await axiosInstance.post(url, body, axiosConfigOptions)
+      console.log(response.data)
       console.log('response status is: ', response.status);
       return response.data;
     }
