@@ -1,9 +1,4 @@
-import {
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse,
-  isAxiosError,
-} from "axios";
+import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
 import { axiosInstance } from "../../axios";
 export interface BodyData {
   email: string | null;
@@ -22,7 +17,7 @@ export const usePostUserLogin = async (
     return response;
   } catch (err) {
     if (isAxiosError(err)) {
-      console.log("error message: ", err.message);
+      console.log("Axios error: ", err);
       return null;
     } else {
       console.log("unexpected error: ", err);
