@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { FriendTaskOverview } from "../components/friend_task_overview";
-import { Add } from "../components/button/button";
+import { Add, LogOutButton } from "../components/button/button";
 import { Card } from "../components/card/Card";
 import {
   friendsTaskResponse,
@@ -45,6 +45,7 @@ export const Home = () => {
   //console.log(habits)*/
   return (
     <>
+      <LogOutButton />
       <div className="card">
         <Card
           userName={currentUserDataResponse.userName}
@@ -59,7 +60,9 @@ export const Home = () => {
         </div>
         <UserTaskOverview tasks={userTasks} onUpdate={handleUpdate} />
         <FriendTaskOverview friendsTasks={friendsTaskResponse.slice(0, 3)} />
+
       </div>
+
     </>
   );
 };
