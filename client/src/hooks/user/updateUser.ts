@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useState, useCallback } from "react";
 
-export const useUpdateTask = <T,>(
+
+import {User} from "./createUser"
+
+export const useUpdateTask = <T extends User,>(
     url: string,
     headers?: HeadersInit
   ): {

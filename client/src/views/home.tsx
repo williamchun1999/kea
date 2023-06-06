@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import { FriendTaskOverview } from "../components/friend_task_overview";
-import { Button, Add } from "../components/button/button";
-import { Card } from "../components/Card/Card";
+import { Add, LogOutButton } from "../components/button/button";
+import { Card } from "../components/card/Card";
 import {
   friendsTaskResponse,
   currentUserDataResponse,
@@ -11,6 +11,8 @@ import { UserTaskOverview } from "../components/user_task_overview";
 import { Task } from "../common/types";
 import { SeeAll } from "../components/SeeAll";
 
+import { useFetchUser } from "../hooks/user/fetchUser";
+import { useAsync } from "react-async-hook";
 export const Home = () => {
   // Page should only update when interacting with user's tasks (CRUD)
   /**
@@ -20,6 +22,19 @@ export const Home = () => {
    *
    *
    */
+
+  const { error, result } = useAsync(async () => {
+    return useFetchUser("http://localhost:3000/home")
+  }, [])
+  if (error) {
+    console.log(error);
+  }
+  if (result) {
+    if (typeof result !== "string") {
+      console.log('id: ', result.id, 'name', result.fName, result.email)
+    }
+  }
+
   const [userTasks, setUserTasks] = useState<Array<Task>>(
     currentUserDataResponse.tasks
   );
@@ -30,6 +45,7 @@ export const Home = () => {
   //console.log(habits)*/
   return (
     <>
+      <LogOutButton />
       <div className="card">
         <Card
           userName={currentUserDataResponse.userName}
@@ -39,12 +55,14 @@ export const Home = () => {
         <div className="tasks w-full p-4">
           <div className="flex justify-between">
             <h2 className="text-3xl">Weekly tasks</h2>
-            <SeeAll userId={ currentUserDataResponse.uuid }/>
+            <SeeAll userId={currentUserDataResponse.uuid} />
           </div>
         </div>
         <UserTaskOverview tasks={userTasks} onUpdate={handleUpdate} />
         <FriendTaskOverview friendsTasks={friendsTaskResponse.slice(0, 3)} />
+
       </div>
+
     </>
   );
 };
