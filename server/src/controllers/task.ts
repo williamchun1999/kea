@@ -31,7 +31,6 @@ export const taskController = {
       taskProgress,
       taskProgressTotal,
       taskCompleted: false,
-      lastUpdated: new Date(),
     });
 
     try {
@@ -46,7 +45,6 @@ export const taskController = {
   updateTask: async (req: Request, res: Response) => {
     const {
       taskName,
-      taskType,
       taskProgress,
       taskProgressTotal,
       taskCompleted,
@@ -58,11 +56,9 @@ export const taskController = {
 
     const updatedTask = {
       taskName,
-      taskType,
       taskProgress,
       taskProgressTotal,
       taskCompleted,
-      lastUpdated: new Date(),
     };
 
     await Task.findByIdAndUpdate({ taskId }, updatedTask, { new: true });
@@ -80,38 +76,4 @@ export const taskController = {
 
     res.json({ message: "Post deleted successfully." });
   },
-
-  // resetTasks: async (req:Request, res:Response) => {
-  //   const { userId } = req.params;
-
-  //   if (!mongoose.Types.ObjectId.isValid(userId))
-  //     return res.status(404).send(`No task with user id: ${userId}`);
-
-  //   const updatedTasksResult = await Task.bulkWrite([
-  //     {
-  //       updateMany: {
-  //         filter: { taskType: "progress" },
-  //         update: {
-  //           $set: {
-  //             taskProgress: { type: 0, nullable: true },
-  //             taskCompleted: false,
-  //           },
-  //         },
-  //       },
-  //     },
-  //     {
-  //       updateMany: {
-  //         filter: { taskType: "checkbox" },
-  //         update: {
-  //           $set: {
-  //             taskProgress: { type: null, nullable: true },
-  //             taskCompleted: false,
-  //           },
-  //         },
-  //       },
-  //     },
-  //   ]);
-
-  //   return res.json(updatedTasksResult);
-  // },
 };
