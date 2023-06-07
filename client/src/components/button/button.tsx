@@ -282,16 +282,25 @@ export const AddFriends = () => {
 };
 
 export const LogOutButton = () => {
+  const handleLogOut = async () => {
+    try {
+      const result = await useUserLogout("http://localhost:3000/home/logout");
+      console.log('C: ', result)
+    }
+    catch (error) {
+      console.log("ERROR: ", error)
+    }
+  } 
   return (
     <>
       <Link to="/">
-        <button className="btn btn-ghost w-screen border-2 border-primary">
+        <button onClick={handleLogOut} className="btn btn-ghost border-2 border-primary">
           Log Out
         </button>
       </Link>
     </>
-  );
-};
+  )
+}
 
 export const EditUserButton = () => {
   return (

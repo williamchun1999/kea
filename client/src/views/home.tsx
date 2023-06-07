@@ -17,16 +17,15 @@ import { SeeAll } from "../components/SeeAll";
 import { useFetchUser } from "../hooks/user/fetchUser";
 import { useAsync } from "react-async-hook";
 export const Home = () => {
-  
   const { error, result } = useAsync(async () => {
-    return useFetchUser("http://localhost:3000/home")
-  }, [])
+    return useFetchUser("http://localhost:3000/home");
+  }, []);
   if (error) {
     console.log(error);
   }
   if (result) {
     if (typeof result !== "string") {
-      console.log('id: ', result.id, 'name', result.fName, result.email)
+      console.log("id: ", result.id, "name", result.fName, result.email);
     }
   }
 
@@ -66,21 +65,27 @@ export const Home = () => {
 
   return (
     <div className="relative sm:mx-16 lg:mx-24">
-            <LogOutButton />
-      <h4 className="font-medium pl-3">
-        {new Intl.DateTimeFormat("en-GB", {
-          weekday: "short",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }).format(new Date())}
-      </h4>
-      <h1 className="text-3xl font-semibold pl-3">
-        Welcome,{" "}
-        <span className="text-primary font-bold">
-          {currentUserDataResponse.userName}!
-        </span>
-      </h1>
+      <div className="flex justify-between">
+        <div>
+          <h4 className="font-medium pl-3">
+            {new Intl.DateTimeFormat("en-GB", {
+              weekday: "short",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }).format(new Date())}
+          </h4>
+          <h1 className="text-3xl font-semibold pl-3">
+            Welcome,{" "}
+            <span className="text-primary font-bold">
+              {currentUserDataResponse.userName}!
+            </span>
+          </h1>
+        </div>
+
+        <LogOutButton />
+      </div>
+
       <Card
         userName={currentUserDataResponse.userName}
         tasks={currentUserDataResponse.tasks}
