@@ -1,10 +1,8 @@
-import express from 'express';
+import express from "express";
 
-import { taskController } from '../controllers/task';
+import { taskController } from "../controllers/task";
 
-const router = express.Router();
+export const friendsRouter = express.Router();
 
-router.get('/tasks', taskController.getTasks);
+friendsRouter.get("/tasks", taskController.getTasks);
 // list users
-
-export default router;

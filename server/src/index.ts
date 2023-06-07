@@ -9,17 +9,21 @@ import {
   AuthenticatorDoneFunction,
 } from "passport-local";
 import dotenv from "dotenv";
-import logger from "morgan";
+import cron from "node-cron";
 
 import { connectDB } from "./config/database";
-import userRoutes from "./routes/user";
-import authRoutes from "./routes/auth";
+import { settingRouter } from "./routes/setting";
+import { authRouter } from "./routes/auth";
 import { homeRouter } from "./routes/home";
-import friendsRoutes from "./routes/friends";
-import profileRoutes from "./routes/profile";
+import { friendsRouter } from "./routes/friends";
+import { profileRouter } from "./routes/profile";
+import { Task } from "./models/task";
+import logger from "morgan";
 import { User, IUser, comparePassword } from "./models/User";
 
 const app = express();
+
+// Path for .env file
 dotenv.config({ path: "src/config/.env" });
 
 app.use(express.json());
@@ -101,11 +105,43 @@ app.use((req, res, next) => {
 app.use(flash());
 
 //determining which route to use
-app.use("/settings", userRoutes);
-app.use("/", authRoutes);
+app.use("/settings", settingRouter);
+app.use("/", authRouter);
 app.use("/home", homeRouter);
-app.use("/friends", friendsRoutes);
-app.use("/profile", profileRoutes);
+app.use("/friends", friendsRouter);
+app.use("/profile", profileRouter);
+
+// Cron job for weekly interval resetting tasks
+cron.schedule("0 0 * * MON", async () => {
+  try {
+    await Task.bulkWrite([
+      {
+        updateMany: {
+          filter: { taskType: "progress" },
+          update: {
+            $set: {
+              taskProgress: { type: 0, nullable: true },
+              taskCompleted: false,
+            },
+          },
+        },
+      },
+      {
+        updateMany: {
+          filter: { taskType: "checkbox" },
+          update: {
+            $set: {
+              taskProgress: { type: null, nullable: true },
+              taskCompleted: false,
+            },
+          },
+        },
+      },
+    ]);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 //Server Running
 

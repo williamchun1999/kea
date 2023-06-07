@@ -1,13 +1,11 @@
-import express from 'express';
+import express from "express";
 
-import { taskController } from '../controllers/task';
+import { taskController } from "../controllers/task";
 
-const router = express.Router();
+export const profileRouter = express.Router();
 
-router.get('/tasks/:userId', taskController.getTasks);
-router.post('/tasks/:userId', taskController.createTask);
-router.patch('/tasks/:taskId', taskController.updateTask);
-router.delete('/tasks/:taskId', taskController.deleteTask);
+profileRouter.get("/tasks", taskController.getTasks);
+profileRouter.post("/tasks", taskController.createTask);
+profileRouter.patch("/tasks/:taskId", taskController.updateTask);
+profileRouter.delete("/tasks/:taskId", taskController.deleteTask);
 // Get user
-
-export default router;
