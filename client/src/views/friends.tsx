@@ -1,5 +1,5 @@
-import { FriendMenu } from '../components/friend_menu';
-import { friendsTaskResponse } from '../common/fake_data';
+import { FriendMenu } from '../components/FriendMenu';
+import { friendsTaskResponse } from '../common/fakeData';
 import { User } from '../common/types';
 import { useState } from 'react';
 

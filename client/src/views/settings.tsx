@@ -1,7 +1,7 @@
 
 
 import { DeleteButton, AddFriends, LogOutButton, EditUserButton  } from "../components/button/button";
-import { currentUserDataResponse } from '../common/fake_data';
+import { currentUserDataResponse } from '../common/fakeData';
 
 
 

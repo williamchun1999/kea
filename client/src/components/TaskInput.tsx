@@ -1,28 +1,52 @@
 import { useState } from "react";
 import { Task, TaskType } from "../common/types";
+import { UpdateTaskBody } from "../common/responseTypes";
 
 interface TaskInputProps {
   task: Task;
+  onUpdate: (newState: Task[]) => void; // Actual function will have no parameters
 }
 
 const TaskInput = ({ task }: TaskInputProps) => {
   const [currentName, setName] = useState(task.taskName);
-//   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [taskProgress, setTaskProgress] = useState(task.taskProgress);
+  const [taskProgressTotal, setTaskProgressTotal] = useState(
+    task.taskProgressTotal
+  );
 
   //logic needed for updating data when user edits some value
-  function handleUpdate() {
-    console.log(currentName);
+  function updateTask() {
+    /* check if task progress === task progress total,
+    if it is, include true to task completed property in the body, else make it false */
+    let taskCompleted = false;
+    if (taskProgress === taskProgressTotal) {
+      taskCompleted = true;
+    }
+    const updateTaskBody: UpdateTaskBody = {
+      taskCompleted,
+      taskName: currentName,
+      taskProgress,
+      taskProgressTotal,
+    };
+
+    /* update task api call */
+    /* callback of fetch tasks */
   }
 
   //close the modals
-  function handleConfirmDelete() {
-   console.log('test');
+  function deleteTask() {
+    /* delete task api call */
+    /* callback of fetch tasks */
   }
 
   return (
     <>
       {/* modal setup */}
-      <input type="checkbox" id="edit-task-modal" className="modal-toggle" />
+      <input
+        type="checkbox"
+        id={`${task.id}-edit-modal`}
+        className="modal-toggle"
+      />
 
       <div className="modal bg-transparent">
         {/* modal for editing tasks */}
@@ -32,7 +56,7 @@ const TaskInput = ({ task }: TaskInputProps) => {
             <h3 className="text-font-bold text-lg">Edit Task</h3>
             <label
               className="btn btn-circle bg-transparent border-0"
-              htmlFor="edit-task-modal"
+              htmlFor={`${task.id}-edit-modal`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,14 +76,14 @@ const TaskInput = ({ task }: TaskInputProps) => {
           </div>
 
           {/* inputs */}
-          <div className="editTask flex-1 flex-col">
+          <div className="editTask flex flex-col">
             <label htmlFor="taskName" className="block w-full">
               Task Name:
             </label>
             <input
               type="text"
               id="taskName"
-              placeholder="Type here"
+              placeholder={`${task.taskName}`}
               className="input input-bordered w-full"
               onChange={(e) => setName(e.target.value)}
             />
@@ -70,74 +94,49 @@ const TaskInput = ({ task }: TaskInputProps) => {
                   Progress:
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="taskProgress"
-                  placeholder="Type here"
+                  placeholder={`Current Progress: ${task.taskProgress}`}
+                  min="0"
+                  max={`${task.taskProgressTotal}`}
                   className="input input-bordered w-full"
+                  onChange={(e) => setTaskProgress(Number(e.target.value))}
+                />
+                <label htmlFor="taskProgressTotal" className="block w-full">
+                  Out of:
+                </label>
+                <input
+                  type="number"
+                  id="taskProgressTotal"
+                  placeholder={`Total: ${task.taskProgressTotal}`}
+                  min="1"
+                  max={`${task.taskProgressTotal}`}
+                  className="input input-bordered w-full"
+                  onChange={(e) => setTaskProgressTotal(Number(e.target.value))}
                 />
               </>
             ) : null}
           </div>
 
-          {/* "period" select menu */}
-          {/* <div className="selectMenu flex flex-1 justify-between">
-            <label htmlFor="period" className=" flex flex-1 items-center">
-              Period
-            </label>
-            <select className="select select-bordered w-9/12" id="period">
-              <option disabled selected>
-                1 Week
-              </option>
-              <option>3 days</option>
-              <option>5 days</option>
-            </select>
-          </div> */}
-
           {/* update & delete buttons */}
           <div className="modal-action flex-col space-x-0">
             <label
-              htmlFor="edit-task-modal"
+              htmlFor={`${task.id}-edit-modal`}
               className="btn btn-block"
-              onClick={handleUpdate}
+              onClick={() => updateTask()}
             >
               Update
             </label>
             <label
-              htmlFor="edit-task-modal"
+              htmlFor={`${task.id}-edit-modal`}
               className="btn btn-block"
-              onClick={handleUpdate}
+              onClick={() => deleteTask()}
             >
               Delete
             </label>
           </div>
         </div>
       </div>
-
-      {/* Confirm Delete modal */}
-      {/* {showDeleteConfirmation && (
-        <>
-          <input
-            type="checkbox"
-            id="deleteConfirmation"
-            className="modal-toggle"
-          />
-          <div className="modal">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg">{`Are you sure you want to delete?`}</h3>
-
-              <div className="modal-action w-full">
-                <label
-                  htmlFor="edit-task-modal"
-                  className="btn w-full"
-                  onClick={handleConfirmDelete}
-                >
-                  Delete
-                </label>
-              </div>
-            </div>
-          </div>
-        </>
-      )} */}
     </>
   );
 };

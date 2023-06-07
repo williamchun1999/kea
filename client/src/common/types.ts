@@ -5,11 +5,14 @@ export enum TaskType {
 }
 
 export type Task = {
+  userId: string;
   taskName: string;
   taskType: TaskType;
   taskCompleted: boolean;
   taskProgress: number | null;
   taskProgressTotal: number | null;
+  id: string;
+  
 
 };
 export type User = {

@@ -39,8 +39,6 @@ export const Card = (props:CardProps) => {
  
   return (
     <>
-      <h4 className="font-medium pl-3">{new Intl.DateTimeFormat("en-GB", {weekday: 'short', year:"numeric",month:"long",day:"numeric"}).format(new Date())}</h4>
-      <h2 className="text-2xl font-semibold pl-3">Welcome, <span className="text-primary font-bold">{props.userName}!</span></h2>
       <div
         className="card w-full bg-primary text-primary-content ">
         <div className="flex justify-evenly items-center h-48">

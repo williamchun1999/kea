@@ -1,10 +1,10 @@
 import { CSSProperties, useState } from "react";
 // import { useLoaderData, useParams } from "react-router-dom";
 
-import { UserTaskOverview } from '../components/user_task_overview';
+import { UserTaskOverview } from '../components/UserTaskOverview';
 import { Task } from '../common/types';
-import { currentUserDataResponse } from "../common/fake_data";
-import { tasksCompletedPercentage } from "../common/weekly_tasks_calculation";
+import { currentUserDataResponse } from "../common/fakeData";
+import { tasksCompletedPercentage } from "../common/weeklyTasksCalculation";
 
 // type ProfileProps = {
 
