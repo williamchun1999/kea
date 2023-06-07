@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { FriendTaskOverview } from "../components/FriendTaskOverview";
-import { Add } from "../components/button/button";
+import { Add, LogOutButton } from "../components/button/button";
 import { Card } from "../components/Card/Card";
 import {
   friendsTaskResponse,
@@ -14,7 +14,22 @@ import { SeeAll } from "../components/SeeAll";
 //   useListTasks,
 // } from "../hooks/tasks";
 
+import { useFetchUser } from "../hooks/user/fetchUser";
+import { useAsync } from "react-async-hook";
 export const Home = () => {
+  
+  const { error, result } = useAsync(async () => {
+    return useFetchUser("http://localhost:3000/home")
+  }, [])
+  if (error) {
+    console.log(error);
+  }
+  if (result) {
+    if (typeof result !== "string") {
+      console.log('id: ', result.id, 'name', result.fName, result.email)
+    }
+  }
+
   const [userTasks, setUserTasks] = useState<Array<Task>>(
     currentUserDataResponse.tasks
   );
@@ -51,6 +66,7 @@ export const Home = () => {
 
   return (
     <div className="relative sm:mx-16 lg:mx-24">
+            <LogOutButton />
       <h4 className="font-medium pl-3">
         {new Intl.DateTimeFormat("en-GB", {
           weekday: "short",
