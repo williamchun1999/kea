@@ -11,7 +11,7 @@ export const homeRouter = express.Router();
 
 //get tasks
 
-homeRouter.get('/tasks/:userId', taskController.getTasks);
+homeRouter.get('/tasks/:userId?', taskController.getTasks);
 homeRouter.post('/tasks/:userId', taskController.createTask);
 homeRouter.patch('/tasks/:taskId', taskController.updateTask);
 homeRouter.delete('/tasks/:taskId', taskController.deleteTask);
