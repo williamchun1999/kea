@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, isAxiosError } from "axios";
+import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
 import { axiosInstance  } from "../../axios";
 
 type GetUserResponse = {
@@ -13,20 +13,19 @@ type GetUserResponse = {
 export const useFetchUser = async (
   url: string,
   axiosConfigOptions?: AxiosRequestConfig
-):Promise<GetUserResponse | string> => {
+):Promise<AxiosResponse<GetUserResponse> | null> => {
     try {
       const response = await axiosInstance.get(url, axiosConfigOptions)
       console.log('response status is: ', response.status);
-      return response.data;
+      return response;
     }
     catch (err) {
       if (isAxiosError(err)) {
-        console.log('error message: ', err.message);
-        return err.message;
-      }
-      else {
-        console.log('unexpected error: ', err);
-        return 'An unexpected error occured';
+        console.log("Axios error: ", err);
+        return null;
+      } else {
+        console.log("unexpected error: ", err);
+        return null;
       }
     }
   }

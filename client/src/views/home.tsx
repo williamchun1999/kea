@@ -16,49 +16,42 @@ import { SeeAll } from "../components/SeeAll";
 
 import { useFetchUser } from "../hooks/user/fetchUser";
 import { useAsync } from "react-async-hook";
+import { useListTasks } from "../hooks/tasks";
 export const Home = () => {
-  const { error, result } = useAsync(async () => {
-    return useFetchUser("http://localhost:3000/home");
-  }, []);
-  if (error) {
-    console.log(error);
-  }
-  if (result) {
-    if (typeof result !== "string") {
-      console.log("id: ", result.id, "name", result.fName, result.email);
-    }
-  }
 
+  // API CALLS
+  const { error, result, loading } = useAsync(async () => {
+      // Get User Info API Call
+    const userResponse = await useFetchUser("http://localhost:3000/home");
+    if (userResponse === null || userResponse.status !== 200) {
+      throw new Error("Failed to fetch user")
+    }
+
+    // Get User Tasks API Call
+    const userTasksResponse = await useListTasks("http://localhost:3000/home/tasks/");
+    if (userTasksResponse === null || userTasksResponse.status !== 200) {
+      throw new Error("Failed to fetch tasks")
+    }
+    console.log('usertask response', userTasksResponse);
+    // Get Friends Tasks API Call (max 3 friends)
+    const friendTasksResponse = await useListTasks(`http://localhost:3000/home/tasks/${userResponse.data.friends[0]}`);
+    if (friendTasksResponse === null || friendTasksResponse.status !== 200) {
+      throw new Error("Failed to fetch tasks")
+    }
+    console.log('friend', friendTasksResponse);
+
+  }, []);
+
+
+  if (result) {
+
+  }
+  
   const [userTasks, setUserTasks] = useState<Array<Task>>(
     currentUserDataResponse.tasks
   );
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(null);
 
-  // use Effect that does the fetchTasks function on initial render
-  // fetchTasks function that can be also used a callback function (.then()) after a crud operation call in a child component
 
-  /* 
-   useEffect(() => {
-    fetchTasks();
-  }, []);
-  */
-
-  /* const fetchTasks = () => {
-    setIsLoading(true);
-    setError(null);
-
-    axios.get('/api/tasks')
-      .then((response) => {
-        setUserTasks(response.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setIsLoading(false);
-      });
-  };
-  */
   function fetchTasks(newTasks: Task[]) {
     setUserTasks(newTasks);
   }
@@ -78,7 +71,7 @@ export const Home = () => {
           <h1 className="text-3xl font-semibold pl-3">
             Welcome,{" "}
             <span className="text-primary font-bold">
-              {currentUserDataResponse.userName}!
+              {/* {userInfo.fName} */}
             </span>
           </h1>
         </div>
