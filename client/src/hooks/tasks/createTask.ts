@@ -1,37 +1,29 @@
-import axios, { AxiosHeaders } from "axios";
-import { useState, useCallback } from "react";
+import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
 
+import { axiosInstance } from "../../axios";
 import { CreateTaskBody } from "../../common/responseTypes";
 
-export const useCreateTask = (
+export const useCreateTask = async (
   url: string,
-  headers?: AxiosHeaders
-): {
-  post: (data: CreateTaskBody) => Promise<void>;
-  loading: boolean;
-  error: string | null;
-  createTaskResponse: CreateTaskBody | null;
-} => {
-  const [createTaskResponse, setCreateTaskResponse] =
-    useState<CreateTaskBody | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const post = useCallback(async (data: CreateTaskBody) => {
-    setLoading(true);
-
-    axios
-
-      .post(url, data, { headers })
-
-      .then((res: any) => setCreateTaskResponse(res.data))
-
-      .catch((err: any) => {
-        setError(err);
-      })
-
-      .finally(() => setLoading(false));
-  }, []);
-
-  return { createTaskResponse, loading, error, post };
+  body: CreateTaskBody,
+  axiosConfigOptions?: AxiosRequestConfig
+): Promise<AxiosResponse | null> => {
+  if (body.taskName === "") {
+    console.log("empty task name");
+    return null
+  }
+  try {
+    const response = await axiosInstance.post(url, body, axiosConfigOptions);
+    console.log(response.data);
+    console.log("response status is: ", response.status);
+    return response;
+  } catch (err) {
+    if (isAxiosError(err)) {
+      console.log("Axios error: ", err);
+      return null;
+    } else {
+      console.log("unexpected error: ", err);
+      return null;
+    }
+  }
 };

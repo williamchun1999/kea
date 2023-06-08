@@ -13,19 +13,8 @@ interface TaskProps {
 }
 
 export const UserTaskOverview = ({ tasks, onUpdate }: TaskProps) => {
-
   const [loading, setLoading] = useState(false);
-  //const { data, loading, error } = useListTasks<Task[]>("http://localhost:5000/tasks?userId=1", (rawData) => rawData);
 
-  /*if (loading) {
-    return <p>loading...</p>
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }*/
-
-  // Temporary clone due to lack of api calls
   const tasksClone = [...tasks];
 
   //toggling checkbox

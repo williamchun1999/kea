@@ -1,4 +1,4 @@
-import { useState, MouseEventHandler } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useUserLogout } from "../../hooks/user/logoutUser";
 
@@ -16,117 +16,13 @@ type DeleteButtonProp = {
 };
 
 export const Add = () => {
-  const [selectedValue, updateSelectedValue] = useState("");
-
-  function handleSelectedValue(event: React.ChangeEvent<HTMLInputElement>) {
-    updateSelectedValue(() => event?.target.value);
-  }
-
-  function createTask() {
-    //popup that deals with adding elements should go here
-    console.log("createdTask");
-  }
-
   return (
-    <>
-      <label
-        className="btn btn-circle btn-sm add--text btn-primary text-base-400"
-        htmlFor="addTask"
-      >
-        +
-      </label>
-
-      <input type="checkbox" id="addTask" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box">
-          {/** title and exit button */}
-          <div className="top flex flex-1 justify-between">
-            <h3 className="font-bold text-lg">Create New Task</h3>
-            <label
-              className="btn btn-circle bg-transparent border-0"
-              htmlFor="addTask"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </label>
-          </div>
-
-          {/* new task name input */}
-          <label htmlFor="newTaskName" className="block w-full">
-            Task Name:
-          </label>
-          <input
-            type="text"
-            id="newTaskName"
-            placeholder="Type here"
-            className="input input-bordered w-full"
-          />
-
-          {/* checkbox or progres bar? */}
-          <div className="form-control">
-            <label className="label cursor-pointer">
-              <span className="label-text">Checkbox</span>
-              <input
-                type="radio"
-                name="taskType"
-                id="checkbox"
-                value="checkbox"
-                className="radio checked:bg-[#e0b0ff]"
-                checked={selectedValue === "checkbox"}
-                onChange={handleSelectedValue}
-              />
-            </label>
-          </div>
-          <div className="form-control">
-            <label className="label cursor-pointer">
-              <span className="label-text">Progress Bar</span>
-              <input
-                type="radio"
-                name="taskType"
-                id="progressBar"
-                value="progressBar"
-                className="radio checked:bg-[#e0b0ff]"
-                checked={selectedValue === "progressBar"}
-                onChange={handleSelectedValue}
-              />
-            </label>
-          </div>
-
-          {selectedValue === "progressBar" && (
-            <div className="progressInput flex flex-1 ">
-              <input
-                type="number"
-                placeholder="total"
-                min="1"
-                className="input input-bordered w-2/4"
-              />
-            </div>
-          )}
-          {/* buttons */}
-          <div className="modal-action flex-col space-x-0">
-            <label
-              htmlFor="addTask"
-              className="btn btn-block"
-              onClick={() => createTask()}
-            >
-              Create
-            </label>
-          </div>
-        </div>
-      </div>
-    </>
+    <label
+      className="btn btn-circle btn-sm add--text btn-primary text-base-400"
+      htmlFor="addTask"
+    >
+      +
+    </label>
   );
 };
 
@@ -285,22 +181,24 @@ export const LogOutButton = () => {
   const handleLogOut = async () => {
     try {
       const result = await useUserLogout("http://localhost:3000/home/logout");
-      console.log('C: ', result)
+      console.log("C: ", result);
+    } catch (error) {
+      console.log("ERROR: ", error);
     }
-    catch (error) {
-      console.log("ERROR: ", error)
-    }
-  } 
+  };
   return (
     <>
       <Link to="/">
-        <button onClick={handleLogOut} className="btn btn-ghost border-2 border-primary">
+        <button
+          onClick={handleLogOut}
+          className="btn btn-ghost border-2 border-primary"
+        >
           Log Out
         </button>
       </Link>
     </>
-  )
-}
+  );
+};
 
 export const EditUserButton = () => {
   return (
