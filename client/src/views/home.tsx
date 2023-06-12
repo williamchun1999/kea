@@ -64,6 +64,7 @@ export const Home = () => {
 
   return (
     <div className="relative sm:mx-16 lg:mx-24">
+      {error && <div className="h-screen">ERROR</div>}
       {loading && <div className="h-screen">Loading...</div>}
       {/* In Future Need Loading Page View  */}
       {result && (
