@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { FriendTaskOverview } from "../components/FriendTaskOverview";
 import { Add, LogOutButton } from "../components/button/button";
-import { Card } from "../components/Card/Card";
+import { Card } from "../components/card/Card";
 import {
   friendsTaskResponse,
   currentUserDataResponse,
@@ -63,9 +63,9 @@ export const Home = () => {
   };
 
   return (
-    <div className="relative sm:mx-16 lg:mx-24">
-      {error && <div className="h-screen">ERROR</div>}
-      {loading && <div className="h-screen">Loading...</div>}
+    <div className="h-screen relative sm:mx-16 lg:mx-24">
+      {error && <div>ERROR</div>}
+      {loading && <div>Loading...</div>}
       {/* In Future Need Loading Page View  */}
       {result && (
         <>
@@ -84,12 +84,11 @@ export const Home = () => {
                 <span className="text-primary font-bold">{result.fName}</span>
               </h1>
             </div>
-
             <LogOutButton />
           </div>
 
           <Card
-            userName={result?.userName ?? "placeholder"}
+            userName={result.userName}
             tasks={userTasks}
           />
           <div className="tasks w-full p-4">

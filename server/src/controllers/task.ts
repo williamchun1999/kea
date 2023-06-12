@@ -9,7 +9,9 @@ export const taskController = {
     const currentUser = req.user as IUser;
     const { userId } = req.params;
     try {
-      const tasks = await Task.find({ userId: userId ?? currentUser._id }).exec();
+      const tasks = await Task.find({
+        userId: userId ?? currentUser._id,
+      }).exec();
 
       res.status(200).json(tasks);
     } catch (error) {
@@ -43,12 +45,8 @@ export const taskController = {
   },
 
   updateTask: async (req: Request, res: Response) => {
-    const {
-      taskName,
-      taskProgress,
-      taskProgressTotal,
-      taskCompleted,
-    } = req.body as ITask;
+    const { taskName, taskProgress, taskProgressTotal, taskCompleted } =
+      req.body as ITask;
     const { taskId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(taskId))
@@ -60,10 +58,12 @@ export const taskController = {
       taskProgressTotal,
       taskCompleted,
     };
-
-    await Task.findByIdAndUpdate({ taskId }, updatedTask, { new: true });
-
-    return res.json(updatedTask);
+    try {
+      await Task.findByIdAndUpdate(taskId, updatedTask, { new: true });
+      return res.status(200).json(updatedTask);
+    } catch (error) {
+      res.status(409).json({ message: error.message });
+    }
   },
 
   deleteTask: async (req: Request, res: Response) => {

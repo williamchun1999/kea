@@ -11,7 +11,7 @@ export type Task = {
   taskCompleted: boolean;
   taskProgress: number | null;
   taskProgressTotal: number | null;
-  id: string;
+  _id: string;
   
 
 };

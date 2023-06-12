@@ -15,11 +15,10 @@ export const FriendTaskOverview = ({ friendsTasks }: FriendsTasksProps) => {
           return (
             <li>
               <a
-                href={`profile/${friend.uuid}`}
+                href={`friends/${friend.uuid}`}
                 className="flex flex-col items-start"
               >
                 <span>{friend.userName}</span>
-                <span>Weekly Task Progress</span>
                 <progress
                   className="progress progress-primary w-6/12"
                   value={``}
