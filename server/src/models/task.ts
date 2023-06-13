@@ -1,6 +1,7 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 
-export interface ITask {
+export interface ITask extends Document {
+  _id: Types.ObjectId;
   userId: String;
   taskName: String;
   taskType: String;

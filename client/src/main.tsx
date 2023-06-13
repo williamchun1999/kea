@@ -30,10 +30,13 @@ const router = createBrowserRouter([
         element: <Settings />,
       },
       {
-        path: "/profile/:uuid",
+        path: "/profile",
         element: <Profile />,
-        // loader: userLoader,
       },
+      {
+        path: "/friends/:userId",
+        element: <Profile />,
+      }
 
     ]
   },

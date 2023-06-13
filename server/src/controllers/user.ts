@@ -5,9 +5,10 @@ import { User, IUser } from "../models/User";
 export const userController = {
   getUser: async (req: Request, res: Response) => {
     const currentUser = req.user as IUser;
+    const { userId } = req.params;
     try {
       const { _id, fName, lName, friends, userName, email } =
-        await User.findById(currentUser._id);
+        await User.findById(userId ?? currentUser._id);
       console.log("User info fetched");
       res.send({
         id: _id,

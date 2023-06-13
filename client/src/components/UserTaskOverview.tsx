@@ -2,41 +2,47 @@ import { useState } from "react";
 
 import TaskInput from "./TaskInput";
 import { Task, TaskType } from "../common/types";
+import { useUpdateTask } from "../hooks/tasks";
 //import { useListTasks } from "../hooks/tasks/listTasks";
 
 interface TaskProps {
   //type Task for the array
   tasks: Array<Task>;
 
-  onUpdate: (newState: Task[]) => void; // Actual function will have no parameters
+  onUpdate: () => void; // Actual function will have no parameters
   
 }
 
 export const UserTaskOverview = ({ tasks, onUpdate }: TaskProps) => {
-
+  console.log(tasks);
   const [loading, setLoading] = useState(false);
-  //const { data, loading, error } = useListTasks<Task[]>("http://localhost:5000/tasks?userId=1", (rawData) => rawData);
-
-  /*if (loading) {
-    return <p>loading...</p>
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }*/
-
-  // Temporary clone due to lack of api calls
-  const tasksClone = [...tasks];
 
   //toggling checkbox
-  function toggleCheckbox(task: Task): void {
+  const toggleCheckbox = async({_id, taskName, taskProgress, taskProgressTotal, taskCompleted}: Task) => {
     setLoading(true);
-    // Pass new value of task into database (whether it is completed or not);
-    task.taskCompleted = !task.taskCompleted;
-    // Rerender data to display updated value
-    onUpdate(tasksClone);
-    setLoading(false);
 
+    // Pass new value of task into database (whether it is completed or not);
+    try {
+      const result = await useUpdateTask(`/home/tasks/${_id}`, {
+        taskName,
+        taskProgress,
+        taskProgressTotal,
+        taskCompleted: (!taskCompleted),
+      });
+      if (result === null || result.status !== 200) {
+        console.log('error')
+      } else {
+        console.log('update task api data', result.data);
+            // Rerender data to display updated value
+        onUpdate();
+      }
+      
+    }
+    catch (err) {
+      console.log('ERR', err)
+    }
+
+    setLoading(false);
   }
 
   const checkTaskType = (task: Task) => {
@@ -61,7 +67,7 @@ export const UserTaskOverview = ({ tasks, onUpdate }: TaskProps) => {
     <>
       <div className="taskList">
         <ul className="menu rounded-box">
-          {tasksClone.map((task) => {
+          {tasks.map((task) => {
             return (
               <li>
                 <label
@@ -70,7 +76,7 @@ export const UserTaskOverview = ({ tasks, onUpdate }: TaskProps) => {
                       ? "bg-success"
                       : ""
                   } bg-base-200 hover:bg-neutral label cursor-pointer flex justify-between`}
-                  htmlFor={`${task.id}-edit-modal`}
+                  htmlFor={`${task._id}-edit-modal`}
                 >
                   <span className="label-text">{task.taskName}</span>
                   {checkTaskType(task)}
