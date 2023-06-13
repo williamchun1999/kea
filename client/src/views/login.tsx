@@ -52,18 +52,20 @@ export const Login = () => {
     }
     return (
         <div className="div bg-base-200 h-screen">
-            <div className="flex flex-col gap-5">
-                <h1 className="text-5xl mt-20 ml-10 tracking-wider">Log In</h1>
-                <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center">
-                    <TextBox title="Email" name="email" value={formData.email} controlInput={handleChange} />
-                    <TextBox title="Password" name="password" value={formData.password} controlInput={handleChange} />
-                    <div className="mt-10 flex flex-col">
-                        <Button name="Log In" color="bg-primary" />
-                        <Link to="/signup">
-                            <Button name="Sign Up" color="bg-primary" />
-                        </Link>
-                    </div>
-                </form>
+            <div className="flex flex-col gap-5 p-4">
+            <h1 className="text-5xl mt-40 tracking-wider text-center">Log In</h1>
+            <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-4">
+                <TextBox title="Email" name="email" value={formData.email}  controlInput = {handleChange} type="text"/> 
+                <TextBox title="Password" name="password" value={formData.password}  controlInput = {handleChange} type="password"/> 
+                <div className="mt-10 flex flex-col">
+                <Link to="/home">
+                    <Button name="Log In" color="bg-primary" />
+                </Link>
+                <Link to="/signup">
+                    <Button name="Sign Up" color="bg-primary" />
+                </Link>
+                </div>
+            </form>
             </div>
             {isError &&
                 <div className="alert alert-error">

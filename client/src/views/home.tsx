@@ -10,7 +10,7 @@ import { UserTaskOverview } from "../components/UserTaskOverview";
 import { Task } from "../common/types";
 import { SeeAll } from "../components/SeeAll";
 import { useFetchUser } from "../hooks/user/fetchUser";
-import { useAsync } from "react-async-hook";
+//import { useAsync } from "react-async-hook";
 import { useListTasks } from "../hooks/tasks";
 import { CreateTask } from "../components/CreateTask";
 
