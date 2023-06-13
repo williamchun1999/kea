@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 
 export const authMiddleware = {
     ensureAuth: function (req:Request, res:Response, next:NextFunction) {
+      console.log( 'is authenticated: ', req.isAuthenticated())
       if (req.isAuthenticated()) {
         return next();
       } else {

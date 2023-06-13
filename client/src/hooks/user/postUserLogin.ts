@@ -1,20 +1,17 @@
 import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
-
 import { axiosInstance } from "../../axios";
-import { UpdateTaskBody } from "../../common/responseTypes";
+export interface BodyData {
+  email: string | null;
+  password: string | null;
+}
 
-
-export const useUpdateTask = async (
+export const usePostUserLogin = async (
   url: string,
-  body: UpdateTaskBody,
+  body: BodyData,
   axiosConfigOptions?: AxiosRequestConfig
 ): Promise<AxiosResponse | null> => {
-  if (body.taskName === "") {
-    console.log("empty task name");
-    return null
-  }
   try {
-    const response = await axiosInstance.patch(url, body, axiosConfigOptions);
+    const response = await axiosInstance.post(url, body, axiosConfigOptions);
     console.log(response.data);
     console.log("response status is: ", response.status);
     return response;

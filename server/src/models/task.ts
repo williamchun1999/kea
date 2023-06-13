@@ -1,6 +1,7 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 
-export interface ITask {
+export interface ITask extends Document {
+  _id: Types.ObjectId;
   userId: String;
   taskName: String;
   taskType: String;
@@ -13,7 +14,6 @@ export interface ITask {
     type: Number;
     nullable: true;
   };
-  lastUpdated: Date;
 }
 const schema = new Schema<ITask>({
   userId: String,
@@ -28,7 +28,6 @@ const schema = new Schema<ITask>({
     type: Number,
     default: null,
   },
-  lastUpdated: Date,
 });
 
 export const Task = mongoose.model('Task', schema);

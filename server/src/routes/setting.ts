@@ -1,17 +1,16 @@
+import express from "express";
 
-import express from "express"
+import {userController } from "../controllers/user";
+import {authController} from "../controllers/auth";
 
-const router = express.Router()
 
-// const settingController = require("../controllers/setting");
-import {settingController} from "../controllers/setting"
+export const settingRouter = express.Router();
 
-//Settings Routes 
+//Settings Routes
 
-router.delete("/deleteUser/:id", settingController.deleteUser)
+settingRouter.delete("/deleteUser/:id", userController.deleteUser);
 
-router.put("/addFriend/:id/:friend", settingController.addFriend)
+settingRouter.put("/addFriend/:id/:friend", userController.addFriend);
 
-router.put("/updateUser/:id", settingController.updateUser)
-
-export default router
+settingRouter.put("/updateUser/:id", userController.updateUser);
+settingRouter.get("/logout", authController.logout);

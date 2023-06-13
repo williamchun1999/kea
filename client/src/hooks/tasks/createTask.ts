@@ -1,12 +1,11 @@
 import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
 
 import { axiosInstance } from "../../axios";
-import { UpdateTaskBody } from "../../common/responseTypes";
+import { CreateTaskBody } from "../../common/responseTypes";
 
-
-export const useUpdateTask = async (
+export const useCreateTask = async (
   url: string,
-  body: UpdateTaskBody,
+  body: CreateTaskBody,
   axiosConfigOptions?: AxiosRequestConfig
 ): Promise<AxiosResponse | null> => {
   if (body.taskName === "") {
@@ -14,7 +13,7 @@ export const useUpdateTask = async (
     return null
   }
   try {
-    const response = await axiosInstance.patch(url, body, axiosConfigOptions);
+    const response = await axiosInstance.post(url, body, axiosConfigOptions);
     console.log(response.data);
     console.log("response status is: ", response.status);
     return response;

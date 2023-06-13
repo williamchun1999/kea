@@ -1,15 +1,17 @@
-import express, {Request, Response} from "express";
+import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 
 import { Task, ITask } from "../models/task";
-
-const router = express.Router();
+import { IUser } from "../models/User";
 
 export const taskController = {
-  getTasks: async (req:Request, res:Response) => {
+  getTasks: async (req: Request, res: Response) => {
+    const currentUser = req.user as IUser;
     const { userId } = req.params;
     try {
-      const tasks = await Task.find({ userId }).exec();
+      const tasks = await Task.find({
+        userId: userId ?? currentUser._id,
+      }).exec();
 
       res.status(200).json(tasks);
     } catch (error) {
@@ -17,21 +19,20 @@ export const taskController = {
     }
   },
 
-  createTask: async (req:Request, res:Response) => {
+  createTask: async (req: Request, res: Response) => {
     const { taskName, taskType, taskProgress, taskProgressTotal } = req.body;
-    const { userId } = req.params;
+    const currentUser = req.user as IUser;
 
-    if (!mongoose.Types.ObjectId.isValid(userId))
-      return res.status(404).send(`No task with user id: ${userId}`);
+    if (!mongoose.Types.ObjectId.isValid(currentUser._id))
+      return res.status(404).send(`No task with user id: ${currentUser._id}`);
 
     const newTask = new Task({
-      userId,
+      userId: currentUser._id,
       taskName,
       taskType,
       taskProgress,
       taskProgressTotal,
       taskCompleted: false,
-      lastUpdated: new Date(),
     });
 
     try {
@@ -43,14 +44,9 @@ export const taskController = {
     }
   },
 
-  updateTask: async (req:Request, res:Response) => {
-    const {
-      taskName,
-      taskType,
-      taskProgress,
-      taskProgressTotal,
-      taskCompleted,
-    } = req.body as ITask;
+  updateTask: async (req: Request, res: Response) => {
+    const { taskName, taskProgress, taskProgressTotal, taskCompleted } =
+      req.body as ITask;
     const { taskId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(taskId))
@@ -58,53 +54,19 @@ export const taskController = {
 
     const updatedTask = {
       taskName,
-      taskType,
       taskProgress,
       taskProgressTotal,
       taskCompleted,
-      lastUpdated: new Date(),
     };
-
-    await Task.findByIdAndUpdate({ taskId }, updatedTask, { new: true });
-
-    return res.json(updatedTask);
+    try {
+      await Task.findByIdAndUpdate(taskId, updatedTask, { new: true });
+      return res.status(200).json(updatedTask);
+    } catch (error) {
+      res.status(409).json({ message: error.message });
+    }
   },
 
-  resetTasks: async (req:Request, res:Response) => {
-    const { userId } = req.params;
-
-    if (!mongoose.Types.ObjectId.isValid(userId))
-      return res.status(404).send(`No task with user id: ${userId}`);
-
-    const updatedTasksResult = await Task.bulkWrite([
-      {
-        updateMany: {
-          filter: { taskType: "progress" },
-          update: {
-            $set: {
-              taskProgress: { type: 0, nullable: true },
-              taskCompleted: false,
-            },
-          },
-        },
-      },
-      {
-        updateMany: {
-          filter: { taskType: "checkbox" },
-          update: {
-            $set: {
-              taskProgress: { type: null, nullable: true },
-              taskCompleted: false,
-            },
-          },
-        },
-      },
-    ]);
-
-    return res.json(updatedTasksResult);
-  },
-
-  deleteTask: async (req:Request, res:Response) => {
+  deleteTask: async (req: Request, res: Response) => {
     const { taskId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(taskId))
@@ -115,5 +77,3 @@ export const taskController = {
     res.json({ message: "Post deleted successfully." });
   },
 };
-
-export default router;
