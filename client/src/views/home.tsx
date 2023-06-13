@@ -4,16 +4,11 @@ import { FriendTaskOverview } from "../components/FriendTaskOverview";
 import { Add, LogOutButton } from "../components/button/button";
 import { Card } from "../components/card/Card";
 import {
-  friendsTaskResponse,
-  currentUserDataResponse,
+  friendsTaskResponse
 } from "../common/fakeData";
 import { UserTaskOverview } from "../components/UserTaskOverview";
 import { Task } from "../common/types";
 import { SeeAll } from "../components/SeeAll";
-// import {
-//   useListTasks,
-// } from "../hooks/tasks";
-
 import { useFetchUser } from "../hooks/user/fetchUser";
 import { useAsync } from "react-async-hook";
 import { useListTasks } from "../hooks/tasks";

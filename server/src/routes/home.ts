@@ -19,6 +19,6 @@ homeRouter.delete('/tasks/:taskId', taskController.deleteTask);
 
 // get user, list user
 
-homeRouter.get("/", authMiddleware.ensureAuth, userController.getUser);
+homeRouter.get("/:userId?", authMiddleware.ensureAuth, userController.getUser);
 
 homeRouter.get('/logout', authController.logout)
