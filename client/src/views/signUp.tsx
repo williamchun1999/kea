@@ -29,7 +29,7 @@ export const SignUp = () => {
   };
 
   return (
-    <div className="div bg-base-200 h-screen flex justify-center items-center">
+    <div className="div bg-base-200 md:h-screen pt-8 md:pt-0 flex justify-center items-center">
       <div className="flex flex-col bg-base-200 ">
         <h1 className="text-5xl mb-10 tracking-wider text-center">Sign Up</h1>
         <form

@@ -30,7 +30,7 @@ export const Login=()=> {
     }
     return (
         <div className="div bg-base-200 h-screen">
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 p-4">
             <h1 className="text-5xl mt-40 tracking-wider text-center">Log In</h1>
             <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-4">
                 <TextBox title="Email" name="email" value={formData.email}  controlInput = {handleChange} type="text"/> 
