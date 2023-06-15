@@ -4,6 +4,8 @@ import { UserTaskOverview } from '../components/UserTaskOverview';
 import { Task } from '../common/types';
 import { currentUserDataResponse } from "../common/fakeData";
 import { tasksCompletedPercentage } from "../common/weeklyTasksCalculation";
+//import { useParams } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 
 export const Profile = () => {
 
@@ -11,7 +13,7 @@ export const Profile = () => {
   const [tasks, setTasks] = useState<Array<Task>>(currentUserDataResponse.tasks)
   // Can grab uuid from useParams, or from loader
 
-
+ 
   // API Call of friend's data
   // Use uuid to do a request for their data
   // 
