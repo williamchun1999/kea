@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Task, TaskType } from "../common/types";
-import { useUpdateTask } from "../hooks/tasks";
+import { useDeleteTask, useUpdateTask } from "../hooks/tasks";
 
 interface TaskInputProps {
   task: Task;
@@ -15,46 +15,64 @@ const TaskInput = ({ task, onUpdate }: TaskInputProps) => {
   );
 
   const updateTask = async () => {
-
-    if ((taskProgress !== null && isNaN(taskProgress)) || (taskProgressTotal !== null && isNaN(taskProgressTotal))) {
-      console.log('needs to be number');
+    // Checks for data entry
+    if (
+      (taskProgress !== null && isNaN(taskProgress)) ||
+      (taskProgressTotal !== null && isNaN(taskProgressTotal))
+    ) {
+      console.log("needs to be number");
       return;
     }
     if (taskProgress! > taskProgressTotal!) {
-      console.log('task progress needs to be lower or the same value as progress total');
+      console.log(
+        "task progress needs to be lower or the same value as progress total"
+      );
       return;
     }
-      /* check if task is checkbox
-  if it is, leave completed value as it originally was
-  check if task progress === task progress total,
-  if it is, include true to task completed property in the body, else make it false */
-      try {
-        const result = await useUpdateTask(`/home/tasks/${task._id}`, {
-          taskName: currentName,
-          taskProgress,
-          taskProgressTotal,
-          taskCompleted: task.taskCompleted === null ? task.taskCompleted : taskProgress === taskProgressTotal ? true : false
-        });
-        if (result === null || result.status !== 200) {
-          console.log('error')
-        } else {
-          console.log('update task api data', result.data);
-          /* callback of fetch tasks */
-          onUpdate();
-        }
-
+    /* check if task is checkbox
+    if it is, leave completed value as it originally was
+    check if task progress === task progress total,
+    if it is, include true to task completed property in the body, else make it false */
+    try {
+      const result = await useUpdateTask(`/home/tasks/${task._id}`, {
+        taskName: currentName,
+        taskProgress,
+        taskProgressTotal,
+        taskCompleted:
+          task.taskCompleted === null
+            ? task.taskCompleted
+            : taskProgress === taskProgressTotal
+            ? true
+            : false,
+      });
+      if (result === null || result.status !== 200) {
+        console.log("error");
+      } else {
+        console.log("update task api data", result.data);
+        /* callback of fetch tasks */
+        onUpdate();
       }
-      catch (err) {
-        console.log('ERR', err)
-      }
-
-  }
+    } catch (err) {
+      console.log("ERR", err);
+    }
+  };
 
   //close the modals
-  const deleteTask = () => {
+  const deleteTask = async () => {
     /* delete task api call */
-    /* callback of fetch tasks */
-  }
+    try {
+      const result = await useDeleteTask(`/home/tasks/${task._id}`);
+      if (result === null || result.status !== 200) {
+        console.log("error");
+      } else {
+        console.log("update task api data", result.data);
+        /* callback of fetch tasks */
+        onUpdate();
+      }
+    } catch (err) {
+      console.log("ERR", err);
+    }
+  };
 
   return (
     <>

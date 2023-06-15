@@ -1,31 +1,24 @@
-import  {useState, useEffect} from "react";
-import axios from "axios";
+import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
 
+import { axiosInstance } from "../../axios";
 
-export const useDeleteTask = <T>(
+export const useDeleteTask = async (
   url: string,
-  
-)=> {
+  axiosConfigOptions?: AxiosRequestConfig
+): Promise<AxiosResponse | null> => {
 
-  const[deleteTaskResponse, setResponseData] = useState<T| null>(null)
-  const [error, setError] = useState<string | null>(null)
-
-
-  useEffect(() => {
-    axios
-      .delete(url)
-
-      .then((res: any) => {
-        setResponseData(res.data)
-      })
-
-      .catch((err: any) =>{
-        setError(err)
-      }
-      )
-  }, [])
-
-
-  return { deleteTaskResponse, error }
-}
-
+  try {
+    const response = await axiosInstance.delete(url, axiosConfigOptions);
+    console.log(response.data);
+    console.log("response status is: ", response.status);
+    return response;
+  } catch (err) {
+    if (isAxiosError(err)) {
+      console.log("Axios error: ", err);
+      return null;
+    } else {
+      console.log("unexpected error: ", err);
+      return null;
+    }
+  }
+};

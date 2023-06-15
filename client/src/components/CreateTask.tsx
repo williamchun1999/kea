@@ -60,7 +60,7 @@ export const CreateTask = ({ callback }: { callback: () => void }) => {
       if (result === null || result.status !== 201) {
         setError(true);
       } else {
-        console.log('create task api data', result.data);
+        console.log("create task api data", result.data);
         callback();
       }
     } catch (error) {
@@ -120,21 +120,12 @@ export const CreateTask = ({ callback }: { callback: () => void }) => {
           </div>
 
           {/* new task name input */}
-          {/* <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center">
-                    <TextBox title="Email" name="email" value={formData.email} controlInput={handleChange} />
-                    <TextBox title="Password" name="password" value={formData.password} controlInput={handleChange} />
-                    <div className="mt-10 flex flex-col">
-                        <Button name="Log In" color="bg-primary" />
-                        <Link to="/signup">
-                            <Button name="Sign Up" color="bg-primary" />
-                        </Link>
-                    </div>
-                </form> */}
           <TextBox
             title="Task Name"
             name="taskName"
             value={createTaskFormData.taskName}
             controlInput={handleChange}
+            type="text"
           />
 
           {/* checkbox or progress bar? */}

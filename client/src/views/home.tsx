@@ -3,9 +3,7 @@ import { useState } from "react";
 import { FriendTaskOverview } from "../components/FriendTaskOverview";
 import { Add, LogOutButton } from "../components/button/button";
 import { Card } from "../components/card/Card";
-import {
-  friendsTaskResponse
-} from "../common/fakeData";
+import { friendsTaskResponse } from "../common/fakeData";
 import { UserTaskOverview } from "../components/UserTaskOverview";
 import { Task } from "../common/types";
 import { SeeAll } from "../components/SeeAll";
@@ -16,6 +14,7 @@ import { useAsync } from "react-async-hook";
 
 export const Home = () => {
   const [userTasks, setUserTasks] = useState<Array<Task>>([]);
+  const [friendsTasks, setFriendsTasks] = useState<Array<Array<Task>>>([]);
 
   // API CALLS
   const { error, result, loading } = useAsync(async () => {
@@ -35,13 +34,18 @@ export const Home = () => {
     console.log("usertask response", userTasksResponse.data);
     setUserTasks(userTasksResponse.data);
     // Get Friends Tasks API Call (max 3 friends)
-    const friendTasksResponse = await useListTasks(
-      `http://localhost:3000/home/tasks/${userResponse.data.friends[0]}`
-    );
-    if (friendTasksResponse === null || friendTasksResponse.status !== 200) {
-      throw new Error("Failed to fetch tasks");
+    for (let i = 0; i < 3; i++) {
+      if (!userResponse.data.friends[i]) {
+        break;
+      }
+      const friendTasksResponse = await useListTasks(
+        `/home/tasks/${userResponse.data.friends[i]}`
+      );
+      if (friendTasksResponse === null || friendTasksResponse.status !== 200) {
+        throw new Error("Failed to fetch tasks");
+      }
+      setFriendsTasks((prevState) => [...prevState, friendTasksResponse.data]);
     }
-    console.log("friend", friendTasksResponse);
     return userResponse.data;
   }, []);
 
@@ -82,10 +86,7 @@ export const Home = () => {
             <LogOutButton />
           </div>
 
-          <Card
-            userName={result.userName}
-            tasks={userTasks}
-          />
+          <Card userName={result.userName} tasks={userTasks} />
           <div className="tasks w-full p-4">
             <div className="flex justify-between">
               <h2 className="text-2xl">Weekly Tasks</h2>
