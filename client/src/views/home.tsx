@@ -26,6 +26,8 @@ export const Home = () => {
       throw new Error("Failed to fetch user");
     }
 
+    console.log('user info: ' , userResponse)
+
     // Get User Tasks API Call
     const userTasksResponse = await useListTasks(
       "http://localhost:3000/home/tasks/"
