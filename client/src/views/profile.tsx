@@ -5,7 +5,7 @@ import { UserTaskOverview } from '../components/UserTaskOverview';
 import { Task } from '../common/types';
 import { currentUserDataResponse } from "../common/fakeData";
 import { tasksCompletedPercentage } from "../common/weeklyTasksCalculation";
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { useFetchUser } from "../hooks/user/fetchUser";
 import { useAsync } from "react-async-hook";
 //import { Form, useLoaderData } from "react-router-dom";
@@ -13,18 +13,33 @@ import { useAsync } from "react-async-hook";
 import { useListTasks } from "../hooks/tasks";
 import { CreateTask } from "../components/CreateTask";
 
+
+
+
+ export async function loader({ params }:any) {
+  console.log('loader params: ' , params)
+  const userProfileResponse = await useFetchUser(`http://localhost:3000/profile/${params.userId}`);
+  console.log('userProfileResponse:', userProfileResponse)
+ return { userProfileResponse };
+}
+
 export const Profile = () => {
 
+  const { userProfileResponse } = useLoaderData();
+
+  console.log('inside function' , userProfileResponse)
+/*  const { userId } = useParams(); 
+  console.log(userId) */
+  
   // To Chloe: REFER TO HOME PAGE FOR API CALL SET UP
   const [tasks, setTasks] = useState<Array<Task>>(currentUserDataResponse.tasks)
   // Can grab uuid from useParams, or from loader
-  const { userId } = useParams(); 
-  console.log(userId)
+
   // API Call of friend's data
   // Use uuid to do a request for their data
   // 
 
-  const { error, result, loading } = useAsync(async () => {
+  /*const { error, result, loading } = useAsync(async () => {
     // Get User Info API Call
     const userResponse = await useFetchUser(`http://localhost:3000/profile/${userId}`);
     if (userResponse === null || userResponse.status !== 200) {
@@ -35,7 +50,7 @@ export const Profile = () => {
     
 
 
-  }, []);
+  }, []);*/
 
 
 
