@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 
 import { Friends, Home, SignUp, LandingPage, Profile, Login, Navbar, Settings } from "./views";
-// import { loader as userLoader } from './views/profile';
 import "./index.css";
 
 const router = createBrowserRouter([
