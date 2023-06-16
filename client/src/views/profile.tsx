@@ -16,10 +16,14 @@ import { CreateTask } from "../components/CreateTask";
 
 
 
- export async function loader({ params }:any) {
-  console.log('loader params: ' , params)
+export async function loader({ params }: any) {
+  console.log(params)
   const userProfileResponse = await useFetchUser(`http://localhost:3000/profile/${params.userId}`);
   console.log('userProfileResponse:', userProfileResponse)
+
+  const userProfileTaskResponse = await useListTasks(`http://localhost:3000/profile/tasks/${params.userId}`);
+  console.log('userProfileTaskResponse:', userProfileTaskResponse)
+
  return { userProfileResponse };
 }
 
@@ -65,7 +69,7 @@ export const Profile = () => {
       <div className="mx-auto card w-4/5 bg-base-100 shadow-xl">
         <div className="flex flex-col justify-around card-body">
           <h2 className="card-title">
-            {currentUserDataResponse.userName.toUpperCase()}
+            {userProfileResponse.data.userName.toUpperCase()}
           </h2>
           <div className="flex flex-col items-center">
             <span>Weekly Task Report</span>
