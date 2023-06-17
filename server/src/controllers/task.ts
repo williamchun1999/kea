@@ -7,6 +7,7 @@ import { IUser } from "../models/User";
 export const taskController = {
   getTasks: async (req: Request, res: Response) => {
     const currentUser = req.user as IUser;
+    console.log("req.user", req.user)
     const { userId } = req.params;
     try {
       const tasks = await Task.find({
