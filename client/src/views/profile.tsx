@@ -5,7 +5,7 @@ import { UserTaskOverview } from '../components/UserTaskOverview';
 import { Task } from '../common/types';
 import { currentUserDataResponse } from "../common/fakeData";
 import { tasksCompletedPercentage } from "../common/weeklyTasksCalculation";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
 import { useFetchUser } from "../hooks/user/fetchUser";
 import { useAsync } from "react-async-hook";
 //import { Form, useLoaderData } from "react-router-dom";
@@ -36,6 +36,7 @@ export async function loader({ params }: any) {
 export const Profile = () => {
 
   const { userProfileResponse, userProfileTaskResponse, paramsId } = useLoaderData();
+  const navigation  = useNavigation()
 
 /*  const { userId } = useParams(); 
   console.log(userId) */
@@ -70,13 +71,14 @@ export const Profile = () => {
   const percentComplete = tasksCompletedPercentage(currentUserDataResponse.tasks) * 100
 
 
+
+
   return (
 
     <>
-    
-    <div className="min-h-screen bg-base-200">
+    <div className={`min-h-screen bg-base-200`}>
       <div className="mx-auto card w-4/5 bg-base-100 shadow-xl">
-        <div className="flex flex-col justify-around card-body">
+        <div className={`flex flex-col justify-around card-body ${ navigation.state === "loading" ? "tw-hidden" : ""}`}>
           <h2 className="card-title">
             {userProfileResponse.data.userName.toUpperCase()}
           </h2>
