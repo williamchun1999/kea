@@ -8,6 +8,7 @@ type GetUserResponse = {
   userName: string
   email:string
   friends: string[]
+  password: string
 }
 
 export const useFetchUser = async (

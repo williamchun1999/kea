@@ -18,6 +18,14 @@ type DeleteButtonProp = {
   userName: string;
 };
 
+type EditButtonProp= {
+  fName: string;
+  lName: string;
+  email: string;
+  userName: string;
+  password: string;
+}
+
 export const Add = () => {
   return (
     <label
@@ -203,16 +211,16 @@ export const LogOutButton = () => {
   );
 };
 
-export const EditUserButton = (props) => {
+export const EditUserButton = ({fName,lName,userName,email,password}: EditButtonProp) => {
 
   //make controlled input 
 
 const [formData, setFormData] = useState({
-  fName: props.user.fName,
-  lName: props.user.lName,
-  userName: props.user.userName,
-  email: props.user.email,
-  password: props.user.password,
+  fName: fName,
+  lName: lName,
+  userName: userName,
+  email: email,
+  password:password,
 });
 
  //make controlled inputs from React's end
