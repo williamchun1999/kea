@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 
 import { UserTaskOverview } from '../components/UserTaskOverview';
 import { Task } from '../common/types';
@@ -17,44 +17,50 @@ import { CreateTask } from "../components/CreateTask";
 
 
 export async function loader({ params }: any) {
-  console.log(params)
-  const userProfileResponse = await useFetchUser(`http://localhost:3000/profile/${params.userId}`);
+
+  console.log('params: ', params)
+  const paramsId = params.userId
+
+  
+  const userProfileResponse = await useFetchUser(`http://localhost:3000/profile/${paramsId}`);
   console.log('userProfileResponse:', userProfileResponse)
 
-  const userProfileTaskResponse = await useListTasks(`http://localhost:3000/profile/tasks/${params.userId}`);
+  const userProfileTaskResponse = await useListTasks(`http://localhost:3000/profile/tasks/${paramsId}`);
   console.log('userProfileTaskResponse:', userProfileTaskResponse)
 
- return { userProfileResponse };
+  return { userProfileResponse , userProfileTaskResponse, paramsId };
+
+
 }
 
 export const Profile = () => {
 
-  const { userProfileResponse } = useLoaderData();
+  const { userProfileResponse, userProfileTaskResponse, paramsId } = useLoaderData();
 
-  console.log('inside function' , userProfileResponse)
 /*  const { userId } = useParams(); 
   console.log(userId) */
   
   // To Chloe: REFER TO HOME PAGE FOR API CALL SET UP
   const [tasks, setTasks] = useState<Array<Task>>(currentUserDataResponse.tasks)
-  // Can grab uuid from useParams, or from loader
 
-  // API Call of friend's data
-  // Use uuid to do a request for their data
-  // 
+  useEffect(() => {
+    setTasks(userProfileTaskResponse.data)
+    console.log('set task', tasks)
+  }, [])
 
-  /*const { error, result, loading } = useAsync(async () => {
-    // Get User Info API Call
-    const userResponse = await useFetchUser(`http://localhost:3000/profile/${userId}`);
-    if (userResponse === null || userResponse.status !== 200) {
-      throw new Error("Failed to fetch user");
+
+  // Fetch Task Callback function after CRUD operation.
+  const fetchTasks = async () => {
+    const userTasksResponse = await useListTasks(
+      `http://localhost:3000/profile/tasks/${paramsId}`
+    );
+    if (userTasksResponse === null || userTasksResponse.status !== 200) {
+      throw new Error("Failed to fetch tasks");
     }
+    console.log("usertask response after edits", userTasksResponse.data);
+    setTasks(userTasksResponse.data);
+  };
 
-    console.log("userprofile", userResponse.data)
-    
-
-
-  }, []);*/
 
 
 
@@ -65,6 +71,9 @@ export const Profile = () => {
 
 
   return (
+
+    <>
+    
     <div className="min-h-screen bg-base-200">
       <div className="mx-auto card w-4/5 bg-base-100 shadow-xl">
         <div className="flex flex-col justify-around card-body">
@@ -88,10 +97,12 @@ export const Profile = () => {
           </div>
           <div>
             <h3>Tasks</h3>
-            {/* <UserTaskOverview tasks={tasks} onUpdate={} /> */}
+            <UserTaskOverview tasks={tasks} onUpdate={fetchTasks} /> 
           </div>
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
