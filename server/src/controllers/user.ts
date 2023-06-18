@@ -23,6 +23,7 @@ export const userController = {
       res.send({ message: err.message });
     }
   },
+
   deleteUser: async (req: Request, res: Response) => {
     const currentUser = req.user as IUser;
     try {
