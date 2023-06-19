@@ -24,6 +24,8 @@ type EditButtonProp= {
   email: string;
   userName: string;
   password: string;
+  controlSubmit: FormEventHandler<HTMLFormElement>;
+  controlChange: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const Add = () => {
@@ -211,41 +213,11 @@ export const LogOutButton = () => {
   );
 };
 
-export const EditUserButton = ({fName,lName,userName,email,password}: EditButtonProp) => {
-
-  //make controlled input 
-
-const [formData, setFormData] = useState({
-  fName: fName,
-  lName: lName,
-  userName: userName,
-  email: email,
-  password:password,
-});
-
- //make controlled inputs from React's end
- const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-  setFormData((prev) => {
-    return {
-      ...prev,
-      [event.target.name]: event.target.value,
-    };
-  });
-};
-
-//on pressing the signup button, the info is gathered and sent to db
-const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-  event.preventDefault();
-  console.log(formData)
-}
+export const EditUserButton = ({fName,lName,userName,email,password, controlSubmit, controlChange,}: EditButtonProp) => {
 
 
   return (
     <>
-      {/* <button className="btn btn-ghost w-screen border-2 border-primary">
-        Edit Account
-      </button> */}
-      
       <label
         htmlFor="editAccount"
         className="btn btn-ghost w-screen border-2 border-primary"
@@ -256,44 +228,44 @@ const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
       <input type="checkbox" id="editAccount" className="modal-toggle" />
       <div className="modal ">
         <div className="modal-box ">
-          <form onSubmit={handleSubmit} className="flex flex-wrap justify-center md:justify-start md:gap-2">
+          <form onSubmit={controlSubmit} className="flex flex-wrap justify-center md:justify-start md:gap-2">
 
               <TextBox
                   title="First Name"
                   name="fName"
-                  value={formData.fName}
-                  controlInput={handleChange}
+                  value={fName}
+                  controlInput={controlChange}
                   type="text"
               />
               <TextBox
                   title="Last Name"
                   name="lName"
-                  value={formData.lName}
-                  controlInput={handleChange}
+                  value={lName}
+                  controlInput={controlChange}
                   type="text"
                 />
               <TextBox
                 title="Email"
                 name="email"
-                value={formData.email}
-                controlInput={handleChange}
+                value={email}
+                controlInput={controlChange}
                 type="text"
               />
               <TextBox
                 title="Username"
                 name="userName"
-                value={formData.userName}
-                controlInput={handleChange}
+                value={userName}
+                controlInput={controlChange}
                 type="text"
               />
               <TextBox
                 title="Password"
                 name="password"
-                value={formData.password}
-                controlInput={handleChange}
+                value={password}
+                controlInput={controlChange}
                 type="password"
               />
-              <button type="submit" className="btn btn-ghost">
+              <button type="submit" className=" btn-ghost">
               <label htmlFor="editAccount" className="btn btn-primary">
               Update Info
               </label>
@@ -307,7 +279,6 @@ const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
           </div>
         </div>
       </div>
-
 
     </>
   );

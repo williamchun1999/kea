@@ -1,44 +1,33 @@
-import axios from "axios";
-import { useState, useCallback } from "react";
+import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
+import { axiosInstance } from "../../axios";
+
+export interface UserData {
+  fName: string
+  lName: string
+  userName: string
+  email: string ;
+  password: string;
+  friends: string[];
+}
 
 
-import {User} from "./createUser"
-
-export const useUpdateTask = <T extends User,>(
-    url: string,
-    headers?: HeadersInit
-  ): {
-    patch: (data: T) => Promise<void>,
-    loading: boolean,
-    error: string | null,
-    updateUserResponse: T | null
-  } =>
-
-
-  {
-
-    const [updateUserResponse, setResponseData] = useState<T | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-  
-    const patch = useCallback(
-      async (data: T) => {
-        setLoading(true);
-  
-        axios
-        
-        .patch(url, data)
-  
-        .then((res: any) => setResponseData(res.data))
-  
-        .catch((err: any) => {
-          setError(err)
-        })
-  
-        .finally(() => setLoading(false))
-      },
-      []
-    );
-  
-    return { updateUserResponse, loading, error, patch };
-  };
+export const useUpdateUser = async (
+  url: string,
+  body: UserData,
+  axiosConfigOptions?: AxiosRequestConfig
+): Promise<AxiosResponse | null> => {
+  try {
+    const response = await axiosInstance.put(url, body, axiosConfigOptions);
+    console.log(response.data);
+    console.log("response status is: ", response.status);
+    return response;
+  } catch (err) {
+    if (isAxiosError(err)) {
+      console.log("Axios error: ", err);
+      return null;
+    } else {
+      console.log("unexpected error: ", err);
+      return null;
+    }
+  }
+};

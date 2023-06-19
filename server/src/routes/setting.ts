@@ -15,5 +15,5 @@ settingRouter.delete("/deleteUser/:id", userController.deleteUser);
 
 settingRouter.put("/addFriend/:id/:friend", userController.addFriend);
 
-settingRouter.put("/updateUser/:id", userController.updateUser);
+settingRouter.put("/updateUser/:id?", userController.updateUser);
 settingRouter.get("/logout", authController.logout);
