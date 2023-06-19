@@ -1,5 +1,5 @@
 
-import { useState, ChangeEventHandler, FormEventHandler } from "react";
+import { useState, ChangeEventHandler, FormEventHandler, MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 import { useUserLogout } from "../../hooks/user/logoutUser";
 
@@ -16,6 +16,7 @@ type NavButtonProp = {
 
 type DeleteButtonProp = {
   userName: string;
+  controlDelete: MouseEventHandler<HTMLButtonElement>
 };
 
 type EditButtonProp= {
@@ -98,11 +99,11 @@ export const DeleteButton = (props: DeleteButtonProp) => {
             <label htmlFor="deleteAccount" className="btn">
               Go Back
             </label>
-            <Link to="/">
+            <button onClick= {props.controlDelete} className=" btn-ghost">
               <label htmlFor="deleteAccount" className="btn btn-primary">
-                Confirm
+              Delete
               </label>
-            </Link>
+              </button>
           </div>
         </div>
       </div>

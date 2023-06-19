@@ -11,7 +11,7 @@ export const settingRouter = express.Router();
 
 settingRouter.get("/", userController.getUser);
 
-settingRouter.delete("/deleteUser/:id", userController.deleteUser);
+settingRouter.delete("/deleteUser", userController.deleteUser);
 
 settingRouter.put("/addFriend/:id/:friend", userController.addFriend);
 
