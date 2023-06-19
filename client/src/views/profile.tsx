@@ -13,43 +13,14 @@ import { useAsync } from "react-async-hook";
 import { useListTasks } from "../hooks/tasks";
 import { CreateTask } from "../components/CreateTask";
 
+import { Add } from "../components/button/button";
 
 
 
-export async function loader({ params }: any) {
-
-  console.log('params: ', params)
-  const paramsId = params.userId
-
-
-  
-
-
-  const userProfileResponse = await useFetchUser(`http://localhost:3000/profile/${paramsId}`);
-  console.log('userProfileResponse:', userProfileResponse)
-  if (userProfileResponse === null || userProfileResponse.status !== 200) {
-    throw new Error("Failed to fetch user");
-  }
-
-
-  const userProfileTaskResponse = await useListTasks(`http://localhost:3000/profile/tasks/${paramsId}`);
-  console.log('userProfileTaskResponse:', userProfileTaskResponse)
-  if (userProfileTaskResponse === null || userProfileTaskResponse.status !== 200) {
-    throw new Error("Failed to fetch tasks");
-  }
-  
-
-
-  
- 
-  return { userProfileResponse , userProfileTaskResponse, paramsId };
-
-
-}
 
 export const Profile = () => {
 
-  const { userProfileResponse, userProfileTaskResponse, paramsId } = useLoaderData();
+ 
   
   
 /*  const { userId } = useParams(); 
@@ -58,17 +29,28 @@ export const Profile = () => {
   // To Chloe: REFER TO HOME PAGE FOR API CALL SET UP
   const [tasks, setTasks] = useState<Array<Task>>(currentUserDataResponse.tasks)
 
-  useEffect(() => {
 
-    setTasks(userProfileTaskResponse.data)
-    console.log('set task', tasks)
-  }, [])
+  const { error, result, loading } = useAsync(async () => {
+    const userProfileResponse = await useFetchUser(`http://localhost:3000/profile`);
+  console.log('userProfileResponse:', userProfileResponse)
+  if (userProfileResponse === null || userProfileResponse.status !== 200) {
+    throw new Error("Failed to fetch user");
+  }
 
+  const userProfileTaskResponse = await useListTasks(`http://localhost:3000/profile/tasks`);
+  console.log('userProfileTaskResponse:', userProfileTaskResponse)
+  if (userProfileTaskResponse === null || userProfileTaskResponse.status !== 200) {
+    throw new Error("Failed to fetch tasks");
+  }
+  setTasks(userProfileTaskResponse.data)
+
+    return userProfileResponse.data
+  }, []);
 
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
     const userTasksResponse = await useListTasks(
-      `http://localhost:3000/profile/tasks/${paramsId}`
+      `http://localhost:3000/profile/tasks/`
     );
     if (userTasksResponse === null || userTasksResponse.status !== 200) {
       throw new Error("Failed to fetch tasks");
@@ -91,18 +73,20 @@ export const Profile = () => {
   return (
 
     <>
-
-    
-    <div className={`min-h-screen bg-base-200`}>
-      <div className="mx-auto card w-4/5 bg-base-100 shadow-xl">
-        <div className={`flex flex-col justify-around card-body`}>
+    {error && <div className="min-h-screen">ERROR</div>}
+    {loading && <div className="min-h-screen">Loading...</div>}
+    { result && 
+    <div className="min-h-screen bg-base-200 pt-8">
+      <div className="mx-auto card w-4/5 bg-base-100 shadow-xl lg:w-[60%]">
+        <div className="flex flex-col justify-around card-body">
           <h2 className="card-title">
-            {userProfileResponse.data.fName.toUpperCase()}
+            {result.fName.toUpperCase()}
           </h2>
           <div className="flex flex-col items-center">
-            <span>Weekly Task Report</span>
+            <span className="block w-full card-title md:text-[2rem]">Weekly Task Report</span>
+          
             <div
-              className=" mt-4 radial-progress bg-primary text-primary-content border-4 border-primary"
+              className="mt-8 radial-progress bg-primary text-primary-content border-4 border-primary"
               style={
                 {
                   "--value": percentComplete,
@@ -114,13 +98,18 @@ export const Profile = () => {
               {Math.round(percentComplete)}%
             </div>
           </div>
-          <div>
-            <h3>Tasks</h3>
+          <div className="mt-4">
+            <div className="flex justify-between">
+              <h3 className="card-title text-[1.5rem] mb-4">Tasks</h3>
+              <Add />
+              <CreateTask callback={fetchTasks} />
+            </div>
+           
             <UserTaskOverview tasks={tasks} onUpdate={fetchTasks} /> 
           </div>
         </div>
       </div>
-    </div>
+    </div>}
     </>
     
   );
