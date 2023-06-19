@@ -15,7 +15,7 @@ export const Settings = () => {
   //error
   const [isError, setIsError] = useState(false);
   const [isUpdateDone, setIsUpdateDone] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(0);
   const [isDeleteComplete, setIsDeleteComplete] = useState(false)
 
   //navigating
@@ -93,9 +93,9 @@ export const Settings = () => {
   useEffect(() => {
     let timeout: number;
     if (isUpdateDone) {
-      setShowPopup(true);
+      setShowPopup(1);
       timeout = setTimeout(() => {
-        setShowPopup(false);
+        setShowPopup(0);
         setIsUpdateDone(false);
       }, 2000);
     }
@@ -127,7 +127,7 @@ export const Settings = () => {
   //redirecting the user to the login page
   useEffect(() => {
     if (isDeleteComplete) {
-      setShowPopup(true)
+      setShowPopup(2)
       const redirectTimeout = setTimeout(() => {
         navigate("/");
       }, 2000);
@@ -155,7 +155,7 @@ export const Settings = () => {
               d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <span>User Info Updated!</span>
+          <span>{showPopup == 1 ? "User Info Updated!" : "Account deleted Successfully!"}</span>
         </div>
       )}
       {result && (
