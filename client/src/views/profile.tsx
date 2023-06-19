@@ -21,13 +21,27 @@ export async function loader({ params }: any) {
   console.log('params: ', params)
   const paramsId = params.userId
 
+
   
+
+
   const userProfileResponse = await useFetchUser(`http://localhost:3000/profile/${paramsId}`);
   console.log('userProfileResponse:', userProfileResponse)
+  if (userProfileResponse === null || userProfileResponse.status !== 200) {
+    throw new Error("Failed to fetch user");
+  }
+
 
   const userProfileTaskResponse = await useListTasks(`http://localhost:3000/profile/tasks/${paramsId}`);
   console.log('userProfileTaskResponse:', userProfileTaskResponse)
+  if (userProfileTaskResponse === null || userProfileTaskResponse.status !== 200) {
+    throw new Error("Failed to fetch tasks");
+  }
+  
 
+
+  
+ 
   return { userProfileResponse , userProfileTaskResponse, paramsId };
 
 
@@ -36,8 +50,8 @@ export async function loader({ params }: any) {
 export const Profile = () => {
 
   const { userProfileResponse, userProfileTaskResponse, paramsId } = useLoaderData();
-  const navigation  = useNavigation()
-
+  
+  
 /*  const { userId } = useParams(); 
   console.log(userId) */
   
@@ -45,6 +59,7 @@ export const Profile = () => {
   const [tasks, setTasks] = useState<Array<Task>>(currentUserDataResponse.tasks)
 
   useEffect(() => {
+
     setTasks(userProfileTaskResponse.data)
     console.log('set task', tasks)
   }, [])
@@ -68,7 +83,7 @@ export const Profile = () => {
 
 
   // Calculate percentage for display
-  const percentComplete = tasksCompletedPercentage(currentUserDataResponse.tasks) * 100
+  const percentComplete = tasksCompletedPercentage(tasks) * 100
 
 
 
@@ -76,11 +91,13 @@ export const Profile = () => {
   return (
 
     <>
+
+    
     <div className={`min-h-screen bg-base-200`}>
       <div className="mx-auto card w-4/5 bg-base-100 shadow-xl">
-        <div className={`flex flex-col justify-around card-body ${ navigation.state === "loading" ? "tw-hidden" : ""}`}>
+        <div className={`flex flex-col justify-around card-body`}>
           <h2 className="card-title">
-            {userProfileResponse.data.userName.toUpperCase()}
+            {userProfileResponse.data.fName.toUpperCase()}
           </h2>
           <div className="flex flex-col items-center">
             <span>Weekly Task Report</span>

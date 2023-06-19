@@ -34,7 +34,9 @@ const router = createBrowserRouter([
       {
         path: "/profile/:userId",
         element: <Profile />,
-        loader: profileLoader
+        loader: profileLoader,
+        errorElement: <div className="min-h-screen">Oops! There was an error.</div>,
+        
       },
       {
         path: "/friends/:userId",

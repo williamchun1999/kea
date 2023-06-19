@@ -7,8 +7,6 @@ import { NavButton } from "../components/button/button";
 
 export const Navbar = () => {
 
-  
-
   //data for the buttons
   const buttons = [
     {
