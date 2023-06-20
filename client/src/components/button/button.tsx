@@ -27,6 +27,7 @@ type EditButtonProp= {
   password: string;
   controlSubmit: FormEventHandler<HTMLFormElement>;
   controlChange: ChangeEventHandler<HTMLInputElement>;
+
 }
 
 export const Add = () => {
@@ -265,6 +266,7 @@ export const EditUserButton = ({fName,lName,userName,email,password, controlSubm
                 value={password}
                 controlInput={controlChange}
                 type="password"
+                disabled = {true}
               />
               <button type="submit" className=" btn-ghost">
               <label htmlFor="editAccount" className="btn btn-primary">
