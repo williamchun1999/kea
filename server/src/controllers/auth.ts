@@ -107,7 +107,7 @@ export const authController = {
 
       if (validationErrors.length) {
         req.flash("errors", validationErrors);
-        return res.send({ message: validationErrors });
+        return res.status(400).send({ message: validationErrors });
       }
 
       req.body.email = validator.normalizeEmail(req.body.email, {
@@ -133,7 +133,7 @@ export const authController = {
           msg: "Account with that email address or username already exists.",
         });
         return res
-          .status(200)
+          .status(400)
           .send({
             message:
               "Account with that email address or username already exists.",

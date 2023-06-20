@@ -16,7 +16,7 @@ import { useAsync } from "react-async-hook";
 
 export const Home = () => {
   const [userTasks, setUserTasks] = useState<Array<Task>>([]);
-
+  
   // API CALLS
   const { error, result, loading } = useAsync(async () => {
     // Get User Info API Call

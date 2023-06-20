@@ -1,50 +1,31 @@
-import axios from 'axios';
-import { useState, useCallback } from 'react';
+import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
+import { axiosInstance } from "../../axios";
+import {BodyData} from "./postUserLogin"
 
+interface signUpBodyData extends BodyData {
+  fName: string
+  lName: string
+  userName: string
+  passwordC: string
+}
 
-
-
-export const useCreateUser = <T,>(
+export const useCreateUser = async (
   url: string,
-  headers?: T
-): {
-  post: (data: T) => Promise<void>,
-  loading: boolean,
-  error: string | null,
-  createUserResponse: T | null,
-
-} => {
-
-  const [createUserResponse, setResponseData] = useState<T | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const post = useCallback(
-    async (data: T) => {
-      console.log('post function called')
-      setLoading(true);
-
-      axios
-      
-      .post(url, data)
-      
-      .then((res: any) => {
-        console.log("run")
-        setResponseData(res.data.message)
-        //console.log(createUserResponse)
-      })
-
-      .catch((err: any) => {
-        console.log("error")
-        const msg = err.response.data.message
-        setError(msg)
-    
-      })
-
-      .finally(() => setLoading(false))
-    },
-    [url]
-  );
-  
-  return { createUserResponse, loading, error, post };
+  body: signUpBodyData,
+  axiosConfigOptions?: AxiosRequestConfig
+): Promise<AxiosResponse | null> => {
+  try {
+    const response = await axiosInstance.post(url, body, axiosConfigOptions);
+    console.log(response.data);
+    console.log("response status is: ", response.status);
+    return response;
+  } catch (err) {
+    if (isAxiosError(err)) {
+      console.log("Axios error: ", err);
+      return null;
+    } else {
+      console.log("unexpected error: ", err);
+      return null;
+    }
+  }
 };
