@@ -41,6 +41,7 @@ export const Home = () => {
 
       // Grab Friend Info
       const friendUserDataResponse = await useFetchUser(`/home/${userResponse.data.friends[i]}`)
+
       if (friendUserDataResponse === null || friendUserDataResponse.status !== 200) {
         throw new Error("Failed to fetch tasks");
       }
@@ -77,6 +78,7 @@ export const Home = () => {
     console.log("usertask response", userTasksResponse.data);
     setUserTasks(userTasksResponse.data);
   };
+
   return (
     <div className="h-screen relative sm:mx-16 lg:mx-24">
       {error && <div>ERROR</div>}

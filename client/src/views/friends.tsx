@@ -1,57 +1,60 @@
-import { FriendMenu } from '../components/FriendMenu';
-import { friendsTaskResponse } from '../common/fakeData';
-import { User } from '../common/types';
-import { useState } from 'react';
+import { FriendMenu } from "../components/FriendMenu";
+import { friendsTaskResponse } from "../common/fakeData";
+import { User } from "../common/types";
+import { useState } from "react";
+import { TextBox } from "../components/Form";
 
-const buttonStyle = "bg-base-200 btn btn-outline btn-primary btn-square sm:btn-sm md:btn-md lg:btn-lg no-animation"
-
-export const loader = async () => {
-  // const friendsTaskResponse = await getFriends();
-  return { friendsTaskResponse };
-}
+// const buttonStyle =
+//   "bg-base-200 btn btn-outline btn-primary btn-square sm:btn-sm md:btn-md lg:btn-lg no-animation";
+// export const Friends = () => {
+//   const [displayData, setDisplayData] = useState<Array<User>>(
+//     friendsTaskResponse.slice(0, 3)
+//   );
+const handleSubmit = () => {};
+const handleChange = () => {};
 
 export const Friends = () => {
-  const [totalDataIndex, setTotalDataIndex] = useState<number>(3);
-  const [displayData, setDisplayData] = useState<Array<User>>(friendsTaskResponse.slice(0, totalDataIndex));
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
-  const nextPage = () => {
-
-    // Base Case of no more display data
-    if (displayData.length < 3) {
-      return 
-    }
-
-    setDisplayData(friendsTaskResponse.slice((totalDataIndex), (totalDataIndex + 3)))
-    setCurrentPage(currentPage + 1);
-    setTotalDataIndex(totalDataIndex + 3)
-
-  }
-  const prevPage = () => {
-  
-    // Base Case of being on Page 1
-    if (currentPage === 1) {
-      return
-    }
-
-    setDisplayData(friendsTaskResponse.slice((totalDataIndex - 6), (totalDataIndex - 3)))
-    setCurrentPage(currentPage - 1);
-    setTotalDataIndex(totalDataIndex - 3)
-  }
-
+  const [formData, setFormData] = useState({
+    userName: "",
+  });
   return (
-    <div className='flex min-h-screen flex-col'>
-      <div className="flex justify-center bg-primary h-12 mb-4">
-        <h1 className='flex justify-center content-center flex-wrap'>Friends</h1>
+    <>
+      <div className="bg-primary h-24 mb-4 sticky top-0 z-10">
+        <div className="flex flex-col sm:flex-row h-full mx-4">
+          <h1 className="flex grow content-center flex-wrap font-bold text-xl lg:text-3xl">
+            Friends
+          </h1>
+          <form
+            onSubmit={handleSubmit}
+            className="flex content-center flex-wrap gap-x-4"
+          >
+            <h2 className="flex content-center flex-wrap">Add Friend</h2>
+            <input
+              type="text"
+              placeholder="username"
+              name="userName"
+              className="input input-bordered input-primary"
+              onChange={handleChange}
+              value={formData.userName}
+            />
+          </form>
+        </div>
       </div>
-      <div className='mx-4'>
-        <FriendMenu content={displayData} />
+      <div className="h-screen relative sm:mx-16 lg:mx-24">
+        <div>
+          <FriendMenu content={friendsTaskResponse} />
+        </div>
       </div>
-      <div className="btn-group flex mt-auto">
-        <button className={`${buttonStyle}`} onClick={prevPage}>«</button>
+    </>
+  );
+};
+
+/* <div className="btn-group flex mt-auto">
+        <button className={`${buttonStyle}`} onClick={prevPage}>
+          «
+        </button>
         <div className="bg-base-200 grow flex justify-center content-center flex-wrap">{`Page ${currentPage}`}</div>
-        <button className={`${buttonStyle}`} onClick={nextPage}>»</button>
-      </div>
-    </div>
-  )
-}
+        <button className={`${buttonStyle}`} onClick={nextPage}>
+          »
+        </button>
+      </div> */
