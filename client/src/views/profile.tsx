@@ -19,12 +19,20 @@ import { Add } from "../components/button/button";
 
 export async function loader({ params }: any) {
 
-  console.log('params: ', params)
-  const paramsId = params.userId
+  
+  let paramsId
+
+  if (params) {
+    paramsId = params.userId
+    console.log('yes params ', paramsId)
+  } else {
+    paramsId = ""
+    console.log('no params', paramsId)
+  }
+
+  return  { paramsId };
 
   
-  
-  return { paramsId };
 
 
 }
