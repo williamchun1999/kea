@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
 import { useAsync } from "react-async-hook";
 
@@ -11,10 +12,9 @@ import { useFetchUser } from "../hooks/user/fetchUser";
 import { useListTasks } from "../hooks/tasks";
 import { CreateTask } from "../components/CreateTask";
 
-
 export const Home = () => {
   const [userTasks, setUserTasks] = useState<Array<Task>>([]);
-
+  
   // API CALLS
   const { error, result, loading } = useAsync(async () => {
     // Get User Info API Call
@@ -22,6 +22,7 @@ export const Home = () => {
     if (userResponse === null || userResponse.status !== 200) {
       throw new Error("Failed to fetch user");
     }
+
     // Get User Tasks API Call
     const userTasksResponse = await useListTasks(
       "http://localhost:3000/home/tasks/"
@@ -30,7 +31,6 @@ export const Home = () => {
       throw new Error("Failed to fetch tasks");
     }
     setUserTasks(userTasksResponse.data);
-
     // Get Friends Tasks API Call (max 3 friends)
     const friendsTasks: Array<User> = [];
 
@@ -65,7 +65,7 @@ export const Home = () => {
       friendsTasks,
     }
   }, []);
-
+  
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
     const userTasksResponse = await useListTasks(

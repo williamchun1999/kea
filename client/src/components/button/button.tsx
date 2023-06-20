@@ -1,6 +1,9 @@
-import { useState } from "react";
+
+import { useState, ChangeEventHandler, FormEventHandler, MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 import { useUserLogout } from "../../hooks/user/logoutUser";
+
+import {TextBox} from "../Form"
 
 type ButtonProp = {
   color?: string;
@@ -13,7 +16,18 @@ type NavButtonProp = {
 
 type DeleteButtonProp = {
   userName: string;
+  controlDelete: MouseEventHandler<HTMLButtonElement>
 };
+
+type EditButtonProp= {
+  fName: string;
+  lName: string;
+  email: string;
+  userName: string;
+  password: string;
+  controlSubmit: FormEventHandler<HTMLFormElement>;
+  controlChange: ChangeEventHandler<HTMLInputElement>;
+}
 
 export const Add = () => {
   return (
@@ -85,11 +99,11 @@ export const DeleteButton = (props: DeleteButtonProp) => {
             <label htmlFor="deleteAccount" className="btn">
               Go Back
             </label>
-            <Link to="/">
+            <button onClick= {props.controlDelete} className=" btn-ghost">
               <label htmlFor="deleteAccount" className="btn btn-primary">
-                Confirm
+              Delete
               </label>
-            </Link>
+              </button>
           </div>
         </div>
       </div>
@@ -200,12 +214,73 @@ export const LogOutButton = () => {
   );
 };
 
-export const EditUserButton = () => {
+export const EditUserButton = ({fName,lName,userName,email,password, controlSubmit, controlChange,}: EditButtonProp) => {
+
+
   return (
     <>
-      <button className="btn btn-ghost w-screen border-2 border-primary">
+      <label
+        htmlFor="editAccount"
+        className="btn btn-ghost w-screen border-2 border-primary"
+      >
         Edit Account
-      </button>
+      </label>
+
+      <input type="checkbox" id="editAccount" className="modal-toggle" />
+      <div className="modal ">
+        <div className="modal-box ">
+          <form onSubmit={controlSubmit} className="flex flex-wrap justify-center md:justify-start md:gap-2">
+
+              <TextBox
+                  title="First Name"
+                  name="fName"
+                  value={fName}
+                  controlInput={controlChange}
+                  type="text"
+              />
+              <TextBox
+                  title="Last Name"
+                  name="lName"
+                  value={lName}
+                  controlInput={controlChange}
+                  type="text"
+                />
+              <TextBox
+                title="Email"
+                name="email"
+                value={email}
+                controlInput={controlChange}
+                type="text"
+              />
+              <TextBox
+                title="Username"
+                name="userName"
+                value={userName}
+                controlInput={controlChange}
+                type="text"
+              />
+              <TextBox
+                title="Password"
+                name="password"
+                value={password}
+                controlInput={controlChange}
+                type="password"
+              />
+              <button type="submit" className=" btn-ghost">
+              <label htmlFor="editAccount" className="btn btn-primary">
+              Update Info
+              </label>
+              </button>
+          </form>
+          {/* modal buttons */}
+          <div className="modal-action">
+            <label htmlFor="editAccount" className="btn">
+              Go Back
+            </label>
+          </div>
+        </div>
+      </div>
+
     </>
   );
 };

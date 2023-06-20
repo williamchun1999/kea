@@ -1,31 +1,26 @@
-import  {useState, useEffect} from "react";
-import axios from "axios";
+import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
+import { axiosInstance  } from "../../axios";
 
 
-
-export const useDeleteUser = <T>(
+export const useDeleteUser = async (
   url: string,
-  
-)=> {
-
-  const[deleteUserData, setResponseData] = useState<T| null>(null)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    axios
-      .delete(url)
-
-      .then((res: any) => {
-        setResponseData(res.data)
-      })
-
-      .catch((err: any) =>{
-        setError(err)
+  axiosConfigOptions?: AxiosRequestConfig
+):Promise<AxiosResponse | null> => {
+    try {
+      const response = await axiosInstance.delete(url, axiosConfigOptions)
+      console.log('response status is: ', response.status);
+      console.log('response data is: ', response.data);
+      return response;
+    }
+    catch (err) {
+      if (isAxiosError(err)) {
+        console.log("Axios error: ", err);
+        return null;
+      } else {
+        console.log("unexpected error: ", err);
+        return null;
       }
-      )
-  }, [])
-
-
-  return { deleteUserData, error }
-}
-
+    }
+  }
+  
+        
