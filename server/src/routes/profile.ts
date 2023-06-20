@@ -11,4 +11,4 @@ profileRouter.post("/tasks", taskController.createTask);
 profileRouter.patch("/tasks/:taskId", taskController.updateTask);
 profileRouter.delete("/tasks/:taskId", taskController.deleteTask);
 // Get user
-profileRouter.get("/userId?", authMiddleware.ensureAuth, userController.getUser);
+profileRouter.get("/:userId?", authMiddleware.ensureAuth, userController.getUser);

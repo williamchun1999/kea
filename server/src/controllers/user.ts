@@ -6,6 +6,7 @@ export const userController = {
   getUser: async (req: Request, res: Response) => {
     const currentUser = req.user as IUser;
     const { userId } = req.params;
+    console.log('userID:' , userId)
     try {
       const { _id, fName, lName, friends, userName, email, password } =
         await User.findById(userId ?? currentUser._id);

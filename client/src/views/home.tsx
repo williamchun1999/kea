@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
 
 import { FriendTaskOverview } from "../components/FriendTaskOverview";
@@ -25,6 +26,8 @@ export const Home = () => {
       throw new Error("Failed to fetch user");
     }
 
+    console.log('user info: ' , userResponse)
+
     // Get User Tasks API Call
     const userTasksResponse = await useListTasks(
       "http://localhost:3000/home/tasks/"
@@ -34,6 +37,9 @@ export const Home = () => {
     }
     console.log("usertask response", userTasksResponse.data);
     setUserTasks(userTasksResponse.data);
+
+
+
     // Get Friends Tasks API Call (max 3 friends)
     const friendTasksResponse = await useListTasks(
       `http://localhost:3000/home/tasks/${userResponse.data.friends[0]}`
@@ -45,6 +51,8 @@ export const Home = () => {
     return userResponse.data;
   }, []);
 
+
+  
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
     const userTasksResponse = await useListTasks(
