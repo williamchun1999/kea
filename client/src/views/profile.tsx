@@ -12,16 +12,29 @@ import { useAsync } from "react-async-hook";
 
 import { useListTasks } from "../hooks/tasks";
 import { CreateTask } from "../components/CreateTask";
-
 import { Add } from "../components/button/button";
 
+
+
+
+export async function loader({ params }: any) {
+
+  console.log('params: ', params)
+  const paramsId = params.userId
+
+  
+  
+  return { paramsId };
+
+
+}
 
 
 
 export const Profile = () => {
 
  
-  
+  const { paramsId } = useLoaderData();
   
 /*  const { userId } = useParams(); 
   console.log(userId) */
@@ -69,6 +82,7 @@ export const Profile = () => {
     <>
     {error && <div className="min-h-screen">ERROR</div>}
     {loading && <div className="min-h-screen">Loading...</div>}
+    {paramsId && <h1>PARAMS!!!!</h1>}
     { result && 
     <div className="min-h-screen bg-base-200 pt-8">
       <div className="mx-auto card w-4/5 bg-base-100 shadow-xl lg:w-[60%]">
