@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 const buttonStyle = "bg-base-200 btn btn-outline btn-primary btn-square sm:btn-sm md:btn-md lg:btn-lg no-animation"
 
-export async function loader() {
+export const loader = async () => {
   // const friendsTaskResponse = await getFriends();
   return { friendsTaskResponse };
 }
@@ -47,7 +47,7 @@ export const Friends = () => {
       <div className='mx-4'>
         <FriendMenu content={displayData} />
       </div>
-      <div className="btn-group flex mt-auto mb-16">
+      <div className="btn-group flex mt-auto">
         <button className={`${buttonStyle}`} onClick={prevPage}>«</button>
         <div className="bg-base-200 grow flex justify-center content-center flex-wrap">{`Page ${currentPage}`}</div>
         <button className={`${buttonStyle}`} onClick={nextPage}>»</button>

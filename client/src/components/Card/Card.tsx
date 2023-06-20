@@ -1,8 +1,8 @@
 import { CSSProperties } from "react";
-import bear from "../../assets/bear.png"
+
+import bear from "../../assets/bear.png";
 
 type CardProps = {
-  userName: string;
   tasks: Array<{
     taskName: string;
     taskType: string;
@@ -11,32 +11,13 @@ type CardProps = {
   }>;
 };
 
-export const Card = (props:CardProps) => {
- 
-  // useEffect(() => {
-  //   async function getData() {
-  //     try {
-  //       const res = await fetch("");
-  //       const data = await res.json();
-  //       //need to do calculations with the data fetched from db, then setstate to that %
- 
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
+export const Card = (props: CardProps) => {
 
-  //   getData();
+  let countTaskDone = 0
+  let totalTask = props.tasks.length
+  props.tasks.forEach(task => task.taskCompleted ? countTaskDone += 1 : countTaskDone)
+  let percentComplete = (countTaskDone / totalTask) * 100
 
-  //   return () => {
-  //     // setProgress(0)
-  //   };
-  // }, [progress]);
-
-  let countTaskDone=0
-  let totalTask = props.tasks.length  
-  props.tasks.forEach(task => task.taskCompleted ? countTaskDone+= 1 : countTaskDone)
-  let percentComplete = (countTaskDone/totalTask) *100
- 
   return (
     <>
       <div
@@ -46,15 +27,15 @@ export const Card = (props:CardProps) => {
             <h2 className="card-title">Today's Goal:</h2>
             <p className="text-base-500">
               {countTaskDone} of {totalTask} completed
-            <img src={bear} className="w-32 h-full"></img>
+              <img src={bear} className="w-32 h-full"></img>
             </p>
           </div>
-            <div
-              className="radial-progress text-base-500"
-              style={{ "--value": percentComplete, "--size": "7rem", "--thickness": "0.8rem"} as CSSProperties}
-            >
-              {Math.round(percentComplete)}%
-            </div>
+          <div
+            className="radial-progress text-base-500"
+            style={{ "--value": percentComplete, "--size": "7rem", "--thickness": "0.8rem" } as CSSProperties}
+          >
+            {Math.round(percentComplete)}%
+          </div>
         </div>
       </div>
     </>

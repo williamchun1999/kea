@@ -74,6 +74,6 @@ export const taskController = {
 
     await Task.findByIdAndDelete(taskId);
 
-    res.json({ message: "Post deleted successfully." });
+    res.status(200).json({ message: "Post deleted successfully." });
   },
 };

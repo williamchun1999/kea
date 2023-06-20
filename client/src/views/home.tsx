@@ -1,20 +1,19 @@
 import { useState } from "react";
+import { useAsync } from "react-async-hook";
 
 import { FriendTaskOverview } from "../components/FriendTaskOverview";
 import { Add, LogOutButton } from "../components/button/button";
 import { Card } from "../components/card/Card";
-import { friendsTaskResponse } from "../common/fakeData";
 import { UserTaskOverview } from "../components/UserTaskOverview";
-import { Task } from "../common/types";
+import { Task, User } from "../common/types";
 import { SeeAll } from "../components/SeeAll";
 import { useFetchUser } from "../hooks/user/fetchUser";
 import { useListTasks } from "../hooks/tasks";
 import { CreateTask } from "../components/CreateTask";
-import { useAsync } from "react-async-hook";
+
 
 export const Home = () => {
   const [userTasks, setUserTasks] = useState<Array<Task>>([]);
-  const [friendsTasks, setFriendsTasks] = useState<Array<Array<Task>>>([]);
 
   // API CALLS
   const { error, result, loading } = useAsync(async () => {
@@ -23,7 +22,6 @@ export const Home = () => {
     if (userResponse === null || userResponse.status !== 200) {
       throw new Error("Failed to fetch user");
     }
-
     // Get User Tasks API Call
     const userTasksResponse = await useListTasks(
       "http://localhost:3000/home/tasks/"
@@ -31,22 +29,41 @@ export const Home = () => {
     if (userTasksResponse === null || userTasksResponse.status !== 200) {
       throw new Error("Failed to fetch tasks");
     }
-    console.log("usertask response", userTasksResponse.data);
     setUserTasks(userTasksResponse.data);
+
     // Get Friends Tasks API Call (max 3 friends)
+    const friendsTasks: Array<User> = [];
+
     for (let i = 0; i < 3; i++) {
-      if (!userResponse.data.friends[i]) {
+      if (userResponse.data.friends[i] === undefined) {
         break;
       }
+
+      // Grab Friend Info
+      const friendUserDataResponse = await useFetchUser(`/home/${userResponse.data.friends[i]}`)
+      if (friendUserDataResponse === null || friendUserDataResponse.status !== 200) {
+        throw new Error("Failed to fetch tasks");
+      }
+
+      // Grab Friend Tasks
       const friendTasksResponse = await useListTasks(
         `/home/tasks/${userResponse.data.friends[i]}`
       );
+
       if (friendTasksResponse === null || friendTasksResponse.status !== 200) {
         throw new Error("Failed to fetch tasks");
       }
-      setFriendsTasks((prevState) => [...prevState, friendTasksResponse.data]);
+
+      friendsTasks.push({
+        userName: friendUserDataResponse.data.userName,
+        uuid: friendUserDataResponse.data.id,
+        tasks: friendTasksResponse.data,
+      })
     }
-    return userResponse.data;
+    return  {
+      userData: userResponse.data,
+      friendsTasks,
+    }
   }, []);
 
   // Fetch Task Callback function after CRUD operation.
@@ -60,7 +77,6 @@ export const Home = () => {
     console.log("usertask response", userTasksResponse.data);
     setUserTasks(userTasksResponse.data);
   };
-
   return (
     <div className="h-screen relative sm:mx-16 lg:mx-24">
       {error && <div>ERROR</div>}
@@ -79,14 +95,14 @@ export const Home = () => {
                 }).format(new Date())}
               </h4>
               <h1 className="text-3xl font-semibold pl-3">
-                Welcome,{" "}
-                <span className="text-primary font-bold">{result.fName}</span>
+                {"Welcome, "}
+                <span className="text-primary font-bold">{result.userData.fName}</span>
               </h1>
             </div>
             <LogOutButton />
           </div>
 
-          <Card userName={result.userName} tasks={userTasks} />
+          <Card tasks={userTasks} />
           <div className="tasks w-full p-4">
             <div className="flex justify-between">
               <h2 className="text-2xl">Weekly Tasks</h2>
@@ -101,7 +117,7 @@ export const Home = () => {
               <SeeAll />
             </div>
           </div>
-          <FriendTaskOverview friendsTasks={friendsTaskResponse.slice(0, 3)} />
+          <FriendTaskOverview friendsTasks={result.friendsTasks} />
         </>
       )}
     </div>

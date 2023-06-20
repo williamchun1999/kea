@@ -57,7 +57,7 @@ const TaskInput = ({ task, onUpdate }: TaskInputProps) => {
     }
   };
 
-  //close the modals
+
   const deleteTask = async () => {
     /* delete task api call */
     try {
@@ -65,7 +65,7 @@ const TaskInput = ({ task, onUpdate }: TaskInputProps) => {
       if (result === null || result.status !== 200) {
         console.log("error");
       } else {
-        console.log("update task api data", result.data);
+        console.log("delete succesful", result);
         /* callback of fetch tasks */
         onUpdate();
       }
