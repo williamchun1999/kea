@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties, useState } from "react";
 
 import { UserTaskOverview } from '../components/UserTaskOverview';
 import { Task } from '../common/types';
 import { currentUserDataResponse } from "../common/fakeData";
 import { tasksCompletedPercentage } from "../common/weeklyTasksCalculation";
-import { useLoaderData, useNavigation } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { useFetchUser } from "../hooks/user/fetchUser";
 import { useAsync } from "react-async-hook";
 //import { Form, useLoaderData } from "react-router-dom";
@@ -60,14 +60,8 @@ export const Profile = () => {
   };
 
 
-
-
-
-
   // Calculate percentage for display
   const percentComplete = tasksCompletedPercentage(tasks) * 100
-
-
 
 
   return (
@@ -83,7 +77,7 @@ export const Profile = () => {
             {result.fName.toUpperCase()}
           </h2>
           <div className="flex flex-col items-center">
-            <span className="block w-full card-title md:text-[2rem]">Weekly Task Report</span>
+            <span className="block w-full card-title text-[1.5rem] md:text-[2rem]">Weekly Task Report</span>
           
             <div
               className="mt-8 radial-progress bg-primary text-primary-content border-4 border-primary"
@@ -100,7 +94,7 @@ export const Profile = () => {
           </div>
           <div className="mt-4">
             <div className="flex justify-between">
-              <h3 className="card-title text-[1.5rem] mb-4">Tasks</h3>
+              <h3 className="card-title text-[1.5rem] mb-4">My Tasks</h3>
               <Add />
               <CreateTask callback={fetchTasks} />
             </div>
