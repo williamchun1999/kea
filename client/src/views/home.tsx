@@ -78,7 +78,7 @@ export const Home = () => {
     setUserTasks(userTasksResponse.data);
   };
   return (
-    <div className="h-screen relative sm:mx-16 lg:mx-24">
+    <div className="min-h-screen relative sm:mx-16 lg:mx-24 pb-[50px] pt-[20px]">
       {error && <div>ERROR</div>}
       {loading && <div>Loading...</div>}
       {/* In Future Need Loading Page View  */}
