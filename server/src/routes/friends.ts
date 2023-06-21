@@ -4,5 +4,5 @@ import { taskController } from "../controllers/task";
 
 export const friendsRouter = express.Router();
 
-friendsRouter.get("/tasks", taskController.getTasks);
+friendsRouter.get("/:id", taskController.getTasks);
 // list users
