@@ -8,12 +8,12 @@ import { useUpdateTask } from "../hooks/tasks";
 interface TaskProps {
   //type Task for the array
   tasks: Array<Task>;
-
+  userId: boolean;
   onUpdate: () => void; // Actual function will have no parameters
   
 }
 
-export const UserTaskOverview = ({ tasks, onUpdate }: TaskProps) => {
+export const UserTaskOverview = ({ tasks, onUpdate , userId }: TaskProps) => {
   console.log(tasks);
   const [loading, setLoading] = useState(false);
 
@@ -58,7 +58,7 @@ export const UserTaskOverview = ({ tasks, onUpdate }: TaskProps) => {
         className="checkbox checkbox-primary"
         checked={task.taskCompleted}
         onClick={() => toggleCheckbox(task)}
-        disabled={loading}
+        disabled={userId || loading}
       />
     );
   };
@@ -82,7 +82,7 @@ export const UserTaskOverview = ({ tasks, onUpdate }: TaskProps) => {
                   {checkTaskType(task)}
                 </label>
 
-                <TaskInput task={task} onUpdate={onUpdate}/>
+                {userId ? null : <TaskInput task={task} onUpdate={onUpdate}/>}
               </li>
             );
           })}

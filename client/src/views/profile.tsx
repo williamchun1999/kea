@@ -5,7 +5,7 @@ import { UserTaskOverview } from '../components/UserTaskOverview';
 import { Task } from '../common/types';
 import { currentUserDataResponse } from "../common/fakeData";
 import { tasksCompletedPercentage } from "../common/weeklyTasksCalculation";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData , useParams } from "react-router-dom";
 import { useFetchUser } from "../hooks/user/fetchUser";
 import { useAsync } from "react-async-hook";
 //import { Form, useLoaderData } from "react-router-dom";
@@ -16,57 +16,60 @@ import { Add } from "../components/button/button";
 
 
 
-
-export async function loader({ params }: any) {
-
-  
-  let paramsId
-
-  if (params) {
-    paramsId = params.userId
-    console.log('yes params ', paramsId)
-  } else {
-    paramsId = ""
-    console.log('no params', paramsId)
-  }
-
-  return  { paramsId };
-
-  
-
-
-}
-
-
-
 export const Profile = () => {
 
- 
-  const { paramsId } = useLoaderData();
-  
-/*  const { userId } = useParams(); 
-  console.log(userId) */
-  
-  // To Chloe: REFER TO HOME PAGE FOR API CALL SET UP
+  console.log('PROFILE PAGE RUN')
+
+
+  const { userId } = useParams(); 
+  console.log(userId)
+
   const [tasks, setTasks] = useState<Array<Task>>(currentUserDataResponse.tasks)
 
 
   const { error, result, loading } = useAsync(async () => {
-    const userProfileResponse = await useFetchUser(`http://localhost:3000/profile`);
-  console.log('userProfileResponse:', userProfileResponse)
-  if (userProfileResponse === null || userProfileResponse.status !== 200) {
-    throw new Error("Failed to fetch user");
-  }
 
-  const userProfileTaskResponse = await useListTasks(`http://localhost:3000/profile/tasks`);
-  console.log('userProfileTaskResponse:', userProfileTaskResponse)
-  if (userProfileTaskResponse === null || userProfileTaskResponse.status !== 200) {
-    throw new Error("Failed to fetch tasks");
-  }
-  setTasks(userProfileTaskResponse.data)
+
+    if (userId) {
+      const userProfileResponse = await useFetchUser(`http://localhost:3000/profile/${userId}`);
+      console.log('userProfileResponse:', userProfileResponse)
+      if (userProfileResponse === null || userProfileResponse.status !== 200) {
+        throw new Error("Failed to fetch user");
+      }
+
+      const userProfileTaskResponse = await useListTasks(`http://localhost:3000/profile/tasks/${userId}`);
+      console.log('userProfileTaskResponse:', userProfileTaskResponse)
+      if (userProfileTaskResponse === null || userProfileTaskResponse.status !== 200) {
+        throw new Error("Failed to fetch tasks");
+      }
+      setTasks(userProfileTaskResponse.data)
 
     return userProfileResponse.data
-  }, []);
+
+    } else {
+      const userProfileResponse = await useFetchUser(`http://localhost:3000/profile`);
+      console.log('userProfileResponse:', userProfileResponse)
+      if (userProfileResponse === null || userProfileResponse.status !== 200) {
+        throw new Error("Failed to fetch user");
+      }
+
+      const userProfileTaskResponse = await useListTasks(`http://localhost:3000/profile/tasks`);
+      console.log('userProfileTaskResponse:', userProfileTaskResponse)
+      if (userProfileTaskResponse === null || userProfileTaskResponse.status !== 200) {
+        throw new Error("Failed to fetch tasks");
+      }
+      setTasks(userProfileTaskResponse.data)
+
+    return userProfileResponse.data
+
+    }
+
+    
+    
+  }, [userId]);
+
+  
+
 
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
@@ -90,7 +93,6 @@ export const Profile = () => {
     <>
     {error && <div className="min-h-screen">ERROR</div>}
     {loading && <div className="min-h-screen">Loading...</div>}
-    {paramsId && <h1>PARAMS!!!!</h1>}
     { result && 
     <div className="min-h-screen bg-base-200 pt-8">
       <div className="mx-auto card w-4/5 bg-base-100 shadow-xl lg:w-[60%]">
@@ -116,12 +118,12 @@ export const Profile = () => {
           </div>
           <div className="mt-4">
             <div className="flex justify-between">
-              <h3 className="card-title text-[1.5rem] mb-4">My Tasks</h3>
-              <Add />
-              <CreateTask callback={fetchTasks} />
+              <h3 className="card-title text-[1.5rem] mb-4">{ userId ? `${result.fName.toUpperCase()}'s Tasks` : "My Tasks"}</h3>
+              {userId ? null : <Add />}
+              {userId ? null :<CreateTask callback={fetchTasks} />}
             </div>
            
-            <UserTaskOverview tasks={tasks} onUpdate={fetchTasks} /> 
+           { userId ? <UserTaskOverview tasks={tasks} onUpdate={fetchTasks} userId={true}/> : <UserTaskOverview tasks={tasks} onUpdate={fetchTasks} userId={false}/>}
           </div>
         </div>
       </div>
