@@ -1,12 +1,93 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useState, ChangeEventHandler, FormEventHandler } from "react";
+import { useAsync } from "react-async-hook";
+import axios from "axios";
+
+import { axiosInstance  } from "../axios";
 import { FriendMenu } from "../components/FriendMenu";
 import { friendsTaskResponse } from "../common/fakeData";
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { useFetchUser } from "../hooks/user/fetchUser";
+import { useListTasks } from "../hooks/tasks";
 
 export const Friends = () => {
+  const [friendsList, setFriendsList] = useState<string[]>([]);
+
+
+  // API CALLS 
+  
+  const { error, result, loading } = useAsync(async () => {
+
+    // Get User Info API Call
+    const userResponse = await useFetchUser("http://localhost:3000/friends");
+    if (userResponse === null || userResponse.status !== 200) {
+      throw new Error("Failed to fetch user");
+    }
+    setFriendsList(userResponse.data.friends);
+    // console.log("friendsList",friendsList)
+    // console.log("userResponse",userResponse.data.friends)
+    
+    //Get Friends Info API Call and the Friends Task API call
+
+  
+    // if (friendsList.length === 0) {
+    //   continue;
+    // }
+    // else {
+      // axios
+      //   .all(userResponse.data.friends.map((friendID) => useListTasks(`http://localhost:3000/friends/${friendID}`)))
+      //   .then((data) => console.log("data",data)
+      // );
+
+    //implementation for when there are no friends in user 
+      try {
+        const friendIDs = userResponse.data.friends;
+
+        //Get friends Info API Call 
+        const friendsInfoEndpoint = friendIDs.map((friendID) => useFetchUser(`http://localhost:3000/friends/${friendID}`));
+        const friendsInfoRes = await axios.all(friendsInfoEndpoint);
+        const friendInfoData = friendsInfoRes.map((response) => response ? response.data : null);
+        console.log("infodata", friendInfoData);
+
+        //Get friends Task API Call 
+        const friendsTaskEndpoint = friendIDs.map((friendID) => useListTasks(`http://localhost:3000/friends/tasks/${friendID}`));
+        const friendsTaskRes = await axios.all(friendsTaskEndpoint);
+        const friendTasksData = friendsTaskRes.map((response) => response ? response.data : null);
+        console.log("tasksdata", friendTasksData);
+
+      } catch (error) {
+        console.error("Error:", error);
+      }
+
+    
+
+
+  //     // Grab Friend Tasks
+  //     const friendTasksResponse = await useListTasks(
+  //       `/home/tasks/${userResponse.data.friends[i]}`
+  //     );
+
+  //     if (friendTasksResponse === null || friendTasksResponse.status !== 200) {
+  //       throw new Error("Failed to fetch tasks");
+  //     }
+
+  //     friendsTasks.push({
+  //       userName: friendUserDataResponse.data.userName,
+  //       uuid: friendUserDataResponse.data.id,
+  //       tasks: friendTasksResponse.data,
+  //     })
+  //   }
+  //   return {
+  //     userData: userResponse.data,
+  //     friendsTasks,
+  //   }
+  }, []);
+
+
+  //form control 
   const [formData, setFormData] = useState({
     userName: "",
   });
-
+  
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
     // Add Friend API here
@@ -47,6 +128,7 @@ export const Friends = () => {
         <div>
           <FriendMenu content={friendsTaskResponse} />
         </div>
+       
       </div>
     </>
   );
