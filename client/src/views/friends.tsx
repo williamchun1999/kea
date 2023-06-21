@@ -1,22 +1,25 @@
 import { FriendMenu } from "../components/FriendMenu";
 import { friendsTaskResponse } from "../common/fakeData";
-import { User } from "../common/types";
-import { useState } from "react";
-import { TextBox } from "../components/Form";
-
-// const buttonStyle =
-//   "bg-base-200 btn btn-outline btn-primary btn-square sm:btn-sm md:btn-md lg:btn-lg no-animation";
-// export const Friends = () => {
-//   const [displayData, setDisplayData] = useState<Array<User>>(
-//     friendsTaskResponse.slice(0, 3)
-//   );
-const handleSubmit = () => {};
-const handleChange = () => {};
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
 
 export const Friends = () => {
   const [formData, setFormData] = useState({
     userName: "",
   });
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault()
+    // Add Friend API here
+  };
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setFormData(prev => {
+      return {
+        ...prev,
+        [event.target.name]: event.target.value
+      }
+    })
+  }
   return (
     <>
       <div className="bg-primary h-24 mb-4 sticky top-0 z-10">
@@ -28,7 +31,7 @@ export const Friends = () => {
             onSubmit={handleSubmit}
             className="flex content-center flex-wrap gap-x-4"
           >
-            <h2 className="flex content-center flex-wrap">Add Friend</h2>
+            <button className="flex content-center flex-wrap">Add Friend</button>
             <input
               type="text"
               placeholder="username"
@@ -49,12 +52,3 @@ export const Friends = () => {
   );
 };
 
-/* <div className="btn-group flex mt-auto">
-        <button className={`${buttonStyle}`} onClick={prevPage}>
-          «
-        </button>
-        <div className="bg-base-200 grow flex justify-center content-center flex-wrap">{`Page ${currentPage}`}</div>
-        <button className={`${buttonStyle}`} onClick={nextPage}>
-          »
-        </button>
-      </div> */

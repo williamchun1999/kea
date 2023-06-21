@@ -14,7 +14,7 @@ import { CreateTask } from "../components/CreateTask";
 
 export const Home = () => {
   const [userTasks, setUserTasks] = useState<Array<Task>>([]);
-  
+
   // API CALLS
   const { error, result, loading } = useAsync(async () => {
     // Get User Info API Call
@@ -43,7 +43,7 @@ export const Home = () => {
       const friendUserDataResponse = await useFetchUser(`/home/${userResponse.data.friends[i]}`)
 
       if (friendUserDataResponse === null || friendUserDataResponse.status !== 200) {
-        throw new Error("Failed to fetch tasks");
+        throw new Error("Failed to fetch user");
       }
 
       // Grab Friend Tasks
@@ -61,12 +61,12 @@ export const Home = () => {
         tasks: friendTasksResponse.data,
       })
     }
-    return  {
+    return {
       userData: userResponse.data,
       friendsTasks,
     }
   }, []);
-  
+
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
     const userTasksResponse = await useListTasks(
