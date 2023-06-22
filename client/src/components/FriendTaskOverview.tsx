@@ -26,7 +26,7 @@ export const FriendTaskOverview = ({ friendsTasks }: FriendsTasksProps) => {
                 >
                   <div className="flex w-full justify-between">
                     <span>{friend.userName}</span>
-                    <span>{`${percentage * 100}% tasks completed`}</span>
+                    <span>{`${Math.round(percentage * 100)}% tasks completed`}</span>
                   </div>
                   <progress
                     className="progress progress-primary"

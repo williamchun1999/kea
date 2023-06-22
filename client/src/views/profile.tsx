@@ -5,7 +5,7 @@ import { UserTaskOverview } from '../components/UserTaskOverview';
 import { Task } from '../common/types';
 import { currentUserDataResponse } from "../common/fakeData";
 import { tasksCompletedPercentage } from "../common/weeklyTasksCalculation";
-import { useLoaderData , useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useFetchUser } from "../hooks/user/fetchUser";
 import { useAsync } from "react-async-hook";
 //import { Form, useLoaderData } from "react-router-dom";
@@ -17,8 +17,6 @@ import { Add } from "../components/button/button";
 
 
 export const Profile = () => {
-
-  console.log('PROFILE PAGE RUN')
 
 
   const { userId } = useParams(); 
@@ -63,8 +61,6 @@ export const Profile = () => {
     return userProfileResponse.data
 
     }
-
-    
     
   }, [userId]);
 
