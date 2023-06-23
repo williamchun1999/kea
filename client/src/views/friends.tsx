@@ -20,45 +20,44 @@ export const Friends = () => {
     if (userResponse === null || userResponse.status !== 200) {
       throw new Error("Failed to fetch user");
     }
+    console.log("userResponse",userResponse.data.friends)
     setFriendsList(userResponse.data.friends);
     // console.log("friendsList",friendsList)
-    // console.log("userResponse",userResponse.data.friends)
 
     //Get Friends Info API Call and the Friends Task API call
     let friendsTasks: Array<User> = [];
 
-    //implementation for when there are no friends in user
-    // if (friendsList.length === 0) {
-    //   friendsTasks = []
-
-    // }
     const friendIDs = userResponse.data.friends;
 
+
     //Get friends Info API Call
-    const friendsInfoEndpoint = friendIDs.map((friendID) =>
-      useFetchUser(`http://localhost:3000/friends/${friendID}`)
-    );
-    const friendsInfoRes = await axios.all(friendsInfoEndpoint);
-    const friendInfoData = friendsInfoRes.map((response) =>
-      response ? response.data : null
-    );
-    console.log("infodata", friendInfoData);
+    
+    const friendsInfoEndpoint= friendIDs.map((friendID) => `http://localhost:3000/friends/${friendID}`)
+    const friendInfoResp = await axios.all(friendsInfoEndpoint.map((endpoint) => useFetchUser(endpoint)))
+    const friendInfoData = friendInfoResp.map((response) => {
+      if (response && response.data) {
+        return response.data;
+      }
+      throw new Error ("failed to get friends info")
+    });
 
-    //Get friends Task API Call
-    const friendsTaskEndpoint = friendIDs.map((friendID) =>
-      useListTasks(`http://localhost:3000/friends/tasks/${friendID}`)
-    );
-    const friendsTaskRes = await axios.all(friendsTaskEndpoint);
-    const friendTasksData = friendsTaskRes.map((response) =>
-      response ? response.data : null
-    );
-    console.log("tasksdata", friendTasksData);
+   console.log("friendInfoData", friendInfoData)
 
-    // if (friendTasksData === null || friendsInfoData === null) {
+  
+     //Get friends Task API Call
+    
+     const friendsTaskEndpoint= friendIDs.map((friendID) => `http://localhost:3000/friends/tasks/${friendID}`)
+     const friendTasksResp = await axios.all(friendsTaskEndpoint.map((endpoint) => useListTasks(endpoint)))
+     const friendTasksData = friendTasksResp.map((response) => {
+       if (response && response.data) {
+         return response.data;
+       }
+       throw new Error ("failed to get friends' tasks");
+     });
 
-    // }
+  
     //add to friendsTasks array
-    for (let i = 0; i < friendsList.length; i++) {
+    for (let i = 0; i < userResponse.data.friends.length; i++) {
       friendsTasks.push({
         userName: friendInfoData[i].userName,
         uuid: friendInfoData[i].id,
@@ -66,6 +65,7 @@ export const Friends = () => {
       });
     }
     console.log("friendsTasks", friendsTasks);
+
     return {
       friendsTasks: friendsTasks,
     };
