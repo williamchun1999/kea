@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
 import { User, IUser } from "../models/User";
 
@@ -6,7 +6,7 @@ export const userController = {
   getUser: async (req: Request, res: Response) => {
     const currentUser = req.user as IUser;
     const { userId } = req.params;
-    console.log('userID:' , userId)
+    console.log("userID:", userId);
     try {
       const { _id, fName, lName, friends, userName, email, password } =
         await User.findById(userId ?? currentUser._id);
@@ -67,37 +67,51 @@ export const userController = {
       res.send({ message: err.message });
     }
   },
+
+  deleteUserFromFriendsLists: async (req: Request, res: Response) => {
+    //get currentUser's ID
+    const currentUser = req.user as IUser;
+
+    try {
+      //find users with the friendsId in friends List and update the friends array
+      const result = await User.updateMany(
+        { friends: currentUser._id },
+        {
+          $pull: {
+            friends: currentUser._id,
+          },
+        }
+      );
+
+      console.log("Deleted user from friends list of all users");
+      console.log('deleteUserFromFriendsList Result', result);
+      res.status(200).send(result);
+    } catch (err) {
+      console.log(err);
+      res.status(409).send({ message: err.message });
+    }
+  },
   updateUser: async (req: Request, res: Response) => {
     //assuming that the form already contains the information for user
-    const { fName, lName, userName, email, password, friends } = req.body;
+    const { fName, lName, userName, email } = req.body;
 
     //get currentUser's ID
     const currentUser = req.user as IUser;
+
+    // Update User Body
+    const updatedUser = {
+      fName,
+      lName,
+      userName,
+      email,
+    };
     try {
-      const user = await User.findOneAndUpdate(
-        { _id: currentUser._id },
-        {
-          $set: {
-            fName: fName,
-            lName: lName,
-            userName: userName,
-            email: email,
-            password: password,
-            friends: friends,
-          },
-        },
-        { new: true }
-      );
-
-      if (!user) {
-        return res.send({ message: "User not found" });
-      }
-
+      await User.findByIdAndUpdate(currentUser._id, updatedUser, { new: true });
       console.log("Updated User Information");
-      res.send(user);
+      return res.status(200).send(updatedUser);
     } catch (err) {
       console.log(err);
-      res.send({ message: err.message });
+      res.status(409).send({ message: err.message });
     }
   },
 };

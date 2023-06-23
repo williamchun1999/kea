@@ -7,7 +7,7 @@ import { IUser } from "../models/User";
 export const taskController = {
   getTasks: async (req: Request, res: Response) => {
     const currentUser = req.user as IUser;
-    console.log("req.user", req.user)
+    console.log("req.user", req.user);
     const { userId } = req.params;
     try {
       const tasks = await Task.find({
@@ -76,5 +76,18 @@ export const taskController = {
     await Task.findByIdAndDelete(taskId);
 
     res.status(200).json({ message: "Post deleted successfully." });
+  },
+  deleteAllTasks: async (req: Request, res: Response) => {
+    const currentUser = req.user as IUser;
+
+    try {
+      const result = await Task.deleteMany({ userId: currentUser._id });
+      console.log("Deleted all tasks from user");
+      console.log("DeleteAllTasks Result", result);
+      res.status(200).send(result);
+    } catch (err) {
+      console.log(err);
+      res.status(409).send({ message: err.message });
+    }
   },
 };
