@@ -10,7 +10,7 @@ import { useListTasks } from "../hooks/tasks";
 import { User } from "../common/types";
 
 export const Friends = () => {
-  const [friendsList, setFriendsList] = useState<string[]>([]);
+  // const [friendsList, setFriendsList] = useState<string[]>([]);
 
   // API CALLS
 
@@ -20,8 +20,8 @@ export const Friends = () => {
     if (userResponse === null || userResponse.status !== 200) {
       throw new Error("Failed to fetch user");
     }
-    console.log("userResponse",userResponse.data.friends)
-    setFriendsList(userResponse.data.friends);
+
+    // setFriendsList(userResponse.data.friends);
     // console.log("friendsList",friendsList)
 
     //Get Friends Info API Call and the Friends Task API call
@@ -40,8 +40,6 @@ export const Friends = () => {
       }
       throw new Error ("failed to get friends info")
     });
-
-   console.log("friendInfoData", friendInfoData)
 
   
      //Get friends Task API Call
@@ -64,8 +62,6 @@ export const Friends = () => {
         tasks: friendTasksData[i],
       });
     }
-    console.log("friendsTasks", friendsTasks);
-
     return {
       friendsTasks: friendsTasks,
     };
@@ -90,7 +86,6 @@ export const Friends = () => {
     });
   };
 
-  console.log('result', result)
   return (
     <>
       {error && <div>ERROR</div>}
