@@ -62,6 +62,7 @@ export const Friends = () => {
         tasks: friendTasksData[i],
       });
     }
+    console.log("friendtasks", friendsTasks)
     return {
       friendsTasks: friendsTasks,
     };

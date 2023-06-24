@@ -61,12 +61,14 @@ export const Home = () => {
         tasks: friendTasksResponse.data,
       })
     }
+    console.log("friendsTasks", friendsTasks)
     return {
       userData: userResponse.data,
       friendsTasks,
     }
   }, []);
 
+  
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
     const userTasksResponse = await useListTasks(

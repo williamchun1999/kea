@@ -21,7 +21,9 @@ export const FriendMenu = (props: FriendMenuProps) => {
         </div>}
       {props.content.length > 0 && <ul className="menu bg-base-200 rounded-box">
         {props.content.map((friend) => {
-          const percentage = Math.round(tasksCompletedPercentage(friend.tasks))
+          console.log("taskscompletedpercentage",tasksCompletedPercentage(friend.tasks))
+          const percentage = Math.round(tasksCompletedPercentage(friend.tasks)*100)
+        
           return (
             <li>
               <a
@@ -30,12 +32,12 @@ export const FriendMenu = (props: FriendMenuProps) => {
               >
                 <div className="flex w-full justify-between">
                   <span>{friend.userName}</span>
-                  <span>{`${percentage * 100}% tasks completed`}</span>
+                  <span>{`${percentage}% tasks completed`}</span>
                 </div>
                 <progress
                   className="progress progress-primary"
                   value={`${percentage}`}
-                  max="1"
+                  max="100"
                 ></progress>
               </a>
             </li>
