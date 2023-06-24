@@ -1,15 +1,15 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
 import { User, IUser } from "../models/User";
 
 export const userController = {
   getUser: async (req: Request, res: Response) => {
     const currentUser = req.user as IUser;
-    const { userId } = req.params;
-    console.log('userID:' , userId)
+    const { id } = req.params;
+    console.log("userID:", id);
     try {
-      const { _id, fName, lName, friends, userName, email, password } =
-        await User.findById(userId ?? currentUser._id);
+      const { _id, fName, lName, friends, userName, email } =
+        await User.findById(id ?? currentUser._id);
       console.log("User info fetched");
       res.send({
         id: _id,
@@ -18,11 +18,10 @@ export const userController = {
         friends,
         userName,
         email,
-        password,
       });
     } catch (err) {
       console.log(err);
-      res.send({ message: err.message });
+      res.status(404).send({ message: err.message });
     }
   },
 

@@ -8,7 +8,7 @@ export const useListTasks = async (
 ):Promise<AxiosResponse<Array<Task>> | null> => {
     try {
       const response = await axiosInstance.get(url, axiosConfigOptions)
-      console.log('response status is: ', response.status);
+      // console.log('response status is: ', response.status);
       return response;
     }
     catch (err) {
@@ -22,4 +22,4 @@ export const useListTasks = async (
     }
   }
   
-        
+ 

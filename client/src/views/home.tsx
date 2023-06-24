@@ -14,7 +14,7 @@ import { CreateTask } from "../components/CreateTask";
 
 export const Home = () => {
   const [userTasks, setUserTasks] = useState<Array<Task>>([]);
-  
+
   // API CALLS
   const { error, result, loading } = useAsync(async () => {
     // Get User Info API Call
@@ -41,8 +41,9 @@ export const Home = () => {
 
       // Grab Friend Info
       const friendUserDataResponse = await useFetchUser(`/home/${userResponse.data.friends[i]}`)
+
       if (friendUserDataResponse === null || friendUserDataResponse.status !== 200) {
-        throw new Error("Failed to fetch tasks");
+        throw new Error("Failed to fetch user");
       }
 
       // Grab Friend Tasks
@@ -60,11 +61,13 @@ export const Home = () => {
         tasks: friendTasksResponse.data,
       })
     }
-    return  {
+    console.log("friendsTasks", friendsTasks)
+    return {
       userData: userResponse.data,
       friendsTasks,
     }
   }, []);
+
   
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
@@ -77,6 +80,7 @@ export const Home = () => {
     console.log("usertask response", userTasksResponse.data);
     setUserTasks(userTasksResponse.data);
   };
+
   return (
     <div className="h-screen relative sm:mx-16 lg:mx-24">
       {error && <div>ERROR</div>}

@@ -8,12 +8,12 @@ export const settingRouter = express.Router();
 
 //Settings Routes
 
-
 settingRouter.get("/", userController.getUser);
 
 settingRouter.delete("/deleteUser", userController.deleteUser);
 
-settingRouter.put("/addFriend/:id/:friend", userController.addFriend);
+settingRouter.put("/addFriend/:friend", userController.addFriend);
 
 settingRouter.put("/updateUser/:id?", userController.updateUser);
+
 settingRouter.get("/logout", authController.logout);

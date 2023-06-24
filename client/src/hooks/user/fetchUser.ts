@@ -17,8 +17,8 @@ export const useFetchUser = async (
 ):Promise<AxiosResponse<GetUserResponse> | null> => {
     try {
       const response = await axiosInstance.get(url, axiosConfigOptions)
-      console.log('response status is: ', response.status);
-      console.log('response data is: ', response.data);
+      // console.log('response status is: ', response.status);
+      // console.log('response data is: ', response.data);
       return response;
     }
     catch (err) {
@@ -31,5 +31,5 @@ export const useFetchUser = async (
       }
     }
   }
-  
+
         
