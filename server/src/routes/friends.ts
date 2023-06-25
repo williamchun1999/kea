@@ -9,4 +9,4 @@ friendsRouter.get("/tasks/:id", taskController.getTasks);
 
 // list user info 
 
-friendsRouter.get("/:id?", userController.getUser);
+friendsRouter.get("/:userId?", userController.getUser);

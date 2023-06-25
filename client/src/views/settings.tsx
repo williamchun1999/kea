@@ -1,15 +1,14 @@
 import { useAsync } from "react-async-hook";
-import { useFetchUser } from "../hooks/user/fetchUser";
+import { useState, useEffect, ChangeEventHandler } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   DeleteButton,
-  AddFriends,
   LogOutButton,
   EditUserButton,
 } from "../components/button/button";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect, ChangeEventHandler } from "react";
-import { useUpdateUser } from "../hooks/user/updateUser";
-import { useDeleteUser } from "../hooks/user/deleteUser";
+import { useDeleteUserFromFriendsList, useDeleteUser, useUpdateUser, useFetchUser } from "../hooks/user";
+import { useDeleteAllTasks } from "../hooks/tasks";
 
 export const Settings = () => {
   //error
@@ -27,7 +26,6 @@ export const Settings = () => {
     lName: "",
     userName: "",
     email: "",
-    password: "",
     friends: [] as string[],
   });
 
@@ -40,7 +38,7 @@ export const Settings = () => {
       throw new Error("Failed to fetch user");
     }
     return userResponse.data;
-  }, []); 
+  }, []);
 
   //setting the form to display current information fetched from the db
   useEffect(() => {
@@ -51,7 +49,6 @@ export const Settings = () => {
         lName: result.lName,
         userName: result.userName,
         email: result.email,
-        password: result.password,
         friends: result.friends,
       }));
     }
@@ -67,13 +64,12 @@ export const Settings = () => {
     });
   };
 
-  
+
 
   //update user info API Call
-  const handleSubmit = async (event) => {
+  const handleSubmit = async () => {
     //hooks for the useUpdateUser
     const url = "http://localhost:3000/settings/updateUser";
-    event.preventDefault();
 
     try {
       const result = await useUpdateUser(url, formData);
@@ -103,20 +99,29 @@ export const Settings = () => {
   }, [isUpdateDone])
 
   //deleteUser API call 
-  const handleDelete = async (event) => {
-   
+  const handleDelete = async () => {
 
-    event.preventDefault()
-    
     try {
-      const result = await useDeleteUser("http://localhost:3000/settings/deleteUser");
-      // console.log('result', result);
-      if (result === null || result.status !== 200) {
+      const deleteUserFromFriendsListResponse = await useDeleteUserFromFriendsList("/settings/deleteUserFromFriendsList");
+      console.log('deleteUserfromFriendsListResponse', deleteUserFromFriendsListResponse)
+      if (deleteUserFromFriendsListResponse === null || deleteUserFromFriendsListResponse.status !== 200) {
         setIsError(true);
-      } else {
-        setIsError(false)
-        setIsDeleteComplete(true)
       }
+      const deleteAllTasksResponse = await useDeleteAllTasks("/settings/deleteAllTasks");
+      console.log("DeleteAllTasksResponse", deleteAllTasksResponse);
+      if (deleteAllTasksResponse === null || deleteAllTasksResponse.status !== 200) {
+        setIsError(true);
+      }
+      const deleteUserResponse = await useDeleteUser("http://localhost:3000/settings/deleteUser");
+      console.log('deleteUserREsponse', deleteUserResponse)
+      if (deleteUserResponse === null || deleteUserResponse.status !== 200) {
+        setIsError(true);
+      }
+      setIsError(false)
+      setIsDeleteComplete(true)
+
+
+
     } catch (error) {
       setIsError(true);
       console.log("ERROR: ", error);
@@ -138,46 +143,46 @@ export const Settings = () => {
     }
   }, [isDeleteComplete, navigate]);
   return (
-    <div>
+    <div className="h-screen relative">
       {error && <div>ERROR</div>}
-      {showPopup && (
-        <div className="alert alert-success">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="stroke-current shrink-0 h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>{showPopup == 1 ? "User Info Updated!" : "Account deleted Successfully!"}</span>
-        </div>
-      )}
+      {isError && <div>ERROR</div>}
+      {loading && <div>Loading...</div>}
       {result && (
-        <>
+        <div>
           <h1 className="text-4xl pt-14 pb-5 mb-10 text-center bg-primary shadow-md">
-            More
+            Settings
           </h1>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 mx-4">
             <EditUserButton
               fName={formData.fName}
               lName={formData.lName}
               email={formData.email}
-              password={formData.password}
               userName={formData.userName}
               controlSubmit={handleSubmit}
               controlChange={handleChange}
             />
-            <AddFriends />
-            <DeleteButton userName={result.userName} controlDelete={handleDelete}/>
+            <DeleteButton userName={result.userName} controlDelete={handleDelete} />
             <LogOutButton />
           </div>
-        </>
+          {showPopup !== 0 && (
+            <div className="alert alert-success">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="stroke-current shrink-0 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{showPopup == 1 ? "User Info Updated!" : "Account deleted Successfully!"}</span>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

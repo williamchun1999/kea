@@ -1,11 +1,15 @@
 import { useCreateUser } from './createUser';
 import { useDeleteUser } from './deleteUser';
 import { useListUsers } from './listUsers';
-import { useUpdateTask } from './updateUser';
+import { useUpdateUser } from './updateUser';
+import { useDeleteUserFromFriendsList } from './deleteUserFromFriendsList';
+import { useFetchUser } from './fetchUser';
 
 export {
     useCreateUser,
     useDeleteUser,
     useListUsers,
-    useUpdateTask
+    useUpdateUser,
+    useDeleteUserFromFriendsList,
+    useFetchUser,
 }

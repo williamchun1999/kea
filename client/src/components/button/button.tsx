@@ -3,7 +3,7 @@ import { useState, ChangeEventHandler, FormEventHandler, MouseEventHandler } fro
 import { Link } from "react-router-dom";
 import { useUserLogout } from "../../hooks/user/logoutUser";
 
-import {TextBox} from "../Form"
+import { TextBox } from "../Form"
 
 type ButtonProp = {
   color?: string;
@@ -19,12 +19,11 @@ type DeleteButtonProp = {
   controlDelete: MouseEventHandler<HTMLButtonElement>
 };
 
-type EditButtonProp= {
+type EditButtonProp = {
   fName: string;
   lName: string;
   email: string;
   userName: string;
-  password: string;
   controlSubmit: FormEventHandler<HTMLFormElement>;
   controlChange: ChangeEventHandler<HTMLInputElement>;
 
@@ -74,13 +73,14 @@ export const NavButton = (props: NavButtonProp) => {
   );
 };
 
+// Need to separate Modals from Buttons (REFER TO Add Button)
 export const DeleteButton = (props: DeleteButtonProp) => {
   return (
     <>
       {/* The button to open modal */}
       <label
         htmlFor="deleteAccount"
-        className="btn btn-ghost w-screen border-2 border-primary"
+        className="btn btn-ghost btn-block border-2 border-primary"
       >
         Delete Account
       </label>
@@ -100,17 +100,18 @@ export const DeleteButton = (props: DeleteButtonProp) => {
             <label htmlFor="deleteAccount" className="btn">
               Go Back
             </label>
-            <button onClick= {props.controlDelete} className=" btn-ghost">
+            <button onClick={props.controlDelete} className=" btn-ghost">
               <label htmlFor="deleteAccount" className="btn btn-primary">
-              Delete
+                Delete
               </label>
-              </button>
+            </button>
           </div>
         </div>
       </div>
     </>
   );
 };
+// Need to separate Modals from Buttons (REFER TO Add Button)
 export const AddFriends = () => {
   const [doneClick, setDoneClick] = useState(true);
 
@@ -214,15 +215,15 @@ export const LogOutButton = () => {
     </>
   );
 };
-
-export const EditUserButton = ({fName,lName,userName,email,password, controlSubmit, controlChange,}: EditButtonProp) => {
+// Need to separate Modals from Buttons (REFER TO Add Button)
+export const EditUserButton = ({ fName, lName, userName, email, controlSubmit, controlChange, }: EditButtonProp) => {
 
 
   return (
     <>
       <label
         htmlFor="editAccount"
-        className="btn btn-ghost w-screen border-2 border-primary"
+        className="btn btn-ghost btn-block border-2 border-primary"
       >
         Edit Account
       </label>
@@ -232,47 +233,39 @@ export const EditUserButton = ({fName,lName,userName,email,password, controlSubm
         <div className="modal-box ">
           <form onSubmit={controlSubmit} className="flex flex-wrap justify-center md:justify-start md:gap-2">
 
-              <TextBox
-                  title="First Name"
-                  name="fName"
-                  value={fName}
-                  controlInput={controlChange}
-                  type="text"
-              />
-              <TextBox
-                  title="Last Name"
-                  name="lName"
-                  value={lName}
-                  controlInput={controlChange}
-                  type="text"
-                />
-              <TextBox
-                title="Email"
-                name="email"
-                value={email}
-                controlInput={controlChange}
-                type="text"
-              />
-              <TextBox
-                title="Username"
-                name="userName"
-                value={userName}
-                controlInput={controlChange}
-                type="text"
-              />
-              <TextBox
-                title="Password"
-                name="password"
-                value={password}
-                controlInput={controlChange}
-                type="password"
-                disabled = {true}
-              />
-              <button type="submit" className=" btn-ghost">
+            <TextBox
+              title="First Name"
+              name="fName"
+              value={fName}
+              controlInput={controlChange}
+              type="text"
+            />
+            <TextBox
+              title="Last Name"
+              name="lName"
+              value={lName}
+              controlInput={controlChange}
+              type="text"
+            />
+            <TextBox
+              title="Email"
+              name="email"
+              value={email}
+              controlInput={controlChange}
+              type="text"
+            />
+            <TextBox
+              title="Username"
+              name="userName"
+              value={userName}
+              controlInput={controlChange}
+              type="text"
+            />
+            <button type="submit" className=" btn-ghost">
               <label htmlFor="editAccount" className="btn btn-primary">
-              Update Info
+                Update Info
               </label>
-              </button>
+            </button>
           </form>
           {/* modal buttons */}
           <div className="modal-action">

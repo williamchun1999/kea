@@ -1,8 +1,8 @@
 import express from "express";
 
-import {userController } from "../controllers/user";
-import {authController} from "../controllers/auth";
-
+import { userController } from "../controllers/user";
+import { authController } from "../controllers/auth";
+import { taskController } from "../controllers/task";
 
 export const settingRouter = express.Router();
 
@@ -11,9 +11,11 @@ export const settingRouter = express.Router();
 settingRouter.get("/", userController.getUser);
 
 settingRouter.delete("/deleteUser", userController.deleteUser);
+settingRouter.delete(
+  "/deleteUserFromFriendsList",
+  userController.deleteUserFromFriendsLists
+);
+settingRouter.delete("/deleteAllTasks", taskController.deleteAllTasks);
 
-settingRouter.put("/addFriend/:friend", userController.addFriend);
-
-settingRouter.put("/updateUser/:id?", userController.updateUser);
-
+settingRouter.put("/updateUser", userController.updateUser);
 settingRouter.get("/logout", authController.logout);
