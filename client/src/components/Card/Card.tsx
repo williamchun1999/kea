@@ -16,7 +16,8 @@ export const Card = (props: CardProps) => {
   let countTaskDone = 0
   let totalTask = props.tasks.length
   props.tasks.forEach(task => task.taskCompleted ? countTaskDone += 1 : countTaskDone)
-  let percentComplete = (countTaskDone / totalTask) * 100
+  let percentComplete
+  totalTask > 0 ? percentComplete = (countTaskDone / totalTask) * 100 : percentComplete = 0
 
   return (
     <>

@@ -36,10 +36,10 @@ export const Navbar = () => {
 
   return (
     <>
-      <div>
+      <div className="mb-16">
         <Outlet />
       </div>
-      <div className="btm-nav sticky">{buttonElements}</div>
+      <div className="btm-nav">{buttonElements}</div>
     </>
   );
 };

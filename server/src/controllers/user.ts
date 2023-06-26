@@ -41,11 +41,11 @@ export const userController = {
     const currentUser = req.user as IUser;
 
     //get the userName of a friend that user put
-    const friendsId = req.params.friend;
+    const friendUserName = req.params.friend;
 
     try {
       //check if the userName exists
-      const friend = await User.findOne({ userName: friendsId });
+      const friend = await User.findOne({ userName: friendUserName });
 
       if (!friend) {
         return res.send({ message: "Username does not exist" });
@@ -54,7 +54,7 @@ export const userController = {
       //find user and update the friends array only if it doesn't already exist
       const user = await User.findOneAndUpdate(
         { _id: currentUser._id },
-        { $addToSet: { friends: friend._id } },
+        { $push: { friends: friend._id } },
         { new: true }
       );
 
@@ -83,7 +83,7 @@ export const userController = {
       );
 
       console.log("Deleted user from friends list of all users");
-      console.log('deleteUserFromFriendsList Result', result);
+      console.log("deleteUserFromFriendsList Result", result);
       res.status(200).send(result);
     } catch (err) {
       console.log(err);

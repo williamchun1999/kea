@@ -149,9 +149,9 @@ export const Settings = () => {
       {loading && <div>Loading...</div>}
       {result && (
         <div>
-          <h1 className="text-4xl pt-14 pb-5 mb-10 text-center bg-primary shadow-md">
-            Settings
-          </h1>
+          <div className="h-24 pb-5 mb-10 text-center bg-primary shadow-md flex content-center justify-center">
+            <h1 className="flex content-center flex-wrap font-bold text-4xl text-center">Settings</h1>
+          </div>
           <div className="flex flex-col gap-3 mx-4">
             <EditUserButton
               fName={formData.fName}

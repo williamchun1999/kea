@@ -8,13 +8,12 @@ import { FriendMenu } from "../components/FriendMenu";
 import { useFetchUser } from "../hooks/user/fetchUser";
 import { useListTasks } from "../hooks/tasks";
 import { User } from "../common/types";
+import { useAddFriend } from "../hooks/user/addFriend";
 
 export const Friends = () => {
-  // const [friendsList, setFriendsList] = useState<string[]>([]);
-
   // API CALLS
 
-  const { error, result, loading } = useAsync(async () => {
+  const { error, result, loading, execute } = useAsync(async () => {
     // Get User Info API Call
     const userResponse = await useFetchUser("http://localhost:3000/friends");
     if (userResponse === null || userResponse.status !== 200) {
@@ -31,29 +30,28 @@ export const Friends = () => {
 
 
     //Get friends Info API Call
-    
-    const friendsInfoEndpoint= friendIDs.map((friendID) => `http://localhost:3000/friends/${friendID}`)
+
+    const friendsInfoEndpoint = friendIDs.map((friendID) => `http://localhost:3000/friends/${friendID}`)
     const friendInfoResp = await axios.all(friendsInfoEndpoint.map((endpoint) => useFetchUser(endpoint)))
     const friendInfoData = friendInfoResp.map((response) => {
       if (response && response.data) {
         return response.data;
       }
-      throw new Error ("failed to get friends info")
+      throw new Error("failed to get friends info")
     });
 
-  
-     //Get friends Task API Call
-    
-     const friendsTaskEndpoint= friendIDs.map((friendID) => `http://localhost:3000/friends/tasks/${friendID}`)
-     const friendTasksResp = await axios.all(friendsTaskEndpoint.map((endpoint) => useListTasks(endpoint)))
-     const friendTasksData = friendTasksResp.map((response) => {
-       if (response && response.data) {
-         return response.data;
-       }
-       throw new Error ("failed to get friends' tasks");
-     });
 
-  
+    //Get friends Task API Call
+
+    const friendsTaskEndpoint = friendIDs.map((friendID) => `http://localhost:3000/friends/tasks/${friendID}`)
+    const friendTasksResp = await axios.all(friendsTaskEndpoint.map((endpoint) => useListTasks(endpoint)))
+    const friendTasksData = friendTasksResp.map((response) => {
+      if (response && response.data) {
+        return response.data;
+      }
+      throw new Error("failed to get friends' tasks");
+    });
+
     //add to friendsTasks array
     for (let i = 0; i < userResponse.data.friends.length; i++) {
       friendsTasks.push({
@@ -73,9 +71,22 @@ export const Friends = () => {
     userName: "",
   });
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    console.log(formData);
     event.preventDefault();
     // Add Friend API here
+    try {
+      const result = await useAddFriend(`/friends/addFriend/${formData.userName}`);
+      if (result === null || result.status !== 200) {
+        console.log("error");
+      } else {
+        console.log("Add Friend Data", result.data);
+        /* callback of fetch tasks */
+        execute();
+      }
+    } catch (err) {
+      console.log("ERR", err);
+    }
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -86,9 +97,8 @@ export const Friends = () => {
       };
     });
   };
-
   return (
-    <>
+    <div className="min-h-screen">
       {error && <div>ERROR</div>}
       {loading && <div>Loading...</div>}
       {result && (
@@ -100,9 +110,9 @@ export const Friends = () => {
               </h1>
               <form
                 onSubmit={handleSubmit}
-                className="flex content-center flex-wrap gap-x-4"
+                className="flex content-center items-center gap-x-4"
               >
-                <button className="flex content-center flex-wrap">
+                <button className="btn btn-secondary btn-sm flex content-center flex-wrap">
                   Add Friend
                 </button>
                 <input
@@ -123,6 +133,6 @@ export const Friends = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };

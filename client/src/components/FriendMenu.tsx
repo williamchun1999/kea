@@ -5,13 +5,6 @@ type FriendMenuProps = {
   content: Array<User>
 }
 
-// Route to friend page when clicking their task
-const directToFriendPage = () => {
-  // Pass in required data for routing to page, will most likely need to change prop data to include some form of uuid for routing
-  console.log('Clicked');
-}
-
-
 export const FriendMenu = (props: FriendMenuProps) => {
   return (
     <>
@@ -21,9 +14,8 @@ export const FriendMenu = (props: FriendMenuProps) => {
         </div>}
       {props.content.length > 0 && <ul className="menu bg-base-200 rounded-box">
         {props.content.map((friend) => {
-          console.log("taskscompletedpercentage",tasksCompletedPercentage(friend.tasks))
-          const percentage = Math.round(tasksCompletedPercentage(friend.tasks)*100)
-        
+          const percentage = Math.round(tasksCompletedPercentage(friend.tasks) * 100)
+
           return (
             <li>
               <a

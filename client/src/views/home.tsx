@@ -33,7 +33,7 @@ export const Home = () => {
     setUserTasks(userTasksResponse.data);
     // Get Friends Tasks API Call (max 3 friends)
     const friendsTasks: Array<User> = [];
-
+    console.log('user friends', userResponse.data.friends);
     for (let i = 0; i < 3; i++) {
       if (userResponse.data.friends[i] === undefined) {
         break;
@@ -45,7 +45,7 @@ export const Home = () => {
       if (friendUserDataResponse === null || friendUserDataResponse.status !== 200) {
         throw new Error("Failed to fetch user");
       }
-
+      console.log(friendUserDataResponse, 'friend userdata');
       // Grab Friend Tasks
       const friendTasksResponse = await useListTasks(
         `/home/tasks/${userResponse.data.friends[i]}`
@@ -68,7 +68,7 @@ export const Home = () => {
     }
   }, []);
 
-  
+
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
     const userTasksResponse = await useListTasks(
@@ -82,7 +82,7 @@ export const Home = () => {
   };
 
   return (
-    <div className="h-screen relative sm:mx-16 lg:mx-24">
+    <div className="min-h-screen relative sm:mx-16 lg:mx-24">
       {error && <div>ERROR</div>}
       {loading && <div>Loading...</div>}
       {/* In Future Need Loading Page View  */}
