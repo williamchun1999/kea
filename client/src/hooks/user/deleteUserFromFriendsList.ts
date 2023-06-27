@@ -1,14 +1,15 @@
 import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
 import { axiosInstance  } from "../../axios";
-import { Task } from "../../common/types";
 
-export const useListTasks = async (
+
+export const useDeleteUserFromFriendsList = async (
   url: string,
   axiosConfigOptions?: AxiosRequestConfig
-):Promise<AxiosResponse<Array<Task>> | null> => {
+):Promise<AxiosResponse | null> => {
     try {
-      const response = await axiosInstance.get(url, axiosConfigOptions)
-      // console.log('response status is: ', response.status);
+      const response = await axiosInstance.delete(url, axiosConfigOptions)
+      console.log('response status is: ', response.status);
+      console.log('response data is: ', response.data);
       return response;
     }
     catch (err) {
@@ -22,4 +23,4 @@ export const useListTasks = async (
     }
   }
   
- 
+        

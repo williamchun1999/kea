@@ -1,22 +1,14 @@
 import { AxiosRequestConfig, AxiosResponse, isAxiosError } from "axios";
+
 import { axiosInstance } from "../../axios";
 
-export interface UserData {
-  fName: string
-  lName: string
-  userName: string
-  email: string ;
-  friends: string[];
-}
-
-
-export const useUpdateUser = async (
+export const useDeleteAllTasks = async (
   url: string,
-  body: UserData,
   axiosConfigOptions?: AxiosRequestConfig
 ): Promise<AxiosResponse | null> => {
+
   try {
-    const response = await axiosInstance.put(url, body, axiosConfigOptions);
+    const response = await axiosInstance.delete(url, axiosConfigOptions);
     console.log(response.data);
     console.log("response status is: ", response.status);
     return response;

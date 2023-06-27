@@ -14,7 +14,7 @@ import { CreateTask } from "../components/CreateTask";
 
 export const Home = () => {
   const [userTasks, setUserTasks] = useState<Array<Task>>([]);
-  
+
   // API CALLS
   const { error, result, loading } = useAsync(async () => {
     // Get User Info API Call
@@ -33,7 +33,7 @@ export const Home = () => {
     setUserTasks(userTasksResponse.data);
     // Get Friends Tasks API Call (max 3 friends)
     const friendsTasks: Array<User> = [];
-
+    console.log('user friends', userResponse.data.friends);
     for (let i = 0; i < 3; i++) {
       if (userResponse.data.friends[i] === undefined) {
         break;
@@ -41,10 +41,11 @@ export const Home = () => {
 
       // Grab Friend Info
       const friendUserDataResponse = await useFetchUser(`/home/${userResponse.data.friends[i]}`)
-      if (friendUserDataResponse === null || friendUserDataResponse.status !== 200) {
-        throw new Error("Failed to fetch tasks");
-      }
 
+      if (friendUserDataResponse === null || friendUserDataResponse.status !== 200) {
+        throw new Error("Failed to fetch user");
+      }
+      console.log(friendUserDataResponse, 'friend userdata');
       // Grab Friend Tasks
       const friendTasksResponse = await useListTasks(
         `/home/tasks/${userResponse.data.friends[i]}`
@@ -60,12 +61,14 @@ export const Home = () => {
         tasks: friendTasksResponse.data,
       })
     }
-    return  {
+    console.log("friendsTasks", friendsTasks)
+    return {
       userData: userResponse.data,
       friendsTasks,
     }
   }, []);
-  
+
+
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
     const userTasksResponse = await useListTasks(
@@ -77,6 +80,7 @@ export const Home = () => {
     console.log("usertask response", userTasksResponse.data);
     setUserTasks(userTasksResponse.data);
   };
+
   return (
     <div className="min-h-screen relative sm:mx-16 lg:mx-24 pb-[50px] pt-[20px]">
       {error && <div>ERROR</div>}

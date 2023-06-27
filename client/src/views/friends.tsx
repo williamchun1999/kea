@@ -1,57 +1,138 @@
-import { FriendMenu } from '../components/FriendMenu';
-import { friendsTaskResponse } from '../common/fakeData';
-import { User } from '../common/types';
-import { useState } from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useState, ChangeEventHandler, FormEventHandler } from "react";
+import { useAsync } from "react-async-hook";
+import axios from "axios";
 
-const buttonStyle = "bg-base-200 btn btn-outline btn-primary btn-square sm:btn-sm md:btn-md lg:btn-lg no-animation"
 
-export const loader = async () => {
-  // const friendsTaskResponse = await getFriends();
-  return { friendsTaskResponse };
-}
+import { FriendMenu } from "../components/FriendMenu";
+import { useFetchUser } from "../hooks/user/fetchUser";
+import { useListTasks } from "../hooks/tasks";
+import { User } from "../common/types";
+import { useAddFriend } from "../hooks/user/addFriend";
 
 export const Friends = () => {
-  const [totalDataIndex, setTotalDataIndex] = useState<number>(3);
-  const [displayData, setDisplayData] = useState<Array<User>>(friendsTaskResponse.slice(0, totalDataIndex));
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  // API CALLS
 
-  const nextPage = () => {
-
-    // Base Case of no more display data
-    if (displayData.length < 3) {
-      return 
+  const { error, result, loading, execute } = useAsync(async () => {
+    // Get User Info API Call
+    const userResponse = await useFetchUser("http://localhost:3000/friends");
+    if (userResponse === null || userResponse.status !== 200) {
+      throw new Error("Failed to fetch user");
     }
 
-    setDisplayData(friendsTaskResponse.slice((totalDataIndex), (totalDataIndex + 3)))
-    setCurrentPage(currentPage + 1);
-    setTotalDataIndex(totalDataIndex + 3)
+    // setFriendsList(userResponse.data.friends);
+    // console.log("friendsList",friendsList)
 
-  }
-  const prevPage = () => {
-  
-    // Base Case of being on Page 1
-    if (currentPage === 1) {
-      return
+    //Get Friends Info API Call and the Friends Task API call
+    let friendsTasks: Array<User> = [];
+
+    const friendIDs = userResponse.data.friends;
+
+
+    //Get friends Info API Call
+
+    const friendsInfoEndpoint = friendIDs.map((friendID) => `http://localhost:3000/friends/${friendID}`)
+    const friendInfoResp = await axios.all(friendsInfoEndpoint.map((endpoint) => useFetchUser(endpoint)))
+    const friendInfoData = friendInfoResp.map((response) => {
+      if (response && response.data) {
+        return response.data;
+      }
+      throw new Error("failed to get friends info")
+    });
+
+
+    //Get friends Task API Call
+
+    const friendsTaskEndpoint = friendIDs.map((friendID) => `http://localhost:3000/friends/tasks/${friendID}`)
+    const friendTasksResp = await axios.all(friendsTaskEndpoint.map((endpoint) => useListTasks(endpoint)))
+    const friendTasksData = friendTasksResp.map((response) => {
+      if (response && response.data) {
+        return response.data;
+      }
+      throw new Error("failed to get friends' tasks");
+    });
+
+    //add to friendsTasks array
+    for (let i = 0; i < userResponse.data.friends.length; i++) {
+      friendsTasks.push({
+        userName: friendInfoData[i].userName,
+        uuid: friendInfoData[i].id,
+        tasks: friendTasksData[i],
+      });
     }
+    console.log("friendtasks", friendsTasks)
+    return {
+      friendsTasks: friendsTasks,
+    };
+  }, []);
 
-    setDisplayData(friendsTaskResponse.slice((totalDataIndex - 6), (totalDataIndex - 3)))
-    setCurrentPage(currentPage - 1);
-    setTotalDataIndex(totalDataIndex - 3)
-  }
+  //form control
+  const [formData, setFormData] = useState({
+    userName: "",
+  });
 
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    console.log(formData);
+    event.preventDefault();
+    // Add Friend API here
+    try {
+      const result = await useAddFriend(`/friends/addFriend/${formData.userName}`);
+      if (result === null || result.status !== 200) {
+        console.log("error");
+      } else {
+        console.log("Add Friend Data", result.data);
+        /* callback of fetch tasks */
+        execute();
+      }
+    } catch (err) {
+      console.log("ERR", err);
+    }
+  };
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [event.target.name]: event.target.value,
+      };
+    });
+  };
   return (
-    <div className='flex min-h-screen flex-col'>
-      <div className="flex justify-center bg-primary h-12 mb-4">
-        <h1 className='flex justify-center content-center flex-wrap'>Friends</h1>
-      </div>
-      <div className='mx-4'>
-        <FriendMenu content={displayData} />
-      </div>
-      <div className="btn-group flex mt-auto">
-        <button className={`${buttonStyle}`} onClick={prevPage}>«</button>
-        <div className="bg-base-200 grow flex justify-center content-center flex-wrap">{`Page ${currentPage}`}</div>
-        <button className={`${buttonStyle}`} onClick={nextPage}>»</button>
-      </div>
+    <div className="min-h-screen">
+      {error && <div>ERROR</div>}
+      {loading && <div>Loading...</div>}
+      {result && (
+        <>
+          <div className="bg-primary h-24 mb-4 sticky top-0 z-10">
+            <div className="flex flex-col sm:flex-row h-full mx-4">
+              <h1 className="flex grow content-center flex-wrap font-bold text-xl lg:text-3xl">
+                Friends
+              </h1>
+              <form
+                onSubmit={handleSubmit}
+                className="flex content-center items-center gap-x-4"
+              >
+                <button className="btn btn-secondary btn-sm flex content-center flex-wrap">
+                  Add Friend
+                </button>
+                <input
+                  type="text"
+                  placeholder="username"
+                  name="userName"
+                  className="input input-bordered input-primary"
+                  onChange={handleChange}
+                  value={formData.userName}
+                />
+              </form>
+            </div>
+          </div>
+          <div className="h-screen relative sm:mx-16 lg:mx-24">
+            <div>
+              <FriendMenu content={result.friendsTasks} />
+            </div>
+          </div>
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
