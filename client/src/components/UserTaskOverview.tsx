@@ -8,7 +8,7 @@ import { useUpdateTask } from "../hooks/tasks";
 interface TaskProps {
   //type Task for the array
   tasks: Array<Task>;
-  userId: boolean;
+  userId?: boolean;
   onUpdate: () => void; // Actual function will have no parameters
   
 }
