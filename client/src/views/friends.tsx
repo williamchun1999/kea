@@ -97,14 +97,14 @@ export const Friends = () => {
       };
     });
   };
-  return (
-    <div className="min-h-screen">
+  return (<>
+    <div className="min-h-[calc(100vh-64px)]">
       {error && <div>ERROR</div>}
       {loading && <div>Loading...</div>}
       {result && (
         <>
-          <div className="bg-primary h-24 mb-4 sticky top-0 z-10">
-            <div className="flex flex-col sm:flex-row h-full mx-4">
+          <div className="bg-primary box-border h-24 border-b-[20px] border-solid border-white sticky top-0 z-10">
+            <div className="top flex flex-col sm:flex-row h-full mx-4">
               <h1 className="flex grow content-center flex-wrap font-bold text-xl lg:text-3xl">
                 Friends
               </h1>
@@ -126,13 +126,15 @@ export const Friends = () => {
               </form>
             </div>
           </div>
-          <div className="h-screen relative sm:mx-16 lg:mx-24">
-            <div>
+          <div className="sm:mx-16 lg:mx-24">
               <FriendMenu content={result.friendsTasks} />
-            </div>
           </div>
+      
         </>
       )}
-    </div>
+
+  </div>
+      
+    </>
   );
 };

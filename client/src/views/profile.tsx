@@ -65,10 +65,10 @@ export const Profile = () => {
   return (
 
     <>
-    {error && <div className="min-h-screen">ERROR</div>}
-    {loading && <div className="min-h-screen">Loading...</div>}
+    {error && <div className="min-h-[calc(100vh-64px)]">ERROR</div>}
+    {loading && <div className="min-h-[calc(100vh-64px)]">Loading...</div>}
     {result && 
-    <div className="min-h-screen bg-base-200 pt-8">
+    <div className="min-h-[calc(100vh-64px)] bg-base-200 pt-8">
       <div className="mx-auto card w-4/5 bg-base-100 shadow-xl lg:w-[60%]">
         <div className="flex flex-col justify-around card-body">
           <h2 className="card-title">

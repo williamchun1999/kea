@@ -143,7 +143,7 @@ export const Settings = () => {
     }
   }, [isDeleteComplete, navigate]);
   return (
-    <div className="h-screen relative">
+    <div className="min-h-[calc(100vh-64px)] relative">
       {error && <div>ERROR</div>}
       {isError && <div>ERROR</div>}
       {loading && <div>Loading...</div>}
