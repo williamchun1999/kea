@@ -2,6 +2,7 @@
 type Images = {
     img1: string;
     img2: string;
+    img3: string;
   }
 
 
@@ -17,14 +18,7 @@ export const Carousel = (imgs: Images) => {
         </div>
         <div className="carousel-item w-full">
           <img
-            src={imgs.img2}
-            className="w-full"
-            alt="Tailwind CSS Carousel component"
-          />
-        </div>
-        <div className="carousel-item w-full">
-          <img
-            src={imgs.img1}
+            src={imgs.img3}
             className="w-full"
             alt="Tailwind CSS Carousel component"
           />

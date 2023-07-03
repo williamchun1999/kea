@@ -3,7 +3,6 @@ import { CSSProperties, useState } from "react";
 
 import { UserTaskOverview } from '../components/UserTaskOverview';
 import { Task } from '../common/types';
-import { currentUserDataResponse } from "../common/fakeData";
 import { tasksCompletedPercentage } from "../common/weeklyTasksCalculation";
 import { useParams } from "react-router-dom";
 import { useFetchUser } from "../hooks/user/fetchUser";

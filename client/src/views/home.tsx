@@ -18,14 +18,14 @@ export const Home = () => {
   // API CALLS
   const { error, result, loading } = useAsync(async () => {
     // Get User Info API Call
-    const userResponse = await useFetchUser("http://localhost:3000/home");
+    const userResponse = await useFetchUser("/home");
     if (userResponse === null || userResponse.status !== 200) {
       throw new Error("Failed to fetch user");
     }
 
     // Get User Tasks API Call
     const userTasksResponse = await useListTasks(
-      "http://localhost:3000/home/tasks/"
+      "/home/tasks/"
     );
     if (userTasksResponse === null || userTasksResponse.status !== 200) {
       throw new Error("Failed to fetch tasks");
@@ -70,7 +70,7 @@ export const Home = () => {
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
     const userTasksResponse = await useListTasks(
-      "http://localhost:3000/home/tasks/"
+      "/home/tasks/"
     );
     if (userTasksResponse === null || userTasksResponse.status !== 200) {
       throw new Error("Failed to fetch tasks");
