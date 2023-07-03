@@ -33,7 +33,7 @@ export const Home = () => {
     setUserTasks(userTasksResponse.data);
     // Get Friends Tasks API Call (max 3 friends)
     const friendsTasks: Array<User> = [];
-    console.log('user friends', userResponse.data.friends);
+    // console.log('user friends', userResponse.data.friends);
     for (let i = 0; i < 3; i++) {
       if (userResponse.data.friends[i] === undefined) {
         break;
@@ -45,7 +45,6 @@ export const Home = () => {
       if (friendUserDataResponse === null || friendUserDataResponse.status !== 200) {
         throw new Error("Failed to fetch user");
       }
-      console.log(friendUserDataResponse, 'friend userdata');
       // Grab Friend Tasks
       const friendTasksResponse = await useListTasks(
         `/home/tasks/${userResponse.data.friends[i]}`
@@ -61,7 +60,6 @@ export const Home = () => {
         tasks: friendTasksResponse.data,
       })
     }
-    console.log("friendsTasks", friendsTasks)
     return {
       userData: userResponse.data,
       friendsTasks,

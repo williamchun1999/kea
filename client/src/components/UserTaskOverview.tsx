@@ -14,7 +14,7 @@ interface TaskProps {
 }
 
 export const UserTaskOverview = ({ tasks, onUpdate , userId }: TaskProps) => {
-  console.log(tasks);
+
   const [loading, setLoading] = useState(false);
 
   //toggling checkbox

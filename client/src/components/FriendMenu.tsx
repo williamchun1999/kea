@@ -23,7 +23,7 @@ export const FriendMenu = (props: FriendMenuProps) => {
                 className="flex flex-col items-start"
               >
                 <div className="flex w-full justify-between">
-                  <span>{friend.userName}</span>
+                  <span>{`${friend.fName}(${friend.userName})`}</span>
                   <span>{`${percentage}% tasks completed`}</span>
                 </div>
                 <progress

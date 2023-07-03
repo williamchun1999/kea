@@ -17,7 +17,7 @@ export const FriendTaskOverview = ({ friendsTasks }: FriendsTasksProps) => {
       {friendsTasks.length > 0 &&
         <ul className="menu bg-base-200 rounded-box">
           {friendsTasks.map((friend) => {
-              console.log("taskscompletedpercentage",tasksCompletedPercentage(friend.tasks))
+             
 
             const percentage = Math.round(tasksCompletedPercentage(friend.tasks)*100)
             return (
