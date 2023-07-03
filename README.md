@@ -30,4 +30,4 @@ William Chun
 
 Elena Kim
 
-Chloe 
+Chloe Kim
