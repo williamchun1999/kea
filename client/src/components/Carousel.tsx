@@ -9,7 +9,7 @@ type Images = {
 export const Carousel = (imgs: Images) => {
   return (
     <>
-    <div className="w-3/4 m-auto carousel rounded-box lg:hidden">
+    <div className="w-3/4 m-auto carousel rounded-box hidden max-[850px]:flex">
         <div className="carousel-item w-full">
           <img
             src={imgs.img1}
@@ -32,7 +32,7 @@ export const Carousel = (imgs: Images) => {
           />
         </div>
       </div>
-      <div className= "hidden lg:flex items-center gap-10 justify-center">
+      <div className= "hidden min-[850px]:flex items-center gap-10 justify-center">
         <div className="w-1/5">
         <img
             src={imgs.img1}
