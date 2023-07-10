@@ -12,15 +12,15 @@ import dotenv from "dotenv";
 import cron from "node-cron";
 import path from "path"
 
-import { connectDB } from "./config/database";
-import { settingRouter } from "./routes/setting";
-import { authRouter } from "./routes/auth";
-import { homeRouter } from "./routes/home";
-import { friendsRouter } from "./routes/friends";
-import { profileRouter } from "./routes/profile";
-import { Task } from "./models/task";
+import { connectDB } from "./src/config/database";
+import { settingRouter } from "./src/routes/setting";
+import { authRouter } from "./src/routes/auth";
+import { homeRouter } from "./src/routes/home";
+import { friendsRouter } from "./src/routes/friends";
+import { profileRouter } from "./src/routes/profile";
+import { Task } from "./src/models/task";
 import logger from "morgan";
-import { User, IUser, comparePassword } from "./models/User";
+import { User, IUser, comparePassword } from "./src/models/User";
 
 const app = express();
 
@@ -143,17 +143,17 @@ cron.schedule("0 0 * * MON", async () => {
     console.error(error);
   }
 });
-//serving the frontend 
 
-app.use(express.static(path.join(__dirname, "./client/build")));
+//serving the frontend 
+app.use(express.static(path.join(__dirname, "./client/build")))
 app.get("*", function (_, res) {
   res.sendFile(
     path.join(__dirname, "./client/build/index.html"),
-    function (err) {
-      res.status(500).send(err);
+    function(err) {
+      res.status(500).send(err)
     }
-  );
-});
+  )
+})
 
 //Server Running
 
