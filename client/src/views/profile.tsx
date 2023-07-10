@@ -21,7 +21,7 @@ export const Profile = () => {
   const { userId } = useParams(); 
   console.log(userId)
 
-  const [tasks, setTasks] = useState<Array<Task>>(currentUserDataResponse.tasks)
+  const [tasks, setTasks] = useState<Array<Task>>([])
 
 
   const { error, result, loading } = useAsync(async () => {
