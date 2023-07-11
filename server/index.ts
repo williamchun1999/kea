@@ -145,10 +145,10 @@ cron.schedule("0 0 * * MON", async () => {
 });
 
 //serving the frontend 
-app.use(express.static(path.join(__dirname, "./client/build")))
+app.use(express.static(path.join(__dirname, "./client/dist")))
 app.get("*", function (_, res) {
   res.sendFile(
-    path.join(__dirname, "./client/build/index.html"),
+    path.join(__dirname, "./client/dist/index.html"),
     function(err) {
       res.status(500).send(err)
     }
