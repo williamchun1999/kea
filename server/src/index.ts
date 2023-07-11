@@ -143,17 +143,17 @@ cron.schedule("0 0 * * MON", async () => {
     console.error(error);
   }
 });
-//serving the frontend 
 
-app.use(express.static(path.join(__dirname, "./client/build")));
+//serving the frontend 
+app.use(express.static(path.join(__dirname, "./client/dist")))
 app.get("*", function (_, res) {
   res.sendFile(
-    path.join(__dirname, "./client/build/index.html"),
-    function (err) {
-      res.status(500).send(err);
+    path.join(__dirname, "./client/dist/index.html"),
+    function(err) {
+      res.status(500).send(err)
     }
-  );
-});
+  )
+})
 
 //Server Running
 
