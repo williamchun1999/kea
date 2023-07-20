@@ -19,25 +19,25 @@ const router = createBrowserRouter([
     element: <Navbar />,
     children:[
       {
-        path: "/home",
+        path: "/kea/home",
         element: <Home />,
     // errorElement: <ErrorPage />,
       },
       {
-        path: "/friends",
+        path: "/kea/friends",
         element: <Friends />,
       },
       {
-        path: "/settings",
+        path: "/kea/settings",
         element: <Settings />,
       },
       {
-        path: "/profile",
+        path: "/kea/profile",
         element: <Profile />,
         
       },
       {
-        path: "/friends/:userId",
+        path: "/kea/friends/:userId",
         element: <Profile />,
         
       }
@@ -45,11 +45,11 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: "/signup",
+    path: "/kea/signup",
     element: <SignUp />,
   },
   {
-    path: "/login",
+    path: "/kea/login",
     element: <Login />,
   },
 ]);

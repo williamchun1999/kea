@@ -9,7 +9,7 @@ export const SeeAll = ({ userId } : SeeAllProps) => {
     if no user id is found, href to /friends
   */
   
-  const href = userId ? `/profile/${userId}` : '/friends';
+  const href = userId ? `/kea/profile/${userId}` : '/kea/friends';
   
   return (
     <a href={href} className='text-[#e0b0ff] flex items-end'>SEE ALL</a>

@@ -23,7 +23,7 @@ export const FriendTaskOverview = ({ friendsTasks }: FriendsTasksProps) => {
             return (
               <li>
                 <a
-                  href={`friends/${friend.uuid}`}
+                  href={`/kea/friends/${friend.uuid}`}
                   className="flex flex-col items-start"
                 >
                   <div className="flex w-full justify-between">

@@ -42,7 +42,7 @@ export const Login = () => {
                 setIsError(true);
             }
             else {
-                navigate("/home")
+                navigate("/kea/home")
             }
 
         }
