@@ -87,7 +87,7 @@ export const Settings = () => {
     //for the popup message that the user info was changed
   };
   useEffect(() => {
-    let timeout: number;
+    let timeout: string | number | NodeJS.Timeout | undefined;
     if (isUpdateDone) {
       setShowPopup(1);
       timeout = setTimeout(() => {

@@ -4,7 +4,7 @@ import { useAsync } from "react-async-hook";
 
 import { FriendTaskOverview } from "../components/FriendTaskOverview";
 import { Add, LogOutButton } from "../components/button/button";
-import { Card } from "../components/Card/Card";
+import { Card } from "../components/card/Card";
 import { UserTaskOverview } from "../components/UserTaskOverview";
 import { Task, User } from "../common/types";
 import { SeeAll } from "../components/SeeAll";
