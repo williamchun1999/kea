@@ -196,7 +196,7 @@ export const AddFriends = () => {
 export const LogOutButton = () => {
   const handleLogOut = async () => {
     try {
-      const result = await useUserLogout("http://localhost:3000/logout");
+      const result = await useUserLogout("/logout");
       console.log("C: ", result);
     } catch (error) {
       console.log("ERROR: ", error);

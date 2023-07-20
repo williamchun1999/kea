@@ -19,7 +19,7 @@ export const Login = () => {
     })
 
     //hooks for the createUser 
-    const url = "http://localhost:3000/login"
+    const url = "/login"
 
     //make controlled inputs from React's end
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {

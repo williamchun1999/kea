@@ -26,13 +26,13 @@ export const Profile = () => {
 
   const { error, result, loading } = useAsync(async () => {
 
-    const userProfileResponse = await useFetchUser(`http://localhost:3000/profile/${userId ? userId : ""}`);
+    const userProfileResponse = await useFetchUser(`/profile/${userId ? userId : ""}`);
     console.log('userProfileResponse:', userProfileResponse)
     if (userProfileResponse === null || userProfileResponse.status !== 200) {
       throw new Error("Failed to fetch user");
     }
 
-    const userProfileTaskResponse = await useListTasks(`http://localhost:3000/profile/tasks/${userId ? userId : ""}`);
+    const userProfileTaskResponse = await useListTasks(`/profile/tasks/${userId ? userId : ""}`);
     console.log('userProfileTaskResponse:', userProfileTaskResponse)
     if (userProfileTaskResponse === null || userProfileTaskResponse.status !== 200) {
       throw new Error("Failed to fetch tasks");
@@ -47,7 +47,7 @@ export const Profile = () => {
   // Fetch Task Callback function after CRUD operation.
   const fetchTasks = async () => {
     const userTasksResponse = await useListTasks(
-      `http://localhost:3000/profile/tasks/`
+      `/profile/tasks/`
     );
     if (userTasksResponse === null || userTasksResponse.status !== 200) {
       throw new Error("Failed to fetch tasks");

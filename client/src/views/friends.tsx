@@ -14,7 +14,7 @@ export const Friends = () => {
 
   const { error, result, loading, execute } = useAsync(async () => {
     // Get User Info API Call
-    const userResponse = await useFetchUser("http://localhost:3000/friends");
+    const userResponse = await useFetchUser("/friends");
     if (userResponse === null || userResponse.status !== 200) {
       throw new Error("Failed to fetch user");
     }

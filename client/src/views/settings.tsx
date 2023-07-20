@@ -33,7 +33,7 @@ export const Settings = () => {
 
   const { error, result, loading } = useAsync(async () => {
     // Get User Info API Call
-    const userResponse = await useFetchUser("http://localhost:3000/settings");
+    const userResponse = await useFetchUser("/settings");
     if (userResponse === null || userResponse.status !== 200) {
       throw new Error("Failed to fetch user");
     }
@@ -69,7 +69,7 @@ export const Settings = () => {
   //update user info API Call
   const handleSubmit = async () => {
     //hooks for the useUpdateUser
-    const url = "http://localhost:3000/settings/updateUser";
+    const url = "/settings/updateUser";
 
     try {
       const result = await useUpdateUser(url, formData);
@@ -112,7 +112,7 @@ export const Settings = () => {
       if (deleteAllTasksResponse === null || deleteAllTasksResponse.status !== 200) {
         setIsError(true);
       }
-      const deleteUserResponse = await useDeleteUser("http://localhost:3000/settings/deleteUser");
+      const deleteUserResponse = await useDeleteUser("/settings/deleteUser");
       console.log('deleteUserREsponse', deleteUserResponse)
       if (deleteUserResponse === null || deleteUserResponse.status !== 200) {
         setIsError(true);

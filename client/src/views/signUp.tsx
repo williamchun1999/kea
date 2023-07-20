@@ -27,7 +27,7 @@ export const SignUp = () => {
   });
 
   //hooks for the createUser
-  const url = "http://localhost:3000/signup";
+  const url = "/signup";
 
   //make controlled inputs from React's end
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
