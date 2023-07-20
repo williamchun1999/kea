@@ -61,7 +61,7 @@ export const Login = () => {
                     <TextBox title="Password" name="password" value={formData.password} controlInput={handleChange} type="password" />
                     <div className="mt-10 flex flex-col">
                         <Button name="Log In" color="bg-primary" />
-                        <Link to="/signup">
+                        <Link to="/kea/signup">
                             <Button name="Sign Up" color="bg-primary" />
                         </Link>
                     </div>

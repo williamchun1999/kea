@@ -19,7 +19,7 @@ export const FriendMenu = (props: FriendMenuProps) => {
           return (
             <li>
               <a
-                href={`/keafriends/${friend.uuid}`}
+                href={`/kea/friends/${friend.uuid}`}
                 className="flex flex-col items-start"
               >
                 <div className="flex w-full justify-between">
