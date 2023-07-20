@@ -17,10 +17,10 @@ export const LandingPage= ()=> {
       <Carousel img1={homepage} img2={friends} img3={profile}/>
       <p className=" w-4/5 text-center m-auto text-secondary "> Keep yourself and your friends accountable through this app!</p>
       <div className="flex flex-col items-center ">
-        <Link to="/login">
+        <Link to="/kea/login">
           <Button name="Login" color="bg-primary "/>
         </Link>
-        <Link to="/signup">
+        <Link to="/kea/signup">
           <Button name="Sign Up" color="bg-primary " />
         </Link>
       </div>

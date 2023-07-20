@@ -175,7 +175,7 @@ export const SignUp = () => {
           <div className="bottom mt-10 w-screen">
             <div className="flex flex-col items-center">
               <Button name="Sign Up" color="bg-primary" />
-              <Link to="/login">
+              <Link to="/kea/login">
                 <Button name="Login" color="bg-primary" />
               </Link>
             </div>
