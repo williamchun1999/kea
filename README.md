@@ -1,7 +1,7 @@
 # KEA (Keep Eachother Accountable)
 An Accountability Task Tracker App. Users can create weekly tasks and follow other users to check in on eachother's progress throughout the week.
 
-**Link to project:** Currently Unavailable
+**Link to project:** https://jade-courageous-perch.cyclic.app
 
 ![alt tag](https://github.com/williamchun1999/kea/blob/main/public/kea.png)
 
@@ -18,6 +18,8 @@ Our early discussions included using React-Redux to manage global states such as
 
 
 However, we are fetching for the logged in user's information in all pages, so utilizing the React Context API for just a simple user information state would reduce the amount of refetching. Other optimizations include enabling pagination for user's friends for scalability of the application.
+
+Cyclic enabled continuous deployment for our application as well, so that any changes in our main branch will be sent to production and available to users immediately.
 
 
 ## Lessons Learned:
